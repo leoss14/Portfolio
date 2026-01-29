@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Leonardo Luksic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #0a1929;
+            --primary-blue: #1e3a5f;
+            --accent-cyan: #00d4ff;
+            --accent-amber: #ffa726;
+            --text-primary: #e8eef3;
+            --text-secondary: #8b9aa8;
+            --card-bg: #132337;
+            --card-border: #1e3a5f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 25, 41, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 100%);
+        }
+
+        .page-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
+        }
+
+        .skill-category h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            padding: 0.6rem 1.2rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin-top: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-amber));
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            border: 3px solid var(--primary-dark);
+            box-shadow: 0 0 0 3px var(--card-border);
+        }
+
+        .timeline-item h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .timeline-location {
+            color: var(--accent-cyan);
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-highlights li {
+            padding: 0.4rem 0 0.4rem 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .timeline-highlights li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-amber);
+        }
+
+        /* Languages */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .language-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .language-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+        }
+
+        .language-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .language-level {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav>
+            <a href="index.html" class="logo">LL</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">All Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>About Me</h1>
+        <p>Data scientist specializing in econometrics, machine learning, and policy analysis</p>
+    </div>
+
+    <!-- Bio Section -->
+    <section>
+        <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 3rem; border-left: 4px solid var(--accent-cyan);">
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                I'm a data scientist and econometrician specializing in applying advanced analytical methods to complex 
+                policy questions. Currently pursuing an MPA in Data Science for Public Policy at the London School of Economics, 
+                I combine rigorous econometric training with modern machine learning techniques.
+            </p>
+            <p style="font-size: 1.15rem; line-height: 1.8; color: var(--text-secondary);">
+                My work spans reinforcement learning applications, economic complexity analysis, spatial econometrics, 
+                and causal inference. I'm particularly interested in using data science to understand development economics, 
+                international trade, and policy effectiveness.
+            </p>
+        </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+        <h2 class="section-title">Technical Skills</h2>
+
+        <div class="skills-grid">
+            
+            <div class="skill-category">
+                <h3><span class="skill-icon">🤖</span> Machine Learning</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Reinforcement Learning</span>
+                    <span class="skill-item">K-means Clustering</span>
+                    <span class="skill-item">Hierarchical Clustering</span>
+                    <span class="skill-item">LASSO / Ridge / Elastic Net</span>
+                    <span class="skill-item">Random Forest</span>
+                    <span class="skill-item">PCA</span>
+                    <span class="skill-item">Classification Models</span>
+                    <span class="skill-item">Model Validation</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span class="skill-icon">📊</span> Econometrics</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Panel Data Analysis</span>
+                    <span class="skill-item">Fixed Effects Models</span>
+                    <span class="skill-item">Causal Inference</span>
+                    <span class="skill-item">Hypothesis Testing</span>
+                    <span class="skill-item">Spatial Econometrics</span>
+                    <span class="skill-item">Time Series Analysis</span>
+                    <span class="skill-item">Network Analysis</span>
+                    <span class="skill-item">Regression Discontinuity</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span class="skill-icon">💻</span> Programming</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">R</span>
+                    <span class="skill-item">Pandas</span>
+                    <span class="skill-item">NumPy</span>
+                    <span class="skill-item">Scikit-learn</span>
+                    <span class="skill-item">TensorFlow</span>
+                    <span class="skill-item">Matplotlib</span>
+                    <span class="skill-item">Seaborn</span>
+                    <span class="skill-item">Plotly</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span class="skill-icon">🛠️</span> Tools & Platforms</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Jupyter Notebooks</span>
+                    <span class="skill-item">Git / GitHub</span>
+                    <span class="skill-item">QGIS</span>
+                    <span class="skill-item">SQL</span>
+                    <span class="skill-item">Web Scraping</span>
+                    <span class="skill-item">Data Visualization</span>
+                    <span class="skill-item">Statistical Software</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span class="skill-icon">🌍</span> Languages</h3>
+                <div class="skill-list">
+                    <span class="skill-item">English (Fluent)</span>
+                    <span class="skill-item">Italian (Native)</span>
+                    <span class="skill-item">Croatian (Native)</span>
+                    <span class="skill-item">French (Proficient)</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Education -->
+    <section>
+        <h2 class="section-title">Education</h2>
+
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <h3>MPA Data Science for Public Policy</h3>
+                <div class="timeline-meta">
+                    <span class="timeline-location">London School of Economics and Political Science</span>
+                    <span class="timeline-date">2024 - 2026</span>
+                </div>
+                <p class="timeline-desc">
+                    Specialized program combining advanced econometrics, machine learning, and policy analysis
+                </p>
+                <ul class="timeline-highlights">
+                    <li>Capstone project with Moody's Ratings on natural resource dependency (208 countries)</li>
+                    <li>Advanced courses: Spatial Econometrics, Network Analysis, Machine Learning for Policy</li>
+                    <li>Focus on causal inference, economic complexity, and data-driven policy evaluation</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>International Exchange Programs</h3>
+                <div class="timeline-meta">
+                    <span class="timeline-location">Yale-NUS College · University of Oxford</span>
+                    <span class="timeline-date">2023</span>
+                </div>
+                <p class="timeline-desc">
+                    Exchange programs focusing on quantitative methods and international political economy
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Bachelor's Degree</h3>
+                <div class="timeline-meta">
+                    <span class="timeline-location">Bocconi University</span>
+                    <span class="timeline-date">2020 - 2024</span>
+                </div>
+                <p class="timeline-desc">
+                    Foundation in economics, quantitative methods, and political analysis
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interests -->
+    <section>
+        <h2 class="section-title">Research Interests</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+            
+            <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem; border-top: 3px solid var(--accent-cyan);">
+                <h4 style="font-family: 'Syne', sans-serif; color: var(--accent-cyan); margin-bottom: 1rem;">Development Economics</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Economic complexity, resource dependency, structural transformation, and industrial policy in emerging markets
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem; border-top: 3px solid var(--accent-amber);">
+                <h4 style="font-family: 'Syne', sans-serif; color: var(--accent-amber); margin-bottom: 1rem;">Causal Inference</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Policy evaluation, natural experiments, quasi-experimental methods, and applied econometrics for program assessment
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem; border-top: 3px solid var(--accent-cyan);">
+                <h4 style="font-family: 'Syne', sans-serif; color: var(--accent-cyan); margin-bottom: 1rem;">Political Economy</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Central and Eastern European politics, electoral systems, party dynamics, and post-communist transitions
+                </p>
+            </div>
+
+            <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem; border-top: 3px solid var(--accent-amber);">
+                <h4 style="font-family: 'Syne', sans-serif; color: var(--accent-amber); margin-bottom: 1rem;">Spatial Analysis</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Geographic data analysis, trade networks, spatial econometrics, and GIS applications for policy
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Experience Highlight -->
+    <section>
+        <h2 class="section-title">Selected Experience</h2>
+
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <h3>Research Analyst · Moody's Ratings</h3>
+                <div class="timeline-meta">
+                    <span class="timeline-location">Capstone Project</span>
+                    <span class="timeline-date">2024 - 2026</span>
+                </div>
+                <p class="timeline-desc">
+                    Led quantitative analysis of natural resource dependency across 208 countries
+                </p>
+                <ul class="timeline-highlights">
+                    <li>Built complete analytical pipeline: data engineering → clustering → econometrics → ML</li>
+                    <li>Developed predictive models using LASSO, Ridge, and Elastic Net (R² = 0.87)</li>
+                    <li>Conducted panel regressions with country fixed effects on 25 years of data</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Political Technology Developer</h3>
+                <div class="timeline-meta">
+                    <span class="timeline-location">Greek Elections Project</span>
+                    <span class="timeline-date">2023</span>
+                </div>
+                <p class="timeline-desc">
+                    Built political compass application for Greek elections
+                </p>
+                <ul class="timeline-highlights">
+                    <li>Achieved 10,000+ users and top Google ranking</li>
+                    <li>Designed algorithm for political positioning and party recommendations</li>
+                    <li>Integrated real-time data visualization for electoral analysis</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="text-align: center; padding: 4rem 2rem;">
+        <h2 style="font-family: 'Syne', sans-serif; font-size: 2.5rem; margin-bottom: 2rem; color: var(--text-primary);">
+            Let's Work Together
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem;">
+            Interested in data science, econometric analysis, or policy research collaboration? Get in touch.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1.5rem;">
+            <a href="contact.html" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--accent-cyan), #0088cc); color: var(--primary-dark); border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: inline-block;">
+                Contact Me
+            </a>
+            <a href="projects.html" style="padding: 1rem 2.5rem; background: transparent; color: var(--text-primary); border: 2px solid var(--accent-cyan); border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: inline-block;">
+                View Projects
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--card-border);">
+        <p style="color: var(--text-secondary);">© 2026 Leonardo Luksic · Data Science Portfolio</p>
+    </footer>
+
+</body>
+</html>

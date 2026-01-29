@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Leonardo Luksic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #0a1929;
+            --primary-blue: #1e3a5f;
+            --accent-cyan: #00d4ff;
+            --accent-amber: #ffa726;
+            --text-primary: #e8eef3;
+            --text-secondary: #8b9aa8;
+            --card-bg: #132337;
+            --card-border: #1e3a5f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 25, 41, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 100%);
+        }
+
+        .page-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            flex: 1;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 3rem;
+        }
+
+        .contact-info h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(30, 58, 95, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .contact-details h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-details a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--accent-amber);
+        }
+
+        /* Resume Download */
+        .resume-section {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 167, 38, 0.1));
+            border: 1px solid var(--accent-cyan);
+            border-radius: 16px;
+        }
+
+        .resume-section h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .resume-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--accent-cyan), #0088cc);
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .resume-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav>
+            <a href="index.html" class="logo">LL</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">All Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Get in Touch</h1>
+        <p>Open to data science roles, research collaboration, and consulting opportunities</p>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+
+        <div class="contact-grid">
+            
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                
+                <div class="contact-methods">
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <a href="mailto:your.email@lse.ac.uk">your.email@lse.ac.uk</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">💼</div>
+                        <div class="contact-details">
+                            <h4>LinkedIn</h4>
+                            <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank">
+                                linkedin.com/in/leonardo-luksic
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">💻</div>
+                        <div class="contact-details">
+                            <h4>GitHub</h4>
+                            <a href="https://github.com/yourusername" target="_blank">
+                                github.com/yourusername
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <span style="color: var(--text-secondary);">London, United Kingdom</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Quick Info -->
+            <div>
+                <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 3rem; margin-bottom: 2rem;">
+                    <h3 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: var(--accent-amber); margin-bottom: 1.5rem;">
+                        Open to Opportunities
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 1.05rem;">
+                        I'm currently seeking positions in:
+                    </p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.6rem 0 0.6rem 1.5rem; position: relative; color: var(--text-primary);">
+                            <span style="position: absolute; left: 0; color: var(--accent-cyan);">▸</span>
+                            Data Science & Analytics
+                        </li>
+                        <li style="padding: 0.6rem 0 0.6rem 1.5rem; position: relative; color: var(--text-primary);">
+                            <span style="position: absolute; left: 0; color: var(--accent-cyan);">▸</span>
+                            Econometric Research
+                        </li>
+                        <li style="padding: 0.6rem 0 0.6rem 1.5rem; position: relative; color: var(--text-primary);">
+                            <span style="position: absolute; left: 0; color: var(--accent-cyan);">▸</span>
+                            Policy Analysis & Consulting
+                        </li>
+                        <li style="padding: 0.6rem 0 0.6rem 1.5rem; position: relative; color: var(--text-primary);">
+                            <span style="position: absolute; left: 0; color: var(--accent-cyan);">▸</span>
+                            Research Collaboration
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 16px; padding: 2rem; text-align: center;">
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                        Graduating from LSE
+                    </p>
+                    <p style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-cyan);">
+                        Summer 2026
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Resume Download -->
+        <div class="resume-section">
+            <h3>Download My Resume</h3>
+            <p style="color: var(--text-secondary); margin-top: 1rem;">
+                Complete CV with detailed project descriptions, skills, and experience
+            </p>
+            <a href="assets/Leonardo_Luksic_Resume.pdf" download class="resume-btn">
+                Download Resume (PDF)
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer style="padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--card-border); margin-top: auto;">
+        <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 2rem;">
+            <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s ease;">
+                LinkedIn
+            </a>
+            <a href="https://github.com/yourusername" target="_blank" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s ease;">
+                GitHub
+            </a>
+            <a href="mailto:your.email@lse.ac.uk" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s ease;">
+                Email
+            </a>
+        </div>
+        <p style="color: var(--text-secondary);">© 2026 Leonardo Luksic · Data Science Portfolio</p>
+    </footer>
+
+</body>
+</html>

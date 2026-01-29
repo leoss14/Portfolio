@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects - Leonardo Luksic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #0a1929;
+            --primary-blue: #1e3a5f;
+            --accent-cyan: #00d4ff;
+            --accent-amber: #ffa726;
+            --text-primary: #e8eef3;
+            --text-secondary: #8b9aa8;
+            --card-bg: #132337;
+            --card-border: #1e3a5f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 25, 41, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 100%);
+        }
+
+        .page-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filter Buttons */
+        .filter-bar {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.8rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-cyan);
+            color: var(--primary-dark);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Grid */
+        .projects-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.2);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-amber));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            padding: 1.8rem;
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.5), rgba(19, 35, 55, 0.5));
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--accent-cyan);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .project-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .project-body {
+            padding: 1.5rem 1.8rem;
+        }
+
+        .project-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .skill-tag {
+            padding: 0.4rem 0.8rem;
+            background: rgba(30, 58, 95, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .project-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent-amber);
+        }
+
+        .project-priority {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .priority-high {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .priority-medium {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent-cyan);
+        }
+
+        .priority-low {
+            background: rgba(139, 154, 168, 0.2);
+            color: var(--text-secondary);
+        }
+
+        /* Category Section Headers */
+        .category-header {
+            margin: 4rem 0 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .category-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .category-count {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-left: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .filter-bar {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav>
+            <a href="index.html" class="logo">LL</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">All Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>All Projects</h1>
+        <p>27 data science, econometrics, and machine learning projects showcasing advanced analytical capabilities</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterProjects('all')">All Projects (27)</button>
+        <button class="filter-btn" onclick="filterProjects('ml')">Machine Learning (12)</button>
+        <button class="filter-btn" onclick="filterProjects('econometrics')">Econometrics (6)</button>
+        <button class="filter-btn" onclick="filterProjects('spatial')">Spatial Analysis (3)</button>
+        <button class="filter-btn" onclick="filterProjects('visualization')">Visualization (6)</button>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="projects-section">
+
+        <!-- HIGH PRIORITY PROJECTS -->
+        <div class="category-header">
+            <h2>Featured Projects <span class="category-count">(5 projects)</span></h2>
+        </div>
+
+        <div class="projects-grid">
+            
+            <!-- 1. RL Bank Rates -->
+            <div class="project-card" data-category="ml" onclick="location.href='project-rl-bank-rates.html'">
+                <div class="project-header">
+                    <div class="project-category">Reinforcement Learning</div>
+                    <h3 class="project-title">Bank Rates Prediction with RL</h3>
+                    <p class="project-desc">
+                        Reinforcement learning project mapping bank rates using Federal Reserve macroeconomic data
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Reinforcement Learning</span>
+                        <span class="skill-tag">Time Series</span>
+                        <span class="skill-tag">Fed Data</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Details →</span>
+                        <span class="project-priority priority-high">High Priority</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Moody's Capstone -->
+            <div class="project-card" data-category="ml econometrics" onclick="location.href='project-moodys-capstone.html'">
+                <div class="project-header">
+                    <div class="project-category">Economic Complexity</div>
+                    <h3 class="project-title">Natural Resource Clustering (Moody's)</h3>
+                    <p class="project-desc">
+                        Clustering 208 countries by natural resource dependency for Moody's Ratings - 9 notebooks
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Clustering</span>
+                        <span class="skill-tag">LASSO/Ridge</span>
+                        <span class="skill-tag">Panel Data</span>
+                        <span class="skill-tag">Imputation</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Details →</span>
+                        <span class="project-priority priority-high">High Priority</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Applied Econometrics -->
+            <div class="project-card" data-category="econometrics" onclick="location.href='project-econometrics.html'">
+                <div class="project-header">
+                    <div class="project-category">Econometrics</div>
+                    <h3 class="project-title">Election Fraud & Labor Market Analysis</h3>
+                    <p class="project-desc">
+                        Hypothesis testing on Iran election fraud and South Africa labor market outcomes
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Causal Inference</span>
+                        <span class="skill-tag">Hypothesis Testing</span>
+                        <span class="skill-tag">Policy Evaluation</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Details →</span>
+                        <span class="project-priority priority-high">High Priority</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Spatial Trade -->
+            <div class="project-card" data-category="spatial econometrics" onclick="location.href='project-spatial-trade.html'">
+                <div class="project-header">
+                    <div class="project-category">Spatial Analysis</div>
+                    <h3 class="project-title">Italian Trade Network Analysis</h3>
+                    <p class="project-desc">
+                        Economic complexity and export patterns across 1000+ products - 2 notebooks
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Economic Complexity</span>
+                        <span class="skill-tag">Network Analysis</span>
+                        <span class="skill-tag">Spatial Mapping</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Details →</span>
+                        <span class="project-priority priority-high">High Priority</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Migration Analysis -->
+            <div class="project-card" data-category="spatial visualization">
+                <div class="project-header">
+                    <div class="project-category">Policy Analysis</div>
+                    <h3 class="project-title">Global Refugee Flows Analysis</h3>
+                    <p class="project-desc">
+                        UNHCR data analysis examining global migration patterns and geopolitical trends
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Time Series</span>
+                        <span class="skill-tag">Migration Data</span>
+                        <span class="skill-tag">Geopolitics</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-high">High Priority</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MACHINE LEARNING PROJECTS -->
+        <div class="category-header">
+            <h2>Machine Learning Projects <span class="category-count">(7 projects)</span></h2>
+        </div>
+
+        <div class="projects-grid">
+            
+            <!-- Uber Clustering -->
+            <div class="project-card" data-category="ml">
+                <div class="project-header">
+                    <div class="project-category">ML Clustering</div>
+                    <h3 class="project-title">Uber Passenger-Driver Clustering</h3>
+                    <p class="project-desc">
+                        K-means clustering analysis of Uber ride-hailing patterns in NYC
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">K-means</span>
+                        <span class="skill-tag">Geospatial</span>
+                        <span class="skill-tag">Pattern Recognition</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-medium">Medium</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RL Mountain Car -->
+            <div class="project-card" data-category="ml">
+                <div class="project-header">
+                    <div class="project-category">Reinforcement Learning</div>
+                    <h3 class="project-title">Mountain Car RL</h3>
+                    <p class="project-desc">
+                        Function approximation with linear approximators on classic RL problem
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Reinforcement Learning</span>
+                        <span class="skill-tag">Function Approximation</span>
+                        <span class="skill-tag">OpenAI Gym</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-medium">Medium</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Simulation -->
+            <div class="project-card" data-category="ml">
+                <div class="project-header">
+                    <div class="project-category">ML Fundamentals</div>
+                    <h3 class="project-title">Data Simulation & ML Methods</h3>
+                    <p class="project-desc">
+                        Data simulation techniques with clear ML methodology explanations
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Simulation</span>
+                        <span class="skill-tag">Synthetic Data</span>
+                        <span class="skill-tag">ML Theory</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-medium">Medium</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PCA -->
+            <div class="project-card" data-category="ml">
+                <div class="project-header">
+                    <div class="project-category">Dimensionality Reduction</div>
+                    <h3 class="project-title">Country Indicators PCA</h3>
+                    <p class="project-desc">
+                        Principal Component Analysis on cross-country development indicators
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">PCA</span>
+                        <span class="skill-tag">Feature Engineering</span>
+                        <span class="skill-tag">Dimensionality Reduction</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-medium">Medium</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Subscription -->
+            <div class="project-card" data-category="ml">
+                <div class="project-header">
+                    <div class="project-category">Classification</div>
+                    <h3 class="project-title">Mobile Subscription Prediction</h3>
+                    <p class="project-desc">
+                        Classification models for mobile subscription validation and prediction
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Classification</span>
+                        <span class="skill-tag">Model Validation</span>
+                        <span class="skill-tag">Predictive Analytics</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-low">Low</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DATA VISUALIZATION PROJECTS -->
+        <div class="category-header">
+            <h2>Data Visualization Projects <span class="category-count">(6 projects)</span></h2>
+        </div>
+
+        <div class="projects-grid">
+            
+            <!-- Macro Viz -->
+            <div class="project-card" data-category="visualization econometrics">
+                <div class="project-header">
+                    <div class="project-category">Macroeconomic Viz</div>
+                    <h3 class="project-title">Country Macro Analysis</h3>
+                    <p class="project-desc">
+                        Visualization of WEO and WDI macroeconomic indicators across countries
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Time Series</span>
+                        <span class="skill-tag">Cross-Country</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-medium">Medium</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UK Regional -->
+            <div class="project-card" data-category="visualization">
+                <div class="project-header">
+                    <div class="project-category">Regional Analysis</div>
+                    <h3 class="project-title">UK Regional Income Analysis</h3>
+                    <p class="project-desc">
+                        Gross Domestic Household Income distribution across UK regions
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Regional Data</span>
+                        <span class="skill-tag">UK Policy</span>
+                        <span class="skill-tag">Visualization</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-low">Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NHS Hospitals -->
+            <div class="project-card" data-category="visualization">
+                <div class="project-header">
+                    <div class="project-category">Healthcare Analytics</div>
+                    <h3 class="project-title">NHS Hospital Waiting Lists</h3>
+                    <p class="project-desc">
+                        Mapping UK hospitals and analyzing waiting time patterns
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Healthcare</span>
+                        <span class="skill-tag">Geographic Mapping</span>
+                        <span class="skill-tag">UK NHS Data</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-low">Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Environmental -->
+            <div class="project-card" data-category="visualization">
+                <div class="project-header">
+                    <div class="project-category">Environmental Data</div>
+                    <h3 class="project-title">CO2 Reduction Analysis</h3>
+                    <p class="project-desc">
+                        Analysis of CO2 reduction targets and environmental policy data
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Climate Data</span>
+                        <span class="skill-tag">Policy Analysis</span>
+                        <span class="skill-tag">Environmental</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-low">Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carbon Markets -->
+            <div class="project-card" data-category="visualization econometrics">
+                <div class="project-header">
+                    <div class="project-category">Environmental Economics</div>
+                    <h3 class="project-title">EU Carbon Allowances (ETS)</h3>
+                    <p class="project-desc">
+                        Analysis of EU Emissions Trading System and carbon market dynamics
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Carbon Markets</span>
+                        <span class="skill-tag">EU Policy</span>
+                        <span class="skill-tag">Time Series</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-low">Low</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DATA ENGINEERING & TOOLS -->
+        <div class="category-header">
+            <h2>Data Engineering & Tools <span class="category-count">(2 projects)</span></h2>
+        </div>
+
+        <div class="projects-grid">
+            
+            <!-- Web Scraping -->
+            <div class="project-card" data-category="ml">
+                <div class="project-header">
+                    <div class="project-category">Data Collection</div>
+                    <h3 class="project-title">Web Scraping Techniques</h3>
+                    <p class="project-desc">
+                        Automated data collection using BeautifulSoup and Selenium
+                    </p>
+                </div>
+                <div class="project-body">
+                    <div class="project-skills">
+                        <span class="skill-tag">Web Scraping</span>
+                        <span class="skill-tag">Automation</span>
+                        <span class="skill-tag">BeautifulSoup</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="project-link">View Notebook →</span>
+                        <span class="project-priority priority-low">Low</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Note about additional projects -->
+        <div style="text-align: center; margin: 4rem 0 2rem; padding: 2rem; background: rgba(0, 212, 255, 0.05); border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2);">
+            <p style="color: var(--text-secondary); font-size: 1.05rem;">
+                <strong style="color: var(--text-primary);">+ 15 Additional Projects</strong> covering econometrics, spatial analysis, visualization, and more
+            </p>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.5rem;">
+                All notebooks available in the GitHub repository
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer style="padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--card-border);">
+        <p style="color: var(--text-secondary);">© 2026 Leonardo Luksic · Data Science Portfolio</p>
+    </footer>
+
+    <script>
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const categories = card.getAttribute('data-category') || '';
+                    if (categories.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
