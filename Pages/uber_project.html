@@ -78,7 +78,7 @@
                 <li>Airport demand surged 48% (JFK became #1 zone)</li>
                 <li>Manhattan core collapsed 35% average (saturation effects)</li>
                 <li>Concentration increased 16% (strategic focus, not uniform spread)</li>
-                <li>Clusters shifted only 4.75 km average (stable optimization)</li>
+                <li>Clusters shifted only 4.64 km average (stable optimization)</li>
             </ul>
         </div>
 
@@ -99,7 +99,7 @@
         <div class="theory-box">
             <h3>January 2018: Market Snapshot</h3>
             <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                Analysis of 19.8 million January 2018 trips (500K sample) reveals concentrated demand patterns 
+                Analysis of 19.8 million January 2018 trips (all 4.5M Uber trips) reveals concentrated demand patterns 
                 across NYC's 263 TLC zones. Using K-means clustering on geographic coordinates derived from 
                 zone centroids, six distinct demand clusters emerged representing Manhattan core, outer boroughs, 
                 and airport zones.
@@ -111,7 +111,7 @@
                     <div class="label">Total Monthly Trips</div>
                 </div>
                 <div class="stat-highlight">
-                    <div class="value">0.3279</div>
+                    <div class="value">0.3268</div>
                     <div class="label">Gini Coefficient</div>
                 </div>
                 <div class="stat-highlight">
@@ -121,7 +121,7 @@
             </div>
 
             <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1.5rem;">
-                The Gini coefficient of 0.3279 indicates relatively balanced zone utilization across NYC's 
+                The Gini coefficient of 0.3268 indicates relatively balanced zone utilization across NYC's 
                 257 active zones. Midtown Center led with the highest pickup volume, followed by Union Square 
                 and East Village. Uber captured 22.7% of the total for-hire vehicle market, competing with 
                 traditional black cars and early Lyft presence. Peak demand occurred at 6:00 PM, with Saturday 
@@ -349,7 +349,7 @@
                     </tr>
                     <tr>
                         <td><strong>Strategic concentration</strong><br><small>Focus on high-value corridors</small></td>
-                        <td>Gini +16% (more focused on profitable routes)</td>
+                        <td>Gini +15% (more focused on profitable routes)</td>
                         <td style="color: var(--accent-green); font-weight: 600;">✓ Confirmed</td>
                     </tr>
                     <tr>
@@ -364,7 +364,7 @@
                     </tr>
                     <tr>
                         <td><strong>Stable core geography</strong><br><small>Optimization, not reorganization</small></td>
-                        <td>4.75 km average cluster shift (moderate)</td>
+                        <td>4.64 km average cluster shift (moderate)</td>
                         <td style="color: var(--accent-green); font-weight: 600;">✓ Confirmed</td>
                     </tr>
                 </tbody>
@@ -398,7 +398,7 @@
         <div class="theory-box">
             <h3>January 2025: Mature Market Patterns</h3>
             <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                Analysis of 20.4 million January 2025 trips (500K sample) reveals significant evolution 
+                Analysis of 20.4 million January 2025 trips (all 15.4M Uber trips) reveals significant evolution 
                 in demand distribution and temporal patterns. The market shows reduced concentration, 
                 shifted peak hours, and broader geographic spread—all indicators of market maturation.
             </p>
@@ -409,8 +409,8 @@
                     <div class="label">Total Monthly Trips (+3%)</div>
                 </div>
                 <div class="stat-highlight">
-                    <div class="value">0.3802</div>
-                    <div class="label">Gini Coefficient (+16%)</div>
+                    <div class="value">0.3754</div>
+                    <div class="label">Gini Coefficient (+15%)</div>
                 </div>
                 <div class="stat-highlight">
                     <div class="value">18:00</div>
@@ -421,7 +421,7 @@
             <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1.5rem;">
                 By 2025, Uber dominated with 75.3% market share, capturing 15.4 million trips versus just 
                 4.5 million in 2018—a 241% growth as competitors consolidated. The Gini coefficient increased 
-                to 0.3802, indicating MORE concentrated demand despite broader geographic coverage. The dramatic 
+                to 0.3754, indicating MORE concentrated demand despite broader geographic coverage. The dramatic 
                 shift: JFK Airport became the #1 pickup zone, displacing Manhattan's urban core. Peak hour remained 
                 at 6 PM, but Friday overtook Saturday as the busiest day.
             </p>
@@ -489,9 +489,9 @@
                     </tr>
                     <tr>
                         <td><strong>Gini Coefficient</strong></td>
-                        <td>0.3279</td>
-                        <td>0.3802</td>
-                        <td style="color: var(--accent-red); font-weight: 600;">+16%</td>
+                        <td>0.3268</td>
+                        <td>0.3754</td>
+                        <td style="color: var(--accent-red); font-weight: 600;">+15%</td>
                     </tr>
                     <tr>
                         <td><strong>Peak Hour</strong></td>
@@ -513,7 +513,7 @@
                     </tr>
                     <tr>
                         <td><strong>Avg Cluster Shift</strong></td>
-                        <td colspan="2" style="text-align: center;">4.75 km</td>
+                        <td colspan="2" style="text-align: center;">4.64 km</td>
                         <td style="color: var(--blue-deep); font-weight: 600;">Moderate shift</td>
                     </tr>
                 </tbody>
@@ -536,7 +536,7 @@
                 <li style="padding: 0.8rem 0 0.8rem 2rem; position: relative; font-size: 1.05rem;">
                     <span style="position: absolute; left: 0; color: var(--blue-main);">▸</span>
                     <strong>Increased concentration paradox:</strong> Despite broader coverage, Gini increased 
-                    16% (0.3279 → 0.3802), indicating MORE concentrated demand. This reflects strategic 
+                    40% (0.3268 → 0.3754), indicating MORE concentrated demand. This reflects strategic 
                     optimization: focusing capacity on high-value corridors (airports, outer borough transit hubs) 
                     rather than spreading evenly.
                 </li>
@@ -550,7 +550,7 @@
                 <li style="padding: 0.8rem 0 0.8rem 2rem; position: relative; font-size: 1.05rem;">
                     <span style="position: absolute; left: 0; color: var(--blue-main);">▸</span>
                     <strong>Outer borough growth:</strong> Brooklyn zones like Greenpoint (+35%) and Bushwick 
-                    (+14%) grew while maintaining stable cluster geography (4.75 km average shift). This indicates 
+                    (+14%) grew while maintaining stable cluster geography (4.64 km average shift). This indicates 
                     demand expansion to previously underserved neighborhoods, not fundamental geographic reorganization.
                 </li>
             </ul>
@@ -616,9 +616,9 @@
 
             <h3 style="margin-top: 3rem;">Business Implications</h3>
             <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
-                The increased concentration (Gini +16%) paradoxically indicates improved operational efficiency. 
+                The increased concentration (Gini +15%) paradoxically indicates improved operational efficiency. 
                 By focusing on high-value corridors—airports, major transit hubs, outer borough growth zones—Uber 
-                optimized for revenue per trip rather than geographic spread. The 4.75 km average cluster shift 
+                optimized for revenue per trip rather than geographic spread. The 4.64 km average cluster shift 
                 shows this happened through strategic demand cultivation, not random geographic reorganization.
             </p>
 
@@ -722,7 +722,7 @@
             <h3 style="margin-top: 3rem;">Business Implications</h3>
             <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
                 The observed patterns strongly suggest MDP-based matching drove the geographic reorganization. 
-                Increased concentration (Gini +16%) wasn't inefficiency—it was strategic optimization toward 
+                Increased concentration (Gini +15%) wasn't inefficiency—it was strategic optimization toward 
                 high-value routes that maximize long-term positioning. The business case for RL matching is clear:
             </p>
 
@@ -736,7 +736,7 @@
                     <div class="label">Airport Demand</div>
                 </div>
                 <div class="stat-highlight">
-                    <div class="value">4.75 km</div>
+                    <div class="value">4.64 km</div>
                     <div class="label">Avg Cluster Shift</div>
                 </div>
             </div>
@@ -745,7 +745,7 @@
                 For a platform that grew from 4.5M to 15.4M monthly trips, intelligent matching algorithms 
                 enabled sustainable expansion. By learning which zones have high positioning value and 
                 optimizing driver allocation accordingly, the system achieved 241% growth while maintaining 
-                geographic stability (4.75 km shifts). The airport surge (+48%) demonstrates the algorithm 
+                geographic stability (4.64 km shifts). The airport surge (+48%) demonstrates the algorithm 
                 successfully identified and prioritized high-value corridors—a pattern greedy matching would 
                 never produce.
             </p>
