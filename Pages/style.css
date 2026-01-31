@@ -518,6 +518,225 @@ iframe {
     margin: 2rem 0;
 }
 
+/* ===== PROJECT PAGE SPECIFIC STYLES ===== */
+
+/* Project Hero */
+.project-hero {
+    padding: 8rem 2rem 4rem;
+    background: linear-gradient(135deg, var(--white), var(--blue-light));
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.project-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--blue-dark);
+}
+
+.project-hero .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-medium);
+    max-width: 900px;
+    margin: 0 auto 2rem;
+}
+
+.project-meta-bar {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.meta-value {
+    font-size: 1.3rem;
+    color: var(--blue-main);
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+}
+
+/* Theory and Content Boxes */
+.theory-box {
+    background: var(--white);
+    border: 2px solid var(--blue-soft);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px var(--shadow-soft);
+}
+
+.theory-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    color: var(--blue-deep);
+    margin-bottom: 1.5rem;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.content-card {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow-soft);
+}
+
+.content-card:hover {
+    border-color: var(--blue-main);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+.card-header {
+    padding: 1.5rem;
+    background: var(--blue-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.card-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    color: var(--blue-dark);
+}
+
+.card-body {
+    padding: 2rem;
+    color: var(--text-medium);
+}
+
+/* Visualization Containers */
+.viz-container {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px var(--shadow-soft);
+}
+
+.viz-container iframe {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Stat Highlights */
+.stat-highlight {
+    background: var(--blue-light);
+    border: 2px solid var(--blue-soft);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.stat-highlight .value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--blue-deep);
+    font-family: 'Syne', sans-serif;
+}
+
+.stat-highlight .label {
+    font-size: 0.95rem;
+    color: var(--text-medium);
+    margin-top: 0.5rem;
+}
+
+/* Comparison and Method Boxes */
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.method-box {
+    background: var(--light-grey);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+}
+
+.method-box.wrong {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.05);
+}
+
+.method-box.correct {
+    border-color: var(--accent-green);
+    background: rgba(76, 175, 80, 0.05);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow-soft);
+}
+
+th {
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-medium);
+}
+
+tr:hover {
+    background: var(--light-grey);
+}
+
+/* Responsive Adjustments for Project Pages */
+@media (max-width: 968px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
 /* Responsive */
 @media (max-width: 968px) {
     .hero-content {
