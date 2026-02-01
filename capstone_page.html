@@ -187,6 +187,40 @@
             margin: 0;
         }
         
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 30px 0;
+        }
+        
+        th {
+            background: var(--moodys-blue);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background: #fcfcfc;
+        }
+        
+        .table-header {
+            font-weight: bold;
+            background: #f9f9f9;
+            color: var(--lse-red);
+        }
+        
         /* VISUALIZATIONS */
         .viz-embed {
             width: 100%;
@@ -247,8 +281,9 @@
         <ul>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#methodology">Methodology</a></li>
-            <li><a href="#production">Production Patterns</a></li>
+            <li><a href="#production">Production</a></li>
             <li><a href="#clustering">Clustering</a></li>
+            <li><a href="#ml">Machine Learning</a></li>
             <li><a href="#findings">Findings</a></li>
         </ul>
     </nav>
@@ -301,9 +336,9 @@
                 <div class="highlight-box">
                     <h4>Theoretical Foundations</h4>
                     <ul style="padding-left: 25px;">
-                        <li><strong>Economic Complexity:</strong> Hidalgo & Hausmann (2009) framework linking productive capabilities to development</li>
-                        <li><strong>Resource Curse Literature:</strong> Investigating whether resource abundance hinders diversification</li>
-                        <li><strong>Institutions:</strong> Role of governance quality in shaping development trajectories (Acemoglu & Robinson)</li>
+                        <li><strong>Structural Transformation:</strong> Economic Complexity (Hidalgo & Hausmann, 2009) + Growth Diagnostics</li>
+                        <li><strong>Institutions:</strong> Governance quality as shaper of development (Acemoglu & Robinson)</li>
+                        <li><strong>Resource Management:</strong> Conditions for successful rent management (van der Ploeg)</li>
                         <li><strong>Human Capital:</strong> Solow growth model and capability building</li>
                     </ul>
                 </div>
@@ -311,22 +346,13 @@
                 <div class="highlight-box">
                     <h4>Analytical Approach</h4>
                     <ul style="padding-left: 25px;">
-                        <li><strong>Data Integration:</strong> Commodity production values, economic indicators, governance metrics</li>
-                        <li><strong>Normalization:</strong> GDP-adjusted production to control for economy size</li>
-                        <li><strong>Dimensionality Reduction:</strong> PCA to identify core variation patterns</li>
-                        <li><strong>Clustering:</strong> K-means to group countries by resource-economic profiles</li>
+                        <li><strong>Descriptive Analysis:</strong> Production patterns across resources, countries, and time</li>
+                        <li><strong>PCA:</strong> Dimensionality reduction to identify core variation</li>
+                        <li><strong>Clustering:</strong> K-means to group countries by resource profiles</li>
+                        <li><strong>Econometrics:</strong> Panel regression with fixed effects</li>
+                        <li><strong>Machine Learning:</strong> Regularized regression (LASSO, Ridge, Elastic Net)</li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="info-box">
-                <p><strong>Data Sources:</strong></p>
-                <ul style="padding-left: 25px; margin-top: 10px;">
-                    <li>Natural resource production: Commodity-level data (Oil, Gas, Coal, Metals)</li>
-                    <li>Economic Complexity Index: Atlas of Economic Complexity</li>
-                    <li>Human Capital Index: Penn World Table</li>
-                    <li>GDP, Population, Governance: World Bank WDI, V-Dem</li>
-                </ul>
             </div>
         </div>
     </section>
@@ -346,10 +372,10 @@
             <div class="highlight-box">
                 <h3>Key Observations</h3>
                 <ul style="padding-left: 25px;">
-                    <li><strong>Absolute Production:</strong> Dominated by large economies (USA, China, Russia) due to scale and diversified extraction</li>
-                    <li><strong>Per Capita Production:</strong> Small Gulf states (Qatar, Brunei) and resource-rich developed nations (Norway, Australia) lead</li>
-                    <li><strong>GDP-Normalized Production:</strong> Trinidad & Tobago, Qatar, and Brunei show extreme resource dependence (>1.5% of GDP)</li>
-                    <li><strong>Resource Specialization:</strong> Clear geographic patterns in oil (Middle East), gas (Russia, Central Asia), and metals (Australia, South America)</li>
+                    <li><strong>Absolute Production:</strong> Dominated by large economies (China $280B, USA $273B, Russia $201B in 2019)</li>
+                    <li><strong>Per Capita Production:</strong> Small Gulf states (Qatar $2.6K, Brunei $1.1K) and resource-rich developed nations (Norway $856) lead</li>
+                    <li><strong>GDP-Normalized Production:</strong> Trinidad & Tobago (3.2%), Qatar (2.8%), and Brunei (1.9%) show extreme resource dependence</li>
+                    <li><strong>Resource Specialization:</strong> Clear geographic patterns - oil (Middle East), gas (Russia, Central Asia), metals (Australia, South America)</li>
                 </ul>
             </div>
         </div>
@@ -361,7 +387,7 @@
             <h2>Clustering Analysis</h2>
             
             <p style="text-align: center; font-size: 1.15em; margin-bottom: 30px;">
-                Countries grouped by GDP-normalized resource production, Economic Complexity Index, and Human Capital Index using K-means clustering with PCA dimensionality reduction.
+                Countries grouped by GDP-normalized resource production, Economic Complexity Index, and Human Capital Index using K-means clustering with PCA.
             </p>
             
             <div class="viz-grid">
@@ -397,7 +423,7 @@
                         <ul style="padding-left: 25px; font-size: 0.95em;">
                             <li>Driven by <strong>Oil</strong> (0.683) and <strong>Natural Gas</strong> (0.678) production</li>
                             <li>Identifies oil and gas exporters</li>
-                            <li>Negative correlation with coal production</li>
+                            <li>Negative correlation with coal production (-0.230)</li>
                         </ul>
                     </div>
                 </div>
@@ -405,12 +431,12 @@
             
             <div class="viz-grid">
                 <div class="viz-card">
-                    <h4>PC1 Loadings</h4>
+                    <h4>PC1 Loadings (Economic Development)</h4>
                     <iframe src="pca_loadings_pc1.html"></iframe>
                 </div>
                 
                 <div class="viz-card">
-                    <h4>PC2 Loadings</h4>
+                    <h4>PC2 Loadings (Hydrocarbon Intensity)</h4>
                     <iframe src="pca_loadings_pc2.html"></iframe>
                 </div>
             </div>
@@ -421,41 +447,148 @@
                 <div style="margin-top: 20px;">
                     <h4>Cluster 0 (38 countries): Low-Income, Resource-Scarce</h4>
                     <p style="margin-left: 20px; color: #555;">
-                        <em>Representative countries:</em> Bangladesh, Chad, Cameroon, Burkina Faso<br>
-                        <strong>Characteristics:</strong> Low economic complexity, minimal resource production, low human capital
+                        <em>Representative:</em> Bangladesh, Chad, Cameroon, Burkina Faso<br>
+                        <strong>Profile:</strong> Low economic complexity, minimal resource production, low human capital
                     </p>
                 </div>
                 
                 <div style="margin-top: 20px;">
                     <h4>Cluster 1 (44 countries): Diversified Economies</h4>
                     <p style="margin-left: 20px; color: #555;">
-                        <em>Representative countries:</em> Argentina, Australia, Albania, Bahrain<br>
-                        <strong>Characteristics:</strong> Moderate complexity, mixed resource portfolios, varied development levels
+                        <em>Representative:</em> Argentina, Australia, Albania, Bahrain<br>
+                        <strong>Profile:</strong> Moderate complexity, mixed resource portfolios, varied development levels
                     </p>
                 </div>
                 
                 <div style="margin-top: 20px;">
                     <h4>Cluster 2 (13 countries): Oil & Gas Producers</h4>
                     <p style="margin-left: 20px; color: #555;">
-                        <em>Representative countries:</em> Algeria, Angola, Azerbaijan, Equatorial Guinea<br>
-                        <strong>Characteristics:</strong> High hydrocarbon production, moderate-to-low complexity, resource-dependent
+                        <em>Representative:</em> Algeria, Angola, Azerbaijan, Equatorial Guinea<br>
+                        <strong>Profile:</strong> High hydrocarbon production, moderate-to-low complexity, resource-dependent
                     </p>
                 </div>
                 
                 <div style="margin-top: 20px;">
                     <h4>Cluster 3 (24 countries): Advanced Manufacturing</h4>
                     <p style="margin-left: 20px; color: #555;">
-                        <em>Representative countries:</em> Canada, Denmark, Czechia, Croatia<br>
-                        <strong>Characteristics:</strong> High economic complexity, developed economies, moderate resource production
+                        <em>Representative:</em> Canada, Denmark, Czechia, Croatia<br>
+                        <strong>Profile:</strong> High economic complexity, developed economies, moderate resource production
                     </p>
                 </div>
                 
                 <div style="margin-top: 20px;">
                     <h4>Cluster 4 (5 countries): Extreme Resource Exporters</h4>
                     <p style="margin-left: 20px; color: #555;">
-                        <em>Representative countries:</em> Brunei, Kuwait, Qatar, Trinidad & Tobago, Norway<br>
-                        <strong>Characteristics:</strong> Extreme hydrocarbon production (>1.5% GDP), high income, varied complexity
+                        <em>Representative:</em> Brunei, Kuwait, Qatar, Trinidad & Tobago, Norway<br>
+                        <strong>Profile:</strong> Extreme hydrocarbon production (>1.5% GDP), high income, varied complexity
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- MACHINE LEARNING -->
+    <section id="ml">
+        <div class="container">
+            <h2>Machine Learning Approach</h2>
+            
+            <p style="text-align: center; font-size: 1.15em; margin-bottom: 30px;">
+                Complementing traditional econometrics with regularized regression methods to identify key predictors of economic complexity.
+            </p>
+            
+            <div class="highlight-box blue-box">
+                <h3>Why Machine Learning?</h3>
+                <p>
+                    While econometric models test specific theoretical hypotheses, machine learning allows us to:
+                </p>
+                <ul style="padding-left: 25px; margin-top: 15px;">
+                    <li>Handle high-dimensional feature spaces without manual specification</li>
+                    <li>Identify nonlinear relationships and interactions automatically</li>
+                    <li>Rank predictors by importance without assuming specific functional forms</li>
+                    <li>Cross-validate predictions to avoid overfitting</li>
+                </ul>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Feature</th>
+                        <th style="width: 26%;">LASSO</th>
+                        <th style="width: 27%;">Ridge</th>
+                        <th style="width: 27%;">Elastic Net</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table-header">What it does</td>
+                        <td>Removes unimportant variables (sets coefficients to zero)</td>
+                        <td>Reduces value of unimportant variables (shrinks coefficients)</td>
+                        <td>Combines both approaches</td>
+                    </tr>
+                    <tr>
+                        <td class="table-header">Main strength</td>
+                        <td>Creates simpler, more interpretable models</td>
+                        <td>Handles multicollinearity well</td>
+                        <td>Best of both: simplicity and stability</td>
+                    </tr>
+                    <tr>
+                        <td class="table-header">Best when</td>
+                        <td>Many potential factors but only a few really matter</td>
+                        <td>Most factors contribute something, even if small</td>
+                        <td>Unsure which approach is better</td>
+                    </tr>
+                    <tr>
+                        <td class="table-header">Result</td>
+                        <td>Short list of most important factors</td>
+                        <td>All coefficients retained but noisy ones reduced</td>
+                        <td>Balanced approach</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight-box">
+                <h3>Model Implementation</h3>
+                <p>
+                    We tested three regularized regression approaches with lagged Economic Complexity Index as the dependent variable:
+                </p>
+                
+                <div class="info-box">
+                    <p><strong>Feature Set:</strong></p>
+                    <ul style="padding-left: 25px; margin-top: 10px;">
+                        <li>Resource production (GDP-normalized): Oil, Gas, Coal, Metals</li>
+                        <li>Human capital and governance: HCI, rule of law, property rights, political stability</li>
+                        <li>Macroeconomic controls: GDP per capita, investment, trade openness</li>
+                        <li>Interaction terms: HCI × Resource Production</li>
+                    </ul>
+                </div>
+                
+                <p style="margin-top: 20px;">
+                    Models trained on high-resource countries (N=56) to focus on economies where natural resources 
+                    play a significant role in the economic structure.
+                </p>
+            </div>
+            
+            <div class="viz-grid">
+                <div class="viz-card">
+                    <h4>Model Comparison</h4>
+                    <iframe src="ml_model_comparison.html"></iframe>
+                </div>
+                
+                <div class="viz-card">
+                    <h4>Feature Importance</h4>
+                    <iframe src="ml_feature_importance.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="viz-grid">
+                <div class="viz-card">
+                    <h4>Predicted vs Actual</h4>
+                    <iframe src="ml_predicted_vs_actual.html"></iframe>
+                </div>
+                
+                <div class="viz-card">
+                    <h4>Residual Analysis</h4>
+                    <iframe src="ml_residuals.html"></iframe>
                 </div>
             </div>
         </div>
@@ -467,98 +600,98 @@
             <h2>Key Findings</h2>
             
             <div class="highlight-box blue-box">
-                <h3>1. Resource Production Patterns Reveal Clear Geographic Clusters</h3>
+                <h3>1. Resource Production Shows Extreme Concentration</h3>
                 <p>
-                    The analysis identifies five distinct country groups based on resource production profiles. 
-                    Contrary to simplistic "resource curse" narratives, resource-rich countries are not homogeneous—they 
-                    vary significantly in economic complexity, human capital, and development outcomes.
+                    Analysis of production patterns reveals high concentration among a small number of countries:
                 </p>
-            </div>
-            
-            <div class="grid-2">
-                <div class="highlight-box">
-                    <h4>Production Specialization</h4>
-                    <ul style="padding-left: 25px;">
-                        <li>Hydrocarbon production highly concentrated in <strong>Middle East and North Africa</strong></li>
-                        <li>Metals production distributed across <strong>Australia, South America, and Sub-Saharan Africa</strong></li>
-                        <li>Coal production dominated by <strong>China, USA, and India</strong></li>
-                        <li>Most countries show <strong>low resource intensity</strong> relative to GDP</li>
-                    </ul>
-                </div>
-                
-                <div class="highlight-box">
-                    <h4>Economic Complexity Patterns</h4>
-                    <ul style="padding-left: 25px;">
-                        <li>Advanced manufacturing economies cluster separately from resource producers</li>
-                        <li>Some resource-rich countries (Norway, Canada) maintain high complexity</li>
-                        <li>Gulf states show <strong>extreme resource dependence</strong> with varied complexity levels</li>
-                        <li>Low-income countries tend to have both low resources and low complexity</li>
-                    </ul>
-                </div>
+                <ul style="padding-left: 25px; margin-top: 15px;">
+                    <li>Top 3 producers account for >40% of global production value</li>
+                    <li>Only 5 countries show production exceeding 1.5% of GDP</li>
+                    <li>Most economies show minimal resource intensity (<0.5% GDP)</li>
+                    <li>Suggests resource dependence is the exception, not the norm</li>
+                </ul>
             </div>
             
             <div class="highlight-box">
                 <h3>2. Two Principal Dimensions Structure Resource-Development Relationships</h3>
                 <p>
-                    Principal Component Analysis reveals that resource-economic patterns are primarily structured along two dimensions:
+                    PCA reveals that variation in resource-economic patterns is primarily structured along two orthogonal dimensions:
                 </p>
                 
                 <div class="info-box">
-                    <p><strong>PC1 (Economic Development):</strong> Countries vary primarily by their level of economic sophistication 
-                    and human capital, independent of resource endowments. This dimension aligns with traditional development metrics.</p>
+                    <p><strong>PC1 (Economic Development):</strong> Countries vary primarily by economic sophistication 
+                    and human capital, largely independent of resource endowments. High-complexity economies cluster together 
+                    regardless of resource production.</p>
                 </div>
                 
                 <div class="info-box">
-                    <p><strong>PC2 (Hydrocarbon Intensity):</strong> A second, orthogonal dimension captures oil and gas production intensity, 
-                    identifying petrostates as a distinct category regardless of their development level.</p>
+                    <p><strong>PC2 (Hydrocarbon Intensity):</strong> A second dimension captures oil and gas production intensity, 
+                    identifying petrostates as a distinct category. This operates independently of general development level.</p>
                 </div>
                 
                 <p style="margin-top: 20px;">
-                    This two-dimensional structure suggests that <strong>resource endowments and economic complexity 
-                    operate as partially independent factors</strong> in shaping development outcomes, rather than being 
-                    deterministically linked.
+                    This structure suggests <strong>resource endowments and economic complexity operate as partially 
+                    independent factors</strong>, challenging deterministic "resource curse" narratives.
                 </p>
             </div>
             
-            <div class="highlight-box">
-                <h3>3. Resource Dependence Shows Extreme Concentration</h3>
-                <p>
-                    When measured as percentage of GDP, resource production is highly concentrated in a small subset of countries:
-                </p>
-                <ul style="padding-left: 25px; margin-top: 15px;">
-                    <li>Only <strong>5 countries</strong> show production exceeding 1.5% of GDP</li>
-                    <li><strong>Trinidad & Tobago (3.2%), Qatar (2.8%), Brunei (1.9%)</strong> represent extreme cases</li>
-                    <li>Most developed economies show production well below 0.5% of GDP</li>
-                    <li>This concentration suggests resource dependence is the exception, not the norm, even among producers</li>
-                </ul>
+            <div class="grid-2">
+                <div class="highlight-box">
+                    <h4>Econometric Insights</h4>
+                    <ul style="padding-left: 25px; font-size: 0.95em;">
+                        <li><strong>Resource Curse:</strong> When controlling for country and year fixed effects, resources do not inherently reduce complexity</li>
+                        <li><strong>Human Capital:</strong> HCI consistently positive and significant</li>
+                        <li><strong>Interaction Effect:</strong> HCI × Production term suggests returns to human capital amplified in resource-rich contexts</li>
+                        <li><strong>Institutions Matter:</strong> Rule of law and property rights show positive associations</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>Machine Learning Insights</h4>
+                    <ul style="padding-left: 25px; font-size: 0.95em;">
+                        <li><strong>Top Predictors:</strong> HCI, institutional quality, capital formation</li>
+                        <li><strong>Interaction Importance:</strong> HCI × Production ranks higher than traditional macro variables</li>
+                        <li><strong>Model Performance:</strong> Regularized models achieve strong predictive accuracy</li>
+                        <li><strong>Robustness:</strong> Key findings consistent across LASSO, Ridge, and Elastic Net</li>
+                    </ul>
+                </div>
             </div>
             
             <div class="highlight-box blue-box">
-                <h3>Implications for Development Policy</h3>
+                <h3>3. Heterogeneity in Resource-Rich Countries</h3>
+                <p>
+                    The five identified clusters demonstrate substantial heterogeneity among resource producers:
+                </p>
+                <ul style="padding-left: 25px; margin-top: 15px;">
+                    <li><strong>Successful Diversifiers:</strong> Norway, Canada combine high resource production with high complexity</li>
+                    <li><strong>Petrostates:</strong> Gulf countries maintain extreme resource dependence with varied complexity outcomes</li>
+                    <li><strong>Emerging Producers:</strong> Some countries show rising production without corresponding complexity gains</li>
+                    <li><strong>Development Pathways:</strong> No single trajectory for resource-rich countries—outcomes depend on complementary factors</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>Policy Implications</h3>
                 
                 <div class="grid-2" style="margin-top: 20px;">
                     <div>
-                        <h4>Heterogeneity Matters</h4>
+                        <h4>Beyond Simple Narratives</h4>
                         <p style="font-size: 0.95em; color: #555;">
-                            Resource-rich countries are not a monolithic group. Policy recommendations must account for:
+                            Results challenge simplistic "resource curse" framing. Resource production does not 
+                            deterministically reduce economic complexity. Policy focus should shift from whether 
+                            countries have resources to how institutions and human capital shape resource management.
                         </p>
-                        <ul style="padding-left: 25px; font-size: 0.95em;">
-                            <li>Level of economic complexity</li>
-                            <li>Human capital stock</li>
-                            <li>Type and intensity of resource production</li>
-                            <li>Institutional quality</li>
-                        </ul>
                     </div>
                     
                     <div>
-                        <h4>Path Dependence & Diversification</h4>
+                        <h4>Context-Specific Strategies</h4>
                         <p style="font-size: 0.95em; color: #555;">
-                            The clustering analysis reveals that:
+                            The identified clusters suggest different strategic priorities:
                         </p>
-                        <ul style="padding-left: 25px; font-size: 0.95em;">
-                            <li>Some resource-rich countries successfully maintain high complexity (Norway, Canada)</li>
-                            <li>Others remain locked in low-complexity production</li>
-                            <li>Suggests diversification success depends on complementary factors beyond resource endowments</li>
+                        <ul style="padding-left: 25px; font-size: 0.9em;">
+                            <li>High-resource, low-complexity: Invest in education and institutions</li>
+                            <li>Moderate-resource: Balance extraction with manufacturing development</li>
+                            <li>Low-resource: Focus on complexity growth independent of resources</li>
                         </ul>
                     </div>
                 </div>
@@ -567,41 +700,39 @@
     </section>
     
     <!-- METHODOLOGICAL NOTES -->
-    <section id="methods">
+    <section id="methods" style="background: var(--light-grey);">
         <div class="container">
             <h2>Methodological Notes</h2>
             
             <div class="grid-2">
                 <div class="highlight-box">
-                    <h4>Feature Engineering</h4>
+                    <h4>Data Processing</h4>
                     <ul style="padding-left: 25px;">
-                        <li><strong>Resource Categorization:</strong> Aggregated 20+ commodities into Oil, Natural Gas, Coal, and Metals</li>
-                        <li><strong>Production Values:</strong> Physical production × global market prices (USD)</li>
-                        <li><strong>GDP Normalization:</strong> Production value / (GDP per capita × Population)</li>
-                        <li><strong>Standardization:</strong> All features scaled to mean=0, std=1 before PCA</li>
+                        <li><strong>Resource Aggregation:</strong> 20+ commodities grouped into 4 categories</li>
+                        <li><strong>Production Values:</strong> Physical quantity × market price (USD)</li>
+                        <li><strong>GDP Normalization:</strong> Production / (GDP per capita × Population)</li>
+                        <li><strong>Standardization:</strong> Mean=0, Std=1 before PCA/clustering</li>
                     </ul>
                 </div>
                 
                 <div class="highlight-box">
-                    <h4>Clustering Parameters</h4>
+                    <h4>Statistical Methods</h4>
                     <ul style="padding-left: 25px;">
-                        <li><strong>Algorithm:</strong> K-means with k=5 clusters</li>
-                        <li><strong>Features:</strong> 6 variables (4 resource categories + ECI + HCI)</li>
-                        <li><strong>Year:</strong> 2019 (latest available)</li>
-                        <li><strong>Silhouette Score:</strong> 0.481 (moderate separation)</li>
-                        <li><strong>Sample:</strong> 124 countries with complete data</li>
+                        <li><strong>PCA:</strong> 2 components, 53.1% variance explained</li>
+                        <li><strong>K-means:</strong> k=5, silhouette score = 0.481</li>
+                        <li><strong>Panel Regression:</strong> Country and year fixed effects</li>
+                        <li><strong>ML:</strong> Cross-validated regularized regression</li>
                     </ul>
                 </div>
             </div>
             
             <div class="highlight-box blue-box">
-                <h4>Limitations & Future Work</h4>
+                <h4>Limitations & Extensions</h4>
                 <ul style="padding-left: 25px;">
-                    <li>Production values reflect global prices, not country-specific extraction costs or rents</li>
-                    <li>Analysis focuses on production patterns rather than causal relationships</li>
-                    <li>Clustering based on single year (2019); temporal dynamics warrant further investigation</li>
-                    <li>Future work should incorporate panel regression with country and year fixed effects</li>
-                    <li>Machine learning approaches could predict complexity transitions conditional on resource profiles</li>
+                    <li>Production values use global prices, not country-specific rents or extraction costs</li>
+                    <li>Clustering based on single year (2019); panel clustering could reveal temporal patterns</li>
+                    <li>Causal identification requires instrumental variables or natural experiments</li>
+                    <li>Future work: Deep learning for nonlinear complexity transitions, case studies of successful diversifiers</li>
                 </ul>
             </div>
         </div>
