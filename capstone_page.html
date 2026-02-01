@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Natural Resources & Economic Complexity | Moody's Capstone</title>
+    <title>Analysis Results | Natural Resources & Economic Complexity</title>
     <style>
         :root {
             --lse-red: #E30613;
@@ -12,21 +12,18 @@
             --light-grey: #f8f8f8;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: white;
             color: var(--dark-grey);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
         
-        /* PORTFOLIO NAVIGATION */
-        .portfolio-nav {
+        /* NAVIGATION */
+        nav {
             position: fixed;
             top: 0;
             left: 0;
@@ -34,20 +31,21 @@
             background: white;
             border-bottom: 3px solid var(--lse-red);
             padding: 15px 0;
-            z-index: 1001;
+            z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
-        .portfolio-nav-content {
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 0 20px;
         }
         
-        .portfolio-nav a {
+        nav a {
             color: var(--dark-grey);
             text-decoration: none;
             font-weight: 600;
@@ -57,104 +55,16 @@
             transition: all 0.3s;
         }
         
-        .portfolio-nav a:hover {
+        nav a:hover {
             color: var(--lse-red);
             background: var(--light-grey);
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--moodys-blue) !important;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 40px;
-        }
-        
-        /* PROJECT NAVIGATION WITH DROPDOWN */
-        .project-nav {
-            position: fixed;
-            top: 63px;
-            left: 0;
-            right: 0;
-            background: white;
-            border-bottom: 2px solid var(--light-grey);
-            padding: 12px 40px;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .project-nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .dropdown-button {
-            background: var(--moodys-blue);
-            color: white;
-            padding: 10px 25px;
-            font-size: 15px;
-            font-weight: 600;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-        }
-        
-        .dropdown-button:hover {
-            background: var(--lse-red);
-        }
-        
-        .dropdown-button::after {
-            content: '▼';
-            font-size: 10px;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background: white;
-            min-width: 220px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            border-radius: 5px;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-        
-        .dropdown-content a {
-            color: var(--dark-grey);
-            padding: 12px 20px;
-            text-decoration: none;
-            display: block;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .dropdown-content a:hover {
-            background: var(--light-grey);
-            color: var(--lse-red);
-        }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
         }
         
         /* SECTIONS */
         section {
             min-height: 100vh;
-            padding: 140px 40px 60px;
-            scroll-margin-top: 130px;
+            padding: 100px 40px 60px;
+            scroll-margin-top: 70px;
         }
         
         section:nth-child(even) {
@@ -162,14 +72,14 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
         
         /* HERO */
         .hero {
             text-align: center;
-            padding: 140px 40px 80px;
+            padding: 120px 40px 80px;
         }
         
         .hero h1 {
@@ -183,142 +93,133 @@
             font-size: 1.4em;
             color: var(--lse-red);
             font-weight: 600;
-            margin-bottom: 20px;
-        }
-        
-        .hero .description {
-            font-size: 1.15em;
-            color: #555;
-            max-width: 900px;
-            margin: 0 auto 30px;
-            line-height: 1.8;
+            margin-bottom: 30px;
         }
         
         .hero .meta {
             font-size: 1.1em;
             color: #666;
-            margin-bottom: 50px;
         }
         
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin-top: 60px;
-        }
-        
-        .stat-box {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-top: 4px solid var(--lse-red);
-        }
-        
-        .stat-box h3 {
-            font-size: 3em;
-            color: var(--lse-red);
-            margin-bottom: 10px;
-        }
-        
-        .stat-box p {
-            color: #666;
-            font-size: 1.05em;
-        }
-        
-        /* SECTION HEADERS */
+        /* TYPOGRAPHY */
         h2 {
             font-size: 2.5em;
             color: var(--moodys-blue);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 3px solid var(--lse-red);
+            text-align: center;
         }
         
-        .section-intro {
-            font-size: 1.15em;
-            color: #555;
-            margin-bottom: 40px;
+        h3 {
+            font-size: 1.6em;
+            color: var(--lse-red);
+            margin: 30px 0 15px;
+        }
+        
+        h4 {
+            font-size: 1.3em;
+            color: var(--moodys-blue);
+            margin: 20px 0 10px;
+        }
+        
+        p, li {
+            font-size: 1.05em;
             line-height: 1.8;
+            margin-bottom: 15px;
         }
         
-        /* VISUALIZATION CARDS */
+        /* BOXES */
+        .highlight-box {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 6px solid var(--lse-red);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .blue-box {
+            border-left-color: var(--moodys-blue);
+        }
+        
+        .info-box {
+            background: #f4f6f8;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid var(--lse-red);
+        }
+        
+        /* GRID */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--moodys-blue), #003d7a);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            font-size: 3em;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card p {
+            font-size: 1em;
+            opacity: 0.95;
+            margin: 0;
+        }
+        
+        /* VISUALIZATIONS */
+        .viz-embed {
+            width: 100%;
+            height: 700px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
         .viz-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
-            margin-top: 40px;
+            margin: 30px 0;
         }
         
         .viz-card {
             background: white;
-            border-radius: 10px;
-            overflow: hidden;
+            border-radius: 8px;
+            padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
         }
         
-        .viz-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        .viz-card h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
         }
         
-        .viz-card h3 {
-            background: var(--lse-red);
-            color: white;
-            padding: 20px;
-            margin: 0;
-            font-size: 1.3em;
-        }
-        
-        .viz-content {
-            padding: 20px;
-            min-height: 400px;
-        }
-        
-        .viz-content iframe {
+        .viz-card iframe {
             width: 100%;
             height: 450px;
             border: none;
-        }
-        
-        .view-btn {
-            display: block;
-            width: calc(100% - 40px);
-            margin: 0 20px 20px;
-            padding: 12px;
-            background: var(--moodys-blue);
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-        
-        .view-btn:hover {
-            background: var(--lse-red);
-        }
-        
-        /* FULL WIDTH VIZ */
-        .viz-full {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-top: 40px;
-        }
-        
-        .viz-full iframe {
-            width: 100%;
-            height: 700px;
-            border: none;
-            border-radius: 5px;
-        }
-        
-        /* APPENDIX SECTION */
-        #appendix {
-            background: var(--light-grey);
         }
         
         /* FOOTER */
@@ -330,58 +231,52 @@
         }
         
         footer p {
-            margin: 5px 0;
+            margin: 8px 0;
         }
         
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5em; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .viz-grid { grid-template-columns: 1fr; }
-            .nav-links { flex-direction: column; gap: 10px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2, .viz-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- PORTFOLIO NAVIGATION -->
-    <div class="portfolio-nav">
-        <div class="portfolio-nav-content">
-            <a href="index.html" class="logo">LL</a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="projects.html">All Projects</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-            </div>
-        </div>
-    </div>
-
+    <!-- NAVIGATION -->
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#methodology">Methodology</a></li>
+            <li><a href="#production">Production Patterns</a></li>
+            <li><a href="#clustering">Clustering</a></li>
+            <li><a href="#findings">Findings</a></li>
+        </ul>
+    </nav>
     
     <!-- HERO -->
-    <section id="home" class="hero">
+    <section id="overview" class="hero">
         <div class="container">
             <h1>Natural Resources &<br>Economic Complexity</h1>
-            <p class="subtitle">Analyzing Resource Production Patterns Across 126 Countries</p>
-            <p class="description">
-                This project analyzes the relationship between natural resource production and economic complexity across 126 countries over 25 years. 
-                Using K-means clustering and PCA, we identify distinct country profiles based on resource extraction patterns, economic development, 
-                and human capital. The analysis reveals how resource endowments correlate with economic sophistication and development trajectories.
+            <p class="subtitle">Analyzing Production Patterns and Development Pathways</p>
+            <p class="meta">
+                Moody's Ratings Capstone Project<br>
+                London School of Economics | MPA Data Science for Public Policy | 2025
             </p>
-            <p class="meta">Moody's Ratings Capstone Project | London School of Economics<br>MPA Data Science for Public Policy | 2025</p>
             
-            <div class="stats-row">
-                <div class="stat-box">
+            <div class="stats-grid">
+                <div class="stat-card">
                     <h3>126</h3>
-                    <p>Countries Analyzed</p>
+                    <p>Countries</p>
                 </div>
-                <div class="stat-box">
+                <div class="stat-card">
                     <h3>25</h3>
-                    <p>Years of Data</p>
+                    <p>Years</p>
                 </div>
-                <div class="stat-box">
+                <div class="stat-card">
                     <h3>5</h3>
-                    <p>Distinct Clusters</p>
+                    <p>Clusters</p>
                 </div>
-                <div class="stat-box">
+                <div class="stat-card">
                     <h3>53%</h3>
                     <p>Variance Explained</p>
                 </div>
@@ -389,152 +284,336 @@
         </div>
     </section>
     
-    <!-- PRODUCTION MAPS -->
-    <section id="maps">
-        <div class="container">
-            <h2>Global Production Mapping</h2>
-            <p class="section-intro">
-                Explore natural resource production patterns across countries and time. 
-                Toggle between different resource types (oil, gas, coal, metals) and 
-                view data in absolute terms, per capita, or as percentage of GDP. 
-                Use the year slider to see how production evolved from 1995 to 2019.
-            </p>
-            
-            <div class="viz-full">
-                <iframe src="capstone_visualizations/individual_plots/map_production_final.html"></iframe>
-            </div>
-        </div>
-    </section>
-    
-    <!-- CLUSTERING -->
-    <section id="clustering">
-        <div class="container">
-            <h2>Clustering Analysis</h2>
-            <p class="section-intro">
-                Countries grouped by resource production patterns using K-means clustering (k=5) 
-                on GDP-normalized production, Economic Complexity Index, and Human Capital Index. 
-                Five distinct clusters emerge, ranging from resource-scarce developing economies to 
-                extreme resource exporters and advanced manufacturing nations.
-            </p>
-            
-            <div class="viz-full">
-                <iframe src="capstone_visualizations/individual_plots/map_clusters.html"></iframe>
-            </div>
-            
-            <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 40px; border-left: 5px solid var(--lse-red);">
-                <h3 style="color: var(--moodys-blue); margin-bottom: 15px;">Cluster Interpretation</h3>
-                <ul style="line-height: 2; color: #555;">
-                    <li><strong>Cluster 0 (38 countries):</strong> Low-income, resource-scarce economies</li>
-                    <li><strong>Cluster 1 (44 countries):</strong> Diversified middle-income economies</li>
-                    <li><strong>Cluster 2 (13 countries):</strong> Oil & gas producing nations</li>
-                    <li><strong>Cluster 3 (24 countries):</strong> Advanced manufacturing economies</li>
-                    <li><strong>Cluster 4 (5 countries):</strong> Extreme resource exporters (Qatar, Kuwait, Norway, etc.)</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    
     <!-- METHODOLOGY -->
-    <section id="analysis">
+    <section id="methodology">
         <div class="container">
-            <h2>Methodology</h2>
-            <p class="section-intro">
-                This analysis combines production data from global commodity markets with 
-                economic indicators to understand how natural resource endowments relate 
-                to economic complexity and development outcomes.
-            </p>
+            <h2>Theoretical Framework</h2>
             
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px;">
-                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-                    <h3 style="color: var(--lse-red); margin-bottom: 15px;">Data Sources</h3>
-                    <ul style="line-height: 2; color: #555;">
-                        <li>Production data: Commodity-level extraction (1995-2019)</li>
-                        <li>Economic Complexity Index: Atlas of Economic Complexity</li>
-                        <li>Human Capital Index: Penn World Table</li>
-                        <li>GDP & Population: World Bank WDI</li>
+            <div class="highlight-box blue-box">
+                <h3>Research Question</h3>
+                <p>
+                    How do natural resource endowments relate to economic complexity and development outcomes? 
+                    Can we identify distinct patterns of resource dependence and economic transformation across countries?
+                </p>
+            </div>
+            
+            <div class="grid-2">
+                <div class="highlight-box">
+                    <h4>Theoretical Foundations</h4>
+                    <ul style="padding-left: 25px;">
+                        <li><strong>Economic Complexity:</strong> Hidalgo & Hausmann (2009) framework linking productive capabilities to development</li>
+                        <li><strong>Resource Curse Literature:</strong> Investigating whether resource abundance hinders diversification</li>
+                        <li><strong>Institutions:</strong> Role of governance quality in shaping development trajectories (Acemoglu & Robinson)</li>
+                        <li><strong>Human Capital:</strong> Solow growth model and capability building</li>
                     </ul>
                 </div>
                 
-                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-                    <h3 style="color: var(--lse-red); margin-bottom: 15px;">Analytical Approach</h3>
-                    <ul style="line-height: 2; color: #555;">
-                        <li>Resource categorization: Oil, Gas, Coal, Metals</li>
-                        <li>GDP normalization: Production as % of GDP</li>
-                        <li>PCA dimensionality reduction (2 components)</li>
-                        <li>K-means clustering (k=5, silhouette=0.48)</li>
+                <div class="highlight-box">
+                    <h4>Analytical Approach</h4>
+                    <ul style="padding-left: 25px;">
+                        <li><strong>Data Integration:</strong> Commodity production values, economic indicators, governance metrics</li>
+                        <li><strong>Normalization:</strong> GDP-adjusted production to control for economy size</li>
+                        <li><strong>Dimensionality Reduction:</strong> PCA to identify core variation patterns</li>
+                        <li><strong>Clustering:</strong> K-means to group countries by resource-economic profiles</li>
                     </ul>
                 </div>
             </div>
             
-            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-top: 30px;">
-                <h3 style="color: var(--lse-red); margin-bottom: 15px;">Key Findings</h3>
-                <ul style="line-height: 2; color: #555;">
-                    <li>Principal components capture <strong>53.1% of variance</strong> in resource-economic patterns</li>
-                    <li><strong>PC1 (29.4%)</strong> represents economic development (driven by ECI and HCI)</li>
-                    <li><strong>PC2 (23.7%)</strong> represents hydrocarbon production intensity</li>
-                    <li>Five distinct country clusters emerge based on resource profiles and development levels</li>
-                    <li>Most countries (100+) show low resource intensity, while ~20 are highly resource-dependent</li>
+            <div class="info-box">
+                <p><strong>Data Sources:</strong></p>
+                <ul style="padding-left: 25px; margin-top: 10px;">
+                    <li>Natural resource production: Commodity-level data (Oil, Gas, Coal, Metals)</li>
+                    <li>Economic Complexity Index: Atlas of Economic Complexity</li>
+                    <li>Human Capital Index: Penn World Table</li>
+                    <li>GDP, Population, Governance: World Bank WDI, V-Dem</li>
                 </ul>
             </div>
         </div>
     </section>
     
-    <!-- APPENDIX -->
-    <section id="appendix">
+    <!-- PRODUCTION PATTERNS -->
+    <section id="production">
         <div class="container">
-            <h2>Appendix: Technical Details</h2>
-            <p class="section-intro">
-                Detailed visualizations of PCA analysis showing the underlying structure of resource-economic relationships.
+            <h2>Global Production Patterns</h2>
+            
+            <p style="text-align: center; font-size: 1.15em; margin-bottom: 30px;">
+                Interactive exploration of natural resource production across countries and time. 
+                Production values represent total USD value (physical production × global prices).
+            </p>
+            
+            <iframe class="viz-embed" src="map_production.html"></iframe>
+            
+            <div class="highlight-box">
+                <h3>Key Observations</h3>
+                <ul style="padding-left: 25px;">
+                    <li><strong>Absolute Production:</strong> Dominated by large economies (USA, China, Russia) due to scale and diversified extraction</li>
+                    <li><strong>Per Capita Production:</strong> Small Gulf states (Qatar, Brunei) and resource-rich developed nations (Norway, Australia) lead</li>
+                    <li><strong>GDP-Normalized Production:</strong> Trinidad & Tobago, Qatar, and Brunei show extreme resource dependence (>1.5% of GDP)</li>
+                    <li><strong>Resource Specialization:</strong> Clear geographic patterns in oil (Middle East), gas (Russia, Central Asia), and metals (Australia, South America)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CLUSTERING ANALYSIS -->
+    <section id="clustering">
+        <div class="container">
+            <h2>Clustering Analysis</h2>
+            
+            <p style="text-align: center; font-size: 1.15em; margin-bottom: 30px;">
+                Countries grouped by GDP-normalized resource production, Economic Complexity Index, and Human Capital Index using K-means clustering with PCA dimensionality reduction.
             </p>
             
             <div class="viz-grid">
                 <div class="viz-card">
-                    <h3>PCA Scatter Plot</h3>
-                    <div class="viz-content">
-                        <iframe src="capstone_visualizations/individual_plots/scatter_pca.html"></iframe>
-                    </div>
-                    <a href="capstone_visualizations/individual_plots/scatter_pca.html" target="_blank" class="view-btn">View Full Screen</a>
+                    <h4>Country Clusters</h4>
+                    <iframe src="map_clusters.html"></iframe>
                 </div>
                 
                 <div class="viz-card">
-                    <h3>PC1 Loadings (Economic Development)</h3>
-                    <div class="viz-content">
-                        <iframe src="capstone_visualizations/individual_plots/pca_loadings_pc1.html"></iframe>
-                    </div>
-                    <a href="capstone_visualizations/individual_plots/pca_loadings_pc1.html" target="_blank" class="view-btn">View Full Screen</a>
+                    <h4>PCA Scatter Plot</h4>
+                    <iframe src="scatter_pca.html"></iframe>
                 </div>
             </div>
             
-            <div class="viz-grid" style="margin-top: 30px;">
-                <div class="viz-card">
-                    <h3>PC2 Loadings (Hydrocarbon Production)</h3>
-                    <div class="viz-content">
-                        <iframe src="capstone_visualizations/individual_plots/pca_loadings_pc2.html"></iframe>
+            <div class="highlight-box blue-box">
+                <h3>Principal Component Analysis</h3>
+                <p style="margin-bottom: 20px;">
+                    Two principal components explain <strong>53.1%</strong> of variance in resource-economic patterns:
+                </p>
+                
+                <div class="grid-2">
+                    <div>
+                        <h4>PC1 (29.4%): Economic Development</h4>
+                        <ul style="padding-left: 25px; font-size: 0.95em;">
+                            <li>Driven by <strong>Economic Complexity Index</strong> (0.693) and <strong>Human Capital Index</strong> (0.686)</li>
+                            <li>Separates developed manufacturing economies from developing resource economies</li>
+                            <li>Weak negative correlation with metals production intensity</li>
+                        </ul>
                     </div>
-                    <a href="capstone_visualizations/individual_plots/pca_loadings_pc2.html" target="_blank" class="view-btn">View Full Screen</a>
+                    
+                    <div>
+                        <h4>PC2 (23.7%): Hydrocarbon Production</h4>
+                        <ul style="padding-left: 25px; font-size: 0.95em;">
+                            <li>Driven by <strong>Oil</strong> (0.683) and <strong>Natural Gas</strong> (0.678) production</li>
+                            <li>Identifies oil and gas exporters</li>
+                            <li>Negative correlation with coal production</li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="viz-grid">
+                <div class="viz-card">
+                    <h4>PC1 Loadings</h4>
+                    <iframe src="pca_loadings_pc1.html"></iframe>
+                </div>
+                
+                <div class="viz-card">
+                    <h4>PC2 Loadings</h4>
+                    <iframe src="pca_loadings_pc2.html"></iframe>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>Cluster Profiles</h3>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Cluster 0 (38 countries): Low-Income, Resource-Scarce</h4>
+                    <p style="margin-left: 20px; color: #555;">
+                        <em>Representative countries:</em> Bangladesh, Chad, Cameroon, Burkina Faso<br>
+                        <strong>Characteristics:</strong> Low economic complexity, minimal resource production, low human capital
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Cluster 1 (44 countries): Diversified Economies</h4>
+                    <p style="margin-left: 20px; color: #555;">
+                        <em>Representative countries:</em> Argentina, Australia, Albania, Bahrain<br>
+                        <strong>Characteristics:</strong> Moderate complexity, mixed resource portfolios, varied development levels
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Cluster 2 (13 countries): Oil & Gas Producers</h4>
+                    <p style="margin-left: 20px; color: #555;">
+                        <em>Representative countries:</em> Algeria, Angola, Azerbaijan, Equatorial Guinea<br>
+                        <strong>Characteristics:</strong> High hydrocarbon production, moderate-to-low complexity, resource-dependent
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Cluster 3 (24 countries): Advanced Manufacturing</h4>
+                    <p style="margin-left: 20px; color: #555;">
+                        <em>Representative countries:</em> Canada, Denmark, Czechia, Croatia<br>
+                        <strong>Characteristics:</strong> High economic complexity, developed economies, moderate resource production
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Cluster 4 (5 countries): Extreme Resource Exporters</h4>
+                    <p style="margin-left: 20px; color: #555;">
+                        <em>Representative countries:</em> Brunei, Kuwait, Qatar, Trinidad & Tobago, Norway<br>
+                        <strong>Characteristics:</strong> Extreme hydrocarbon production (>1.5% GDP), high income, varied complexity
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- KEY FINDINGS -->
+    <section id="findings">
+        <div class="container">
+            <h2>Key Findings</h2>
+            
+            <div class="highlight-box blue-box">
+                <h3>1. Resource Production Patterns Reveal Clear Geographic Clusters</h3>
+                <p>
+                    The analysis identifies five distinct country groups based on resource production profiles. 
+                    Contrary to simplistic "resource curse" narratives, resource-rich countries are not homogeneous—they 
+                    vary significantly in economic complexity, human capital, and development outcomes.
+                </p>
+            </div>
+            
+            <div class="grid-2">
+                <div class="highlight-box">
+                    <h4>Production Specialization</h4>
+                    <ul style="padding-left: 25px;">
+                        <li>Hydrocarbon production highly concentrated in <strong>Middle East and North Africa</strong></li>
+                        <li>Metals production distributed across <strong>Australia, South America, and Sub-Saharan Africa</strong></li>
+                        <li>Coal production dominated by <strong>China, USA, and India</strong></li>
+                        <li>Most countries show <strong>low resource intensity</strong> relative to GDP</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>Economic Complexity Patterns</h4>
+                    <ul style="padding-left: 25px;">
+                        <li>Advanced manufacturing economies cluster separately from resource producers</li>
+                        <li>Some resource-rich countries (Norway, Canada) maintain high complexity</li>
+                        <li>Gulf states show <strong>extreme resource dependence</strong> with varied complexity levels</li>
+                        <li>Low-income countries tend to have both low resources and low complexity</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>2. Two Principal Dimensions Structure Resource-Development Relationships</h3>
+                <p>
+                    Principal Component Analysis reveals that resource-economic patterns are primarily structured along two dimensions:
+                </p>
+                
+                <div class="info-box">
+                    <p><strong>PC1 (Economic Development):</strong> Countries vary primarily by their level of economic sophistication 
+                    and human capital, independent of resource endowments. This dimension aligns with traditional development metrics.</p>
+                </div>
+                
+                <div class="info-box">
+                    <p><strong>PC2 (Hydrocarbon Intensity):</strong> A second, orthogonal dimension captures oil and gas production intensity, 
+                    identifying petrostates as a distinct category regardless of their development level.</p>
+                </div>
+                
+                <p style="margin-top: 20px;">
+                    This two-dimensional structure suggests that <strong>resource endowments and economic complexity 
+                    operate as partially independent factors</strong> in shaping development outcomes, rather than being 
+                    deterministically linked.
+                </p>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>3. Resource Dependence Shows Extreme Concentration</h3>
+                <p>
+                    When measured as percentage of GDP, resource production is highly concentrated in a small subset of countries:
+                </p>
+                <ul style="padding-left: 25px; margin-top: 15px;">
+                    <li>Only <strong>5 countries</strong> show production exceeding 1.5% of GDP</li>
+                    <li><strong>Trinidad & Tobago (3.2%), Qatar (2.8%), Brunei (1.9%)</strong> represent extreme cases</li>
+                    <li>Most developed economies show production well below 0.5% of GDP</li>
+                    <li>This concentration suggests resource dependence is the exception, not the norm, even among producers</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box blue-box">
+                <h3>Implications for Development Policy</h3>
+                
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div>
+                        <h4>Heterogeneity Matters</h4>
+                        <p style="font-size: 0.95em; color: #555;">
+                            Resource-rich countries are not a monolithic group. Policy recommendations must account for:
+                        </p>
+                        <ul style="padding-left: 25px; font-size: 0.95em;">
+                            <li>Level of economic complexity</li>
+                            <li>Human capital stock</li>
+                            <li>Type and intensity of resource production</li>
+                            <li>Institutional quality</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4>Path Dependence & Diversification</h4>
+                        <p style="font-size: 0.95em; color: #555;">
+                            The clustering analysis reveals that:
+                        </p>
+                        <ul style="padding-left: 25px; font-size: 0.95em;">
+                            <li>Some resource-rich countries successfully maintain high complexity (Norway, Canada)</li>
+                            <li>Others remain locked in low-complexity production</li>
+                            <li>Suggests diversification success depends on complementary factors beyond resource endowments</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- METHODOLOGICAL NOTES -->
+    <section id="methods">
+        <div class="container">
+            <h2>Methodological Notes</h2>
+            
+            <div class="grid-2">
+                <div class="highlight-box">
+                    <h4>Feature Engineering</h4>
+                    <ul style="padding-left: 25px;">
+                        <li><strong>Resource Categorization:</strong> Aggregated 20+ commodities into Oil, Natural Gas, Coal, and Metals</li>
+                        <li><strong>Production Values:</strong> Physical production × global market prices (USD)</li>
+                        <li><strong>GDP Normalization:</strong> Production value / (GDP per capita × Population)</li>
+                        <li><strong>Standardization:</strong> All features scaled to mean=0, std=1 before PCA</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>Clustering Parameters</h4>
+                    <ul style="padding-left: 25px;">
+                        <li><strong>Algorithm:</strong> K-means with k=5 clusters</li>
+                        <li><strong>Features:</strong> 6 variables (4 resource categories + ECI + HCI)</li>
+                        <li><strong>Year:</strong> 2019 (latest available)</li>
+                        <li><strong>Silhouette Score:</strong> 0.481 (moderate separation)</li>
+                        <li><strong>Sample:</strong> 124 countries with complete data</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box blue-box">
+                <h4>Limitations & Future Work</h4>
+                <ul style="padding-left: 25px;">
+                    <li>Production values reflect global prices, not country-specific extraction costs or rents</li>
+                    <li>Analysis focuses on production patterns rather than causal relationships</li>
+                    <li>Clustering based on single year (2019); temporal dynamics warrant further investigation</li>
+                    <li>Future work should incorporate panel regression with country and year fixed effects</li>
+                    <li>Machine learning approaches could predict complexity transitions conditional on resource profiles</li>
+                </ul>
             </div>
         </div>
     </section>
     
     <!-- FOOTER -->
     <footer>
-        <p style="font-size: 1.2em; font-weight: 600; margin-bottom: 10px;">Natural Resources & Economic Complexity Analysis</p>
+        <p style="font-size: 1.3em; font-weight: 600; margin-bottom: 15px;">Natural Resources & Economic Complexity</p>
         <p>Moody's Ratings Capstone Project</p>
         <p>Master in Public Administration - Data Science for Public Policy</p>
-        <p>London School of Economics and Political Science | 2025</p>
+        <p>London School of Economics and Political Science</p>
+        <p style="margin-top: 15px; opacity: 0.8;">2025</p>
     </footer>
-    
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>

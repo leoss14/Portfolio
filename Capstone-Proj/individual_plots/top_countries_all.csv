@@ -1,0 +1,151 @@
+Country Name,Value,Resource,Normalization,Rank
+United States,39849646460.86188,Total,Absolute Production (USD),1
+Russian Federation,28317335745.335293,Total,Absolute Production (USD),2
+China,11509358975.658,Total,Absolute Production (USD),3
+"Iran, Islamic Rep.",9217730352.14,Total,Absolute Production (USD),4
+Saudi Arabia,8188215386.846001,Total,Absolute Production (USD),5
+Canada,7913482444.672,Total,Absolute Production (USD),6
+Qatar,6792097756.3,Total,Absolute Production (USD),7
+Australia,5863656461.844999,Total,Absolute Production (USD),8
+Norway,4576430606.4,Total,Absolute Production (USD),9
+Algeria,3564956458.12,Total,Absolute Production (USD),10
+Qatar,2574.073764153507,Total,Per Capita (USD/person),1
+Brunei Darussalam,1119.1919940137345,Total,Per Capita (USD/person),2
+Trinidad and Tobago,902.7222298705631,Total,Per Capita (USD/person),3
+Norway,855.7441293547967,Total,Per Capita (USD/person),4
+Bahrain,381.96810055022524,Total,Per Capita (USD/person),5
+Oman,355.04217378264394,Total,Per Capita (USD/person),6
+United Arab Emirates,351.8910300202683,Total,Per Capita (USD/person),7
+Kuwait,348.24214544845523,Total,Per Capita (USD/person),8
+Saudi Arabia,272.3613002749919,Total,Per Capita (USD/person),9
+Australia,231.44648642327363,Total,Per Capita (USD/person),10
+Trinidad and Tobago,3.2239521203670694,Total,% of GDP,1
+Qatar,2.8279418356203707,Total,% of GDP,2
+Brunei Darussalam,1.8759439923691414,Total,% of GDP,3
+Norway,1.3423221919980743,Total,% of GDP,4
+Oman,1.0534510808804902,Total,% of GDP,5
+Uzbekistan,0.8213524684377835,Total,% of GDP,6
+Kuwait,0.7764828843112409,Total,% of GDP,7
+Bahrain,0.7621301964166061,Total,% of GDP,8
+Azerbaijan,0.7618523258123576,Total,% of GDP,9
+"Iran, Islamic Rep.",0.7215095940711092,Total,% of GDP,10
+United States,6255476115.0,Oil,Absolute Production (USD),1
+Saudi Arabia,4318796524.0,Oil,Absolute Production (USD),2
+Russian Federation,4262835105.0,Oil,Absolute Production (USD),3
+Canada,1960342233.0,Oil,Absolute Production (USD),4
+Iraq,1744500017.0,Oil,Absolute Production (USD),5
+United Arab Emirates,1454084271.0,Oil,Absolute Production (USD),6
+China,1404633240.0,Oil,Absolute Production (USD),7
+"Iran, Islamic Rep.",1278230000.0,Oil,Absolute Production (USD),8
+Kuwait,1086296995.0,Oil,Absolute Production (USD),9
+Brazil,1054746043.0,Oil,Absolute Production (USD),10
+Kuwait,244.53393117463955,Oil,Per Capita (USD/person),1
+Qatar,240.2243047504848,Oil,Per Capita (USD/person),2
+United Arab Emirates,153.94001356160447,Oil,Per Capita (USD/person),3
+Saudi Arabia,143.6543839319841,Oil,Per Capita (USD/person),4
+Norway,119.46204645714874,Oil,Per Capita (USD/person),5
+Brunei Darussalam,100.00970432366495,Oil,Per Capita (USD/person),6
+Oman,77.18884719839363,Oil,Per Capita (USD/person),7
+Libya,62.78347405342487,Oil,Per Capita (USD/person),8
+Canada,52.1111286615799,Oil,Per Capita (USD/person),9
+Iraq,42.350281003640234,Oil,Per Capita (USD/person),10
+Kuwait,0.5452424833471369,Oil,% of GDP,1
+Iraq,0.3703580582526092,Oil,% of GDP,2
+Libya,0.2789743414835791,Oil,% of GDP,3
+Qatar,0.2639164311439679,Oil,% of GDP,4
+Saudi Arabia,0.25458855762763405,Oil,% of GDP,5
+Angola,0.24274353080055974,Oil,% of GDP,6
+Oman,0.22902821275212065,Oil,% of GDP,7
+Gabon,0.22468761978649082,Oil,% of GDP,8
+United Arab Emirates,0.22125434466960325,Oil,% of GDP,9
+Azerbaijan,0.1910098982357395,Oil,% of GDP,10
+United States,32259860862.0,Natural Gas,Absolute Production (USD),1
+Russian Federation,23602037364.0,Natural Gas,Absolute Production (USD),2
+"Iran, Islamic Rep.",7935878885.0,Natural Gas,Absolute Production (USD),3
+Qatar,6157575213.0,Natural Gas,Absolute Production (USD),4
+China,6143288711.0,Natural Gas,Absolute Production (USD),5
+Canada,5895998856.0,Natural Gas,Absolute Production (USD),6
+Australia,5078317510.0,Natural Gas,Absolute Production (USD),7
+Norway,3936130326.0,Natural Gas,Absolute Production (USD),8
+Saudi Arabia,3863420684.0,Natural Gas,Absolute Production (USD),9
+Algeria,3022340248.0,Natural Gas,Absolute Production (USD),10
+Qatar,2333.6019850249577,Natural Gas,Per Capita (USD/person),1
+Brunei Darussalam,1019.1822896900695,Natural Gas,Per Capita (USD/person),2
+Trinidad and Tobago,880.7199727269729,Natural Gas,Per Capita (USD/person),3
+Norway,736.0147478559793,Natural Gas,Per Capita (USD/person),4
+Bahrain,381.04813459895024,Natural Gas,Per Capita (USD/person),5
+Oman,277.76816442438985,Natural Gas,Per Capita (USD/person),6
+Australia,200.44809109800084,Natural Gas,Per Capita (USD/person),7
+United Arab Emirates,197.67576141104206,Natural Gas,Per Capita (USD/person),8
+Russian Federation,162.2654063152136,Natural Gas,Per Capita (USD/person),9
+Canada,156.7313858781432,Natural Gas,Per Capita (USD/person),10
+Trinidad and Tobago,3.145373991653976,Natural Gas,% of GDP,1
+Qatar,2.5637535229333333,Natural Gas,% of GDP,2
+Brunei Darussalam,1.708311803246914,Natural Gas,% of GDP,3
+Norway,1.1545144112526307,Natural Gas,% of GDP,4
+Oman,0.8241701821772914,Natural Gas,% of GDP,5
+Uzbekistan,0.810390002893052,Natural Gas,% of GDP,6
+Bahrain,0.7602946142563894,Natural Gas,% of GDP,7
+"Iran, Islamic Rep.",0.6211738176507328,Natural Gas,% of GDP,8
+Russian Federation,0.5935551058568161,Natural Gas,% of GDP,9
+Azerbaijan,0.5708184747628426,Natural Gas,% of GDP,10
+China,3846332000.0,Coal,Absolute Production (USD),1
+United States,1281375458.861876,Coal,Absolute Production (USD),2
+India,753912000.0,Coal,Absolute Production (USD),3
+Indonesia,616159594.0,Coal,Absolute Production (USD),4
+Australia,505408428.4,Coal,Absolute Production (USD),5
+Russian Federation,440656938.2352941,Coal,Absolute Production (USD),6
+South Africa,254410720.00000003,Coal,Absolute Production (USD),7
+Germany,131300000.00000004,Coal,Absolute Production (USD),8
+Kazakhstan,115001200.0,Coal,Absolute Production (USD),9
+Poland,112409160.0,Coal,Absolute Production (USD),10
+Australia,19.949157274654265,Coal,Per Capita (USD/person),1
+Mongolia,17.48302232200101,Coal,Per Capita (USD/person),2
+Kazakhstan,5.986666531317358,Coal,Per Capita (USD/person),3
+Serbia,5.598157585740439,Coal,Per Capita (USD/person),4
+Bulgaria,4.283680629967147,Coal,Per Capita (USD/person),5
+South Africa,4.269504111448158,Coal,Per Capita (USD/person),6
+Bosnia and Herzegovina,3.9983309087072225,Coal,Per Capita (USD/person),7
+United States,3.88029585203684,Coal,Per Capita (USD/person),8
+Czechia,3.805799733317591,Coal,Per Capita (USD/person),9
+Russian Federation,3.0295425782789205,Coal,Per Capita (USD/person),10
+Mongolia,0.143132980889737,Coal,% of GDP,1
+Australia,0.0395229461586259,Coal,% of GDP,2
+South Africa,0.031189816470429187,Coal,% of GDP,3
+Serbia,0.030560474603914745,Coal,% of GDP,4
+Bosnia and Herzegovina,0.02778599596564622,Coal,% of GDP,5
+Lao PDR,0.02739247112976892,Coal,% of GDP,6
+Mozambique,0.02681706266819635,Coal,% of GDP,7
+Kazakhstan,0.02271826672517262,Coal,% of GDP,8
+Indonesia,0.018880588504794654,Coal,% of GDP,9
+Bulgaria,0.018298823396897354,Coal,% of GDP,10
+China,115105024.658,Metals,Absolute Production (USD),1
+Australia,112772689.045,Metals,Absolute Production (USD),2
+Guinea,67000027.552,Metals,Absolute Production (USD),3
+United States,52934025.0,Metals,Absolute Production (USD),4
+Brazil,35301428.90727979,Metals,Absolute Production (USD),5
+India,28425904.064,Metals,Absolute Production (USD),6
+Indonesia,18789750.59,Metals,Absolute Production (USD),7
+Russian Federation,11806338.1,Metals,Absolute Production (USD),8
+Jamaica,9022286.0,Metals,Absolute Production (USD),9
+South Africa,6961585.0879999995,Metals,Absolute Production (USD),10
+Guinea,5.1402676860043455,Metals,Per Capita (USD/person),1
+Australia,4.4512912401687705,Metals,Per Capita (USD/person),2
+Jamaica,3.1956854301269697,Metals,Per Capita (USD/person),3
+Gabon,1.1068454671813717,Metals,Per Capita (USD/person),4
+Bahrain,0.9199659512750075,Metals,Per Capita (USD/person),5
+Bosnia and Herzegovina,0.3347430738241111,Metals,Per Capita (USD/person),6
+Chile,0.3029635181738454,Metals,Per Capita (USD/person),7
+Kazakhstan,0.2771604353666704,Metals,Per Capita (USD/person),8
+United Arab Emirates,0.27525504762176994,Metals,Per Capita (USD/person),9
+Qatar,0.2474743780642956,Metals,Per Capita (USD/person),10
+Guinea,0.2137129944871715,Metals,% of GDP,1
+Jamaica,0.03030636942251929,Metals,% of GDP,2
+Australia,0.008818825858126501,Metals,% of GDP,3
+Gabon,0.007093169433985203,Metals,% of GDP,4
+Bosnia and Herzegovina,0.0023262631110770437,Metals,% of GDP,5
+Mozambique,0.001893427763368652,Metals,% of GDP,6
+Bahrain,0.0018355821602165933,Metals,% of GDP,7
+Ghana,0.001552263587233219,Metals,% of GDP,8
+"Congo, Dem. Rep.",0.0013356982555297484,Metals,% of GDP,9
+Chile,0.0012686849149556117,Metals,% of GDP,10
