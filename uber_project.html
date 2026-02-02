@@ -42,6 +42,10 @@
                 <span class="meta-label">Market Share Growth</span>
                 <span class="meta-value">23% → 75%</span>
             </div>
+            <div class="meta-item">
+                <span class="meta-label">Airport Growth</span>
+                <span class="meta-value">+48%</span>
+            </div>
         </div>
     </div>
 
@@ -64,39 +68,123 @@
         <h2 class="section-title">Background: MDP-Based Matching</h2>
         
         <div class="theory-box">
-            <h3>How Driver Matching Works</h3>
+            <h3>From Greedy to Value-Based Matching</h3>
             <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                Early ridesharing platforms matched drivers to passengers based on proximity—closest driver 
-                gets the trip. This minimizes pickup time but ignores where the driver ends up. A driver 
-                might pick up someone 2 minutes away and end up at an airport with a 30-minute wait.
+                In 2018, Uber's matching system was relatively simple: connect the nearest available driver 
+                to each passenger request. This greedy approach minimizes immediate pickup distance but ignores 
+                a critical question: Where does the driver end up after completing this trip?
             </p>
 
             <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 2rem;">
-                MDP-based systems account for destination value. The algorithm considers: (1) trip fare, 
-                (2) value of ending up in the destination zone, (3) opportunity cost of leaving the current zone. 
-                Drivers in low-demand areas get priority for trips to high-demand destinations because they have 
-                less to lose. This creates natural driver flow without explicit routing.
+                A driver might pick up someone 2 minutes away in Midtown Manhattan and drop them at JFK Airport. 
+                The short pickup seems efficient, but now the driver is at an airport with potential 30-minute 
+                wait times. Meanwhile, a driver 5 minutes away could have taken the same trip and ended up better 
+                positioned for their next pickup. The greedy algorithm chose the wrong driver.
             </p>
 
-            <div style="background: var(--light-grey); padding: 2rem; border-radius: 8px; border-left: 4px solid var(--lse-red);">
-                <strong style="font-size: 1.1rem;">The matching decision:</strong>
-                <p style="margin-top: 1rem; line-height: 1.8;">
-                    When passenger requests trip from zone A to zone B, system calculates advantage for each available driver:
+            <div class="method-box wrong">
+                <h4 style="color: #f44336; margin-bottom: 1rem; font-size: 1.3rem;">❌ 2018: Greedy Matching</h4>
+                <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                    <strong>Decision Rule:</strong> Match the closest available driver to minimize pickup time.
                 </p>
-                <div style="font-family: 'Courier New', monospace; font-size: 1.2rem; text-align: center; margin: 1.5rem 0; padding: 1rem; background: white; border-radius: 5px;">
-                    A(i,j) = r<sub>i,j</sub> + γ V(s'<sub>j</sub>) − V(s<sub>i</sub>)
+                <div style="background: rgba(244, 67, 54, 0.15); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong style="color: #f44336;">Limitations:</strong>
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                        <li>Ignores where the driver ends up after the trip</li>
+                        <li>Doesn't account for future demand patterns</li>
+                        <li>Can leave drivers stranded in low-demand areas</li>
+                        <li>Optimizes pickup time but not overall system efficiency</li>
+                    </ul>
                 </div>
-                <p style="line-height: 1.8; font-size: 0.95rem;">
-                    where r is trip revenue, V(s') is destination zone value, V(s) is current zone value, 
-                    and γ is discount factor. Driver with highest advantage gets matched.
-                </p>
             </div>
+
+            <div class="method-box correct">
+                <h4 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.3rem;">✅ 2025: MDP-Based Matching</h4>
+                <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                    <strong>Decision Rule:</strong> Match the driver whose action maximizes long-term value, 
+                    not just immediate pickup distance.
+                </p>
+                <div style="background: rgba(76, 175, 80, 0.15); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong style="color: var(--accent-green);">How It Works:</strong>
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                        <li>System learns the value of being in each zone at each time</li>
+                        <li>Calculates: Immediate Reward + Future Position Value - Current Position Value</li>
+                        <li>Prioritizes drivers with less to lose (already in low-value zones)</li>
+                        <li>Values trips to high-demand destinations (better positioning for next trip)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: white; border: 1px solid var(--border-light); border-radius: 12px; padding: 2.5rem; margin: 2rem 0; box-shadow: 0 2px 8px var(--shadow-soft);">
+            <h3 style="font-size: 1.6rem; color: var(--moodys-blue); margin-bottom: 1.5rem;">
+                How MDP Matching Works
+            </h3>
+
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 2rem;">
+                When deciding which driver to match with a passenger, the algorithm considers three factors:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: var(--light-grey); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-light);">
+                    <h5 style="color: var(--moodys-blue); margin-bottom: 0.8rem; font-size: 1.1rem;">1. Immediate Reward</h5>
+                    <p style="color: var(--text-medium); font-size: 0.95rem;">
+                        The fare revenue from completing this specific trip
+                    </p>
+                </div>
+
+                <div style="background: var(--light-grey); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-light);">
+                    <h5 style="color: var(--moodys-blue); margin-bottom: 0.8rem; font-size: 1.1rem;">2. Future Opportunities</h5>
+                    <p style="color: var(--text-medium); font-size: 0.95rem;">
+                        How valuable is the destination zone? Will the driver find their next trip quickly?
+                    </p>
+                </div>
+
+                <div style="background: var(--light-grey); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-light);">
+                    <h5 style="color: var(--moodys-blue); margin-bottom: 0.8rem; font-size: 1.1rem;">3. Opportunity Cost</h5>
+                    <p style="color: var(--text-medium); font-size: 0.95rem;">
+                        What's being given up by leaving the current zone?
+                    </p>
+                </div>
+            </div>
+
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                <strong>Example:</strong> A passenger in Midtown requests a trip to JFK. Two drivers are available:
+            </p>
+
+            <div style="margin: 1.5rem 0;">
+                <div style="background: rgba(244, 67, 54, 0.1); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #f44336; margin-bottom: 1rem;">
+                    <strong style="color: #f44336;">Driver A:</strong> 2 minutes away in Midtown<br>
+                    <span style="color: var(--text-medium);">Greedy choice: Shortest pickup time</span><br>
+                    <span style="color: var(--text-medium);">Result: Ends up at JFK with 30-min airport queue</span>
+                </div>
+
+                <div style="background: rgba(76, 175, 80, 0.1); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-green);">
+                    <strong style="color: var(--accent-green);">Driver B:</strong> 5 minutes away in Upper East Side<br>
+                    <span style="color: var(--text-medium);">MDP choice: Better long-term positioning</span><br>
+                    <span style="color: var(--text-medium);">Result: Driver A stays in high-value Midtown, Driver B gets airport fare + Driver A gets next Midtown trip quickly</span>
+                </div>
+            </div>
+
+            <p style="font-size: 1.05rem; line-height: 1.8;">
+                The system learns zone values through millions of observations. Drivers in quiet zones get 
+                priority for trips to busy destinations because they have less to lose. Trips to high-demand 
+                zones are valued because they position drivers well. This happens without explicit routing 
+                instructions.
+            </p>
+
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-top: 1.5rem; padding: 1.5rem; background: var(--light-grey); border-radius: 8px; border-left: 4px solid var(--lse-red);">
+                According to Xu et al. (2018), similar MDP algorithms have been implemented in 20+ cities, 
+                handling millions of daily trips and improving completion rates by 0.5-5% depending on city 
+                characteristics. The 241% growth and increased airport concentration observed in the data are 
+                consistent with strategic optimization toward high-value routes.
+            </p>
         </div>
 
         <div class="theory-box">
             <h3>Testable Predictions</h3>
             <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
-                If Uber deployed MDP matching between 2018 and 2025, we should observe:
+                If MDP matching was deployed between 2018 and 2025, we should observe:
             </p>
             <table>
                 <thead>
@@ -108,7 +196,7 @@
                 <tbody>
                     <tr>
                         <td><strong>Increased airport demand</strong></td>
-                        <td>Airports position drivers for high-value return trips</td>
+                        <td>Airports have high destination value (return trips to Manhattan)</td>
                     </tr>
                     <tr>
                         <td><strong>Manhattan core decline</strong></td>
