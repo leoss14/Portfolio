@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Tax Analysis – Leonardo Luksic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="nav-container">
+        <nav>
+            <a href="index.html" class="logo">LL</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- HERO -->
+    <div class="project-hero">
+        <h1>Classifying Gendered Products in UK Retail Data</h1>
+        <p class="subtitle">
+            Building a classifier to label products as female-marketed, male-marketed, or neutral 
+            using text and color features from supermarket data.
+        </p>
+        
+        <div class="project-meta-bar">
+            <div class="meta-item">
+                <span class="meta-label">Products</span>
+                <span class="meta-value">12,832</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Accuracy (vs Human)</span>
+                <span class="meta-value">84.4%</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Features</span>
+                <span class="meta-value">799</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Training Samples</span>
+                <span class="meta-value">2,532</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <section class="summary-section">
+        <div class="theory-box">
+            <h3>Overview</h3>
+            <p>
+                This project builds a classifier to predict whether a retail product is marketed toward 
+                women, men, or neither. The motivation is to support analysis of gendered pricing 
+                differentials (the "pink tax"), which requires first identifying which products are 
+                gendered—something not always explicit in the data.
+            </p>
+            <p>
+                The classifier uses TF-IDF features from product descriptions and category breadcrumbs, 
+                plus color features extracted from product images. The best model achieves 84% agreement 
+                with human labels on a held-out validation set. Color features contribute modestly to 
+                performance (+4.5 percentage points in an ablation test), with lavender and pink 
+                associated with female products, and black and brown with male products.
+            </p>
+        </div>
+    </section>
+
+    <!-- BACKGROUND -->
+    <section>
+        <h2 class="section-title">Background</h2>
+        
+        <div class="theory-box">
+            <h3>The Problem</h3>
+            <p>
+                Research on the "pink tax" examines whether products marketed to women are priced 
+                higher than equivalent products marketed to men. Estimating this requires labeling 
+                products by target gender, but many products don't state this explicitly. Instead, 
+                they signal gender through color choices, language, and brand names.
+            </p>
+            <p>
+                With ~21,000 products in this dataset, manual labeling is impractical. This project 
+                attempts automated classification, though with caveats about accuracy and the 
+                inherent subjectivity of "gendered marketing."
+            </p>
+        </div>
+
+        <div class="theory-box">
+            <h3>Approach</h3>
+            <p>
+                The classifier combines three feature types:
+            </p>
+            <p>
+                <strong>Text features:</strong> TF-IDF vectors from product descriptions (500 features) 
+                and category breadcrumbs (200 features). These capture explicit gender terms ("for men"), 
+                brand names (Venus, Gillette), and product categories.
+            </p>
+            <p>
+                <strong>Color features:</strong> Dominant colors extracted from product images using 
+                K-means clustering, mapped to 31 named colors. This produces 93 binary features 
+                (3 color slots × 31 colors).
+            </p>
+            <p>
+                <strong>Metadata:</strong> Store ID, price, and unit price (6 features).
+            </p>
+        </div>
+    </section>
+
+    <!-- DATA -->
+    <section>
+        <h2 class="section-title">Data</h2>
+        
+        <div class="theory-box">
+            <h3>Sources and Filtering</h3>
+            <p>
+                The dataset contains 21,436 products scraped from Tesco, Sainsbury's, Boots, and Superdrug. 
+                I excluded categories unlikely to be gendered (food, electronics, pet supplies, cleaning 
+                products), leaving 12,832 products in categories like personal care, cosmetics, and toiletries.
+            </p>
+            <p>
+                For training labels, I used two sources: (1) explicit gender terms extracted via regex 
+                from product text ("for women", "men's", etc.), yielding 1,075 female and 844 male products; 
+                and (2) 259 products with human-coded labels from a separate validation exercise.
+            </p>
+            <p>
+                The training set was balanced to 844 samples per class (female, male, neutral), with 
+                neutral samples drawn from products lacking explicit gender terms.
+            </p>
+        </div>
+
+        <div class="theory-box">
+            <h3>Color Extraction</h3>
+            <p>
+                For 2,000 products, I downloaded images and extracted the three most dominant colors 
+                using K-means clustering on pixel RGB values. Each color was then matched to the nearest 
+                named color from a 31-color palette.
+            </p>
+            <p>
+                This process succeeded for 1,133 products; the rest failed due to missing images or 
+                download errors. The chart below shows sample products with their extracted colors, 
+                including some errors where background elements skewed the results.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/validation/sample_products_colors.png" alt="Sample products with extracted colors" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Sample products with extracted dominant colors. Some extractions are noisy—the Lacoste cologne 
+            is labeled male but extracted colors include pink/salmon from the background.
+        </p>
+    </section>
+
+    <!-- COLOR ANALYSIS -->
+    <section>
+        <h2 class="section-title">Color Patterns</h2>
+        
+        <p style="margin-bottom: 2rem;">
+            The charts below show color distributions in explicitly gendered products and the 
+            LASSO coefficients indicating which colors predict each gender class.
+        </p>
+
+        <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/validation//color_distribution_by_gender.png" alt="Color distribution by gender" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; margin-bottom: 2rem;">
+            Color frequency in products with explicit gender labels. Sample sizes are small (n=32 each).
+        </p>
+
+        <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/validation//color_importance.png" alt="Color importance for gender prediction" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            LASSO coefficients from a binary female/male classifier. Positive values predict female; 
+            negative values predict male.
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <p>
+                The patterns match expectations: pinks, purples, and lavender are associated with 
+                female products; black, brown, and navy with male products. However, some results 
+                are less intuitive—tan has a strong female coefficient, possibly due to foundation 
+                and cosmetics packaging.
+            </p>
+            <p>
+                These associations reflect marketing conventions rather than any inherent property 
+                of the colors. The classifier learns what retailers do, not what they should do.
+            </p>
+        </div>
+    </section>
+
+    <!-- MODEL RESULTS -->
+    <section>
+        <h2 class="section-title">Model Results</h2>
+        
+        <div class="theory-box">
+            <h3>Model Comparison</h3>
+            <p>
+                I tested five classifiers on a 75/25 train-test split. Performance is measured on 
+                the test set (639 samples).
+            </p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Accuracy</th>
+                    <th>F1 (Weighted)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Histogram Gradient Boosting</td>
+                    <td>83.6%</td>
+                    <td>0.836</td>
+                </tr>
+                <tr>
+                    <td>Logistic Regression (L2)</td>
+                    <td>80.4%</td>
+                    <td>0.804</td>
+                </tr>
+                <tr>
+                    <td>SVM (RBF)</td>
+                    <td>78.4%</td>
+                    <td>0.783</td>
+                </tr>
+                <tr>
+                    <td>Random Forest</td>
+                    <td>75.4%</td>
+                    <td>0.753</td>
+                </tr>
+                <tr>
+                    <td>Logistic Regression (L1)</td>
+                    <td>70.6%</td>
+                    <td>0.703</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 1.5rem;">
+            Gradient boosting performed best, likely because it handles sparse features and missing 
+            values (many products lack color data) without requiring imputation.
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <h3>Validation Against Human Labels</h3>
+            <p>
+                The test set above uses labels derived from explicit text patterns, which may not 
+                reflect how humans would categorize products. A stricter test uses 256 products 
+                with independent human labels.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/validation/confusion_vs_human.png" alt="Confusion matrices vs human labels" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Agreement with human coders across different feature sets. The combined model reaches 84.4%.
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <p>
+                The combined model (breadcrumbs + descriptions + colors) achieves 84.4% accuracy 
+                against human labels. Breadcrumbs alone reach 77.3%, performing well on neutral 
+                products (99%) but poorly on female products (57%). Description-only performs 
+                worst at 60.8%.
+            </p>
+            <p>
+                The confusion matrices show the model is conservative—it tends to predict "neutral" 
+                when uncertain, leading to under-classification of gendered products.
+            </p>
+        </div>
+    </section>
+
+    <!-- FEATURE IMPORTANCE -->
+    <section>
+        <h2 class="section-title">Feature Importance</h2>
+        
+        <div class="theory-box">
+            <p>
+                L1-regularized logistic regression provides interpretable coefficients. The top 
+                predictors for each class are shown below.
+            </p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <div class="card-header" style="background: #c23a3a;"><h3>Female Predictors</h3></div>
+                <div class="card-body">
+                    <p>color1_lavender: +1.45</p>
+                    <p>bc_period: +0.81</p>
+                    <p>bc_shaving hair: +0.78</p>
+                    <p>bc_intimate: +0.77</p>
+                    <p>desc_venus: +0.64</p>
+                    <p style="margin-bottom: 0;">color1_silver: +0.64</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header" style="background: var(--navy);"><h3>Male Predictors</h3></div>
+                <div class="card-body">
+                    <p>bc_toiletries: +1.47</p>
+                    <p>desc_lynx: +1.09</p>
+                    <p>color1_black: +0.86</p>
+                    <p>bc_gel: +0.75</p>
+                    <p>bc_razors: +0.64</p>
+                    <p style="margin-bottom: 0;">color1_navy: +0.60</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header" style="background: var(--grey-600);"><h3>Neutral Predictors</h3></div>
+                <div class="card-body">
+                    <p>bc_toothpaste: +0.73</p>
+                    <p>bc_accessories: +0.67</p>
+                    <p>bc_conditioner: +0.66</p>
+                    <p>bc_marketplace: +0.52</p>
+                    <p>bc_care: +0.43</p>
+                    <p style="margin-bottom: 0;">bc_bath: +0.43</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <p>
+                Brand names are strong predictors: "Venus" for female, "Lynx" and "Gillette" for male. 
+                Category breadcrumbs also encode gender—UK retailers place "toiletries" in male-coded 
+                sections and "shaving hair removal" in female-coded sections, even for similar products.
+            </p>
+            <p>
+                The neutral class is predicted by genuinely ungendered categories (toothpaste, conditioner) 
+                and marketplace listings, which tend to have less structured metadata.
+            </p>
+        </div>
+    </section>
+
+    <!-- COLOR IMPACT -->
+    <section>
+        <h2 class="section-title">Color Feature Contribution</h2>
+        
+        <div class="theory-box">
+            <p>
+                To estimate how much color features contribute, I trained the same L1 model with and 
+                without color features.
+            </p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Configuration</th>
+                    <th>Accuracy</th>
+                    <th>F1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>With colors</td>
+                    <td>70.6%</td>
+                    <td>0.703</td>
+                </tr>
+                <tr>
+                    <td>Without colors</td>
+                    <td>66.0%</td>
+                    <td>0.657</td>
+                </tr>
+                <tr>
+                    <td>Difference</td>
+                    <td>+4.5pp</td>
+                    <td>+0.046</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 1.5rem;">
+            On the subset of products with extracted colors (216 test samples), the improvement 
+            is larger: from 55.6% to 66.7%. This suggests color is more useful when text signals 
+            are weak, but the sample is small.
+        </p>
+
+        <div class="viz-container" style="background: #1a1a2e; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/validation/color_importance_heatmap.png" alt="Color importance heatmap" style="width: 100%; border-radius: 4px;">
+        </div>
+    </section>
+
+    <!-- PREDICTIONS -->
+    <section>
+        <h2 class="section-title">Full Dataset Predictions</h2>
+        
+        <div class="theory-box">
+            <p>
+                Applying the classifier to all 12,832 filtered products:
+            </p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Predicted Class</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Neutral</td>
+                    <td>9,669</td>
+                    <td>75%</td>
+                </tr>
+                <tr>
+                    <td>Female</td>
+                    <td>2,043</td>
+                    <td>16%</td>
+                </tr>
+                <tr>
+                    <td>Male</td>
+                    <td>1,120</td>
+                    <td>9%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 1.5rem;">
+            The high neutral proportion reflects both the genuine prevalence of ungendered products 
+            and the model's conservative tendency. Some products the model calls "neutral" likely 
+            have subtle gendered marketing that the classifier misses.
+        </p>
+    </section>
+
+    <!-- LIMITATIONS -->
+    <section>
+        <h2 class="section-title">Limitations</h2>
+        
+        <div class="theory-box">
+            <p>
+                <strong>Color extraction quality:</strong> Many extracted colors are wrong due to 
+                backgrounds, reflections, and packaging elements. Better image segmentation would help, 
+                but wasn't implemented here.
+            </p>
+            <p>
+                <strong>Missing data:</strong> 867 products failed color extraction entirely. These 
+                are treated as missing, which gradient boosting handles but logistic regression does not.
+            </p>
+            <p>
+                <strong>Label quality:</strong> The "ground truth" combines regex-extracted labels and 
+                human coding. Regex labels may miss implicit gendering; human labels weren't checked 
+                for inter-rater reliability.
+            </p>
+            <p>
+                <strong>Class imbalance:</strong> The neutral class dominates in raw data. Balancing 
+                helped training but may not reflect the true distribution, affecting calibration.
+            </p>
+            <p>
+                <strong>Generalization:</strong> The classifier was trained on UK supermarket data. 
+                Performance on other retailers or countries is unknown.
+            </p>
+        </div>
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section>
+        <h2 class="section-title">Next Steps</h2>
+        
+        <div class="theory-box">
+            <p>
+                The original goal was to measure price differentials between gendered products. 
+                With classification complete, the next phase would match similar products across 
+                gender categories and compare prices, controlling for quantity, brand, and retailer.
+            </p>
+            <p>
+                This is harder than classification—it requires defining "equivalent" products, 
+                which involves judgment calls about what counts as comparable.
+            </p>
+        </div>
+    </section>
+
+    <!-- TECHNICAL APPENDIX -->
+    <section>
+        <h2 class="section-title">Technical Details</h2>
+        
+        <div class="content-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <div class="content-card">
+                <div class="card-header"><h3>Data</h3></div>
+                <div class="card-body">
+                    <p>Sources: Tesco, Sainsbury's, Boots, Superdrug</p>
+                    <p>Raw products: 21,436</p>
+                    <p>After filtering: 12,832</p>
+                    <p>Human-coded: 259</p>
+                    <p style="margin-bottom: 0;">Training set: 2,532 (balanced)</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header"><h3>Features</h3></div>
+                <div class="card-body">
+                    <p>Breadcrumb TF-IDF: 200</p>
+                    <p>Description TF-IDF: 500</p>
+                    <p>Color features: 93</p>
+                    <p>Metadata: 6</p>
+                    <p style="margin-bottom: 0;">Total: 799</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header"><h3>Training</h3></div>
+                <div class="card-body">
+                    <p>Split: 75/25 train-test</p>
+                    <p>CV: 5-fold stratified</p>
+                    <p>Best model: HistGradientBoosting</p>
+                    <p>Regularization: L1, L2</p>
+                    <p style="margin-bottom: 0;">Random state: 42</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header"><h3>Tools</h3></div>
+                <div class="card-body">
+                    <p>Language: Python</p>
+                    <p>ML: Scikit-learn</p>
+                    <p>Images: PIL, K-means</p>
+                    <p>Text: TfidfVectorizer</p>
+                    <p style="margin-bottom: 0;">Viz: Matplotlib, Seaborn</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 2.5rem 0;">
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Classification</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">TF-IDF</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Color Extraction</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Gradient Boosting</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">LASSO</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Python</span>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
+            <a href="https://github.com/leoss14" target="_blank" class="social-link">GitHub</a>
+            <a href="mailto:l.luksic@lse.ac.uk" class="social-link">Email</a>
+        </div>
+        <p>© 2025 Leonardo Luksic</p>
+    </footer>
+
+</body>
+</html>
