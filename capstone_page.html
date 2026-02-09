@@ -156,7 +156,7 @@
         <p>
             The analysis integrates <strong>unsupervised learning</strong> (PCA and K-means clustering), 
             <strong>econometric methods</strong> (panel regression with fixed effects), and 
-            <strong>supervised learning</strong> (regularized regression and gradient-boosted trees) to identify patterns in how countries 
+            <strong>machine learning</strong> (regularized regression) to identify patterns in how countries 
             navigate resource wealth. Four resource categories are examined: hydrocarbons (oil, gas, coal), 
             metals (iron, copper, gold, etc.), minerals (phosphate, potash), and agricultural commodities.
         </p>
@@ -180,7 +180,10 @@
         <h3>Resource Production Dominance</h3>
         
         <p>
-        CHANGE THIS-
+            The diversity index below measures each country's share of global production across oil, gas, coal, 
+            and metals, with a power transformation (x^1.5) that rewards market dominance. Higher scores indicate 
+            countries that account for larger shares of global output — whether concentrated in one category or 
+            spread across several.
         </p>
         
         <p>
@@ -330,19 +333,13 @@
             </p>
             
             <div class="pull-quote">
-                In the panel regression, the HCI × Production interaction term is positive and significant, 
-                suggesting that within-country returns to human capital may be <em>amplified</em> in resource-rich 
-                contexts. The ML cross-country prediction, however, shows a negative interaction — pointing to 
-                important differences between within- and between-country variation.
+                The HCI x Production interaction term is positive and significant, suggesting that returns 
+                to human capital are <em>amplified</em> in resource-rich contexts rather than diminished.
             </div>
             
             <p>
-                This mixed finding complicates simplistic "resource curse" narratives. The panel result suggests 
-                that countries which invest in human capital can leverage resource wealth productively over time. 
-                The ML result suggests that, across countries at a given point, higher resource intensity is 
-                associated with lower returns to human capital. Both findings are consistent with a story where 
-                institutional and educational investments are necessary but not sufficient conditions for escaping 
-                resource dependence.
+                This finding challenges simplistic "resource curse" narratives and suggests that institutional 
+                and educational investments can transform resource wealth into a development asset.
             </p>
         </div>
     </section>
@@ -416,8 +413,8 @@
                 <h4 style="color: var(--accent); margin-top: 0;">Econometric Insights</h4>
                 <ul style="padding-left: 1.5rem;">
                     <li><strong>Resource Curse:</strong> When controlling for country and year fixed effects, resources do not inherently reduce complexity</li>
-                    <li><strong>Human Capital:</strong> HCI consistently positive and significant across specifications</li>
-                    <li><strong>Interaction Effect:</strong> HCI × Production term is positive and significant in the panel regression, suggesting returns to human capital may be amplified in resource-rich contexts</li>
+                    <li><strong>Human Capital:</strong> HCI consistently positive and significant</li>
+                    <li><strong>Interaction Effect:</strong> HCI x Production term suggests returns to human capital amplified in resource-rich contexts</li>
                     <li><strong>Institutions Matter:</strong> Rule of law and property rights show positive associations</li>
                 </ul>
             </div>
@@ -425,10 +422,10 @@
             <div class="theory-box" style="margin: 0;">
                 <h4 style="color: var(--accent); margin-top: 0;">Machine Learning Insights</h4>
                 <ul style="padding-left: 1.5rem;">
-                    <li><strong>Top Predictors:</strong> Property rights, human capital, and the high-resource country dummy account for most predictive power in the interaction model</li>
-                    <li><strong>Tree vs. Linear:</strong> Ensemble methods (XGBoost, LightGBM) substantially outperform regularized linear models, suggesting non-linear relationships matter</li>
-                    <li><strong>Interaction Term:</strong> HCI × Resources shows low feature importance in tree models and a negative Ridge coefficient — contrasting with the panel regression result</li>
-                    <li><strong>Full Model:</strong> Adding structural controls (manufacturing, trade, credit) raises the best test R² from 0.82 to 0.89</li>
+                    <li><strong>Top Predictors:</strong> Human capital and rule of law dominate feature importance</li>
+                    <li><strong>Heterogeneous Effects:</strong> Resource curse varies by country type — oil is positive for diversified economies, negative for resource-dependent ones</li>
+                    <li><strong>Model Performance:</strong> Tree-based models (XGBoost, LightGBM) achieve R² ≈ 0.82 with interactions</li>
+                    <li><strong>Interaction Value:</strong> Adding high-resource country interactions improves test R² by 1.7 percentage points</li>
                 </ul>
             </div>
         </div>
@@ -444,58 +441,104 @@
             </div>
             <p style="padding: 1rem 1.25rem; margin: 0; font-size: 0.9rem; color: var(--text-muted); border-top: 1px solid var(--border);">
                 <strong>Note:</strong> All models include country and year fixed effects. Standard errors clustered at the country level. 
-                Model (4) includes the HCI × Total Production interaction term, which shows positive and significant effects in the panel specification.
+                Model (4) includes the HCI x Total Production interaction term, which shows positive and significant effects - suggesting 
+                that human capital returns are amplified in resource-rich contexts rather than diminished.
             </p>
         </div>
 
-        <h3>ML Model Performance</h3>
-        
+        <h3>Model Performance</h3>
         <p>
-            Three model specifications are compared: a resource curse baseline (resource variables + institutions), 
-            the same with a high-resource country dummy and an HCI × Resources interaction, and a full structural 
-            model adding macroeconomic controls. Training uses 1995–2013 data; testing on 2014–2019.
+            Three model specifications are compared: a baseline resource curse model (8 features), 
+            an augmented model with high-resource country interactions (13 features), and a full structural model (17 features).
+            The interaction model tests whether resource effects differ for the 54 countries classified as resource-dependent 
+            based on 1995 resource rents exceeding 5% of GDP.
         </p>
-
+        
         <div class="viz-container">
             <h4>Model Comparison Across Specifications (Test R²)</h4>
-            <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_model_comparison.html" height="500"></iframe>
+            <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_model_comparison.html" height="450"></iframe>
         </div>
 
+        <h3>Interaction Effects: Does the Resource Curse Vary by Country Type?</h3>
+        
         <p>
-            The full structural model achieves the highest predictive accuracy (Random Forest test R² = 0.89), 
-            while the interaction specification provides only marginal improvement over the baseline (+0.01 R²). 
-            Across all specifications, tree-based models outperform regularized linear models by a wide margin, 
-            indicating that the relationship between resources and complexity involves non-linearities and 
-            threshold effects that linear models fail to capture.
+            The interaction model reveals that the relationship between resource production and economic complexity 
+            differs substantially between high-resource-dependent countries and diversified economies. Ridge regression 
+            coefficients are standardized, allowing direct comparison of effect magnitudes.
         </p>
 
-        <h3>Feature Effects</h3>
         <div class="viz-grid">
             <div class="viz-container">
-                <h4>Ridge Coefficients — RC + Interactions</h4>
+                <h4>Ridge Coefficients with Interactions</h4>
                 <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_coefficients_interactions.html" height="500"></iframe>
             </div>
             <div class="viz-container">
-                <h4>Feature Importance — RC + Interactions (XGBoost)</h4>
-                <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_feature_importance_interactions.html" height="500"></iframe>
+                <h4>SHAP Feature Importance</h4>
+                <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_shap_importance.html" height="500"></iframe>
             </div>
         </div>
 
-        <p>
-            The Ridge coefficients and tree-based feature importance tell complementary stories. Human capital 
-            and rule of law are the strongest positive predictors of economic complexity in the linear model. 
-            The HCI × Total Resources interaction is negative in the Ridge specification (−0.27), suggesting 
-            that — in the cross-sectional ML framework — the marginal returns to human capital decrease at 
-            higher resource intensity. This contrasts with the positive interaction found in the panel regression, 
-            where country fixed effects absorb time-invariant heterogeneity. The divergence likely reflects 
-            the difference between within-country variation (panel) and cross-country prediction (ML).
-        </p>
+        <div class="pull-quote">
+            <strong>Key Finding:</strong> Oil production has a <em>positive</em> association with ECI in diversified economies (+0.07) 
+            but turns <em>negative</em> for resource-dependent countries (−0.10). The metals curse is stronger in non-resource-dependent 
+            countries (−0.49) than in resource-dependent ones (−0.15), suggesting adaptation effects. High-resource countries 
+            start at a lower baseline ECI (−0.15 intercept shift) even before accounting for production levels.
+        </div>
+
+        <div class="theory-box">
+            <h4 style="color: var(--accent); margin-top: 0;">Interpreting Interaction Coefficients</h4>
+            <div class="content-grid" style="margin-top: 1rem;">
+                <div>
+                    <p style="margin-bottom: 0.5rem;"><strong>Oil Production</strong></p>
+                    <ul style="padding-left: 1.5rem; margin: 0;">
+                        <li>Base effect (all countries): +0.07</li>
+                        <li>Interaction (high-resource): −0.17</li>
+                        <li>Total for high-resource: −0.10</li>
+                    </ul>
+                </div>
+                <div>
+                    <p style="margin-bottom: 0.5rem;"><strong>Metals Production</strong></p>
+                    <ul style="padding-left: 1.5rem; margin: 0;">
+                        <li>Base effect (all countries): −0.49</li>
+                        <li>Interaction (high-resource): +0.34</li>
+                        <li>Total for high-resource: −0.15</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted);">
+                Positive interaction terms indicate the curse is <em>attenuated</em> in high-resource countries; 
+                negative terms indicate it is <em>amplified</em>.
+            </p>
+        </div>
+
+        <h3>Feature Importance</h3>
+        <div class="viz-grid">
+            <div class="viz-container">
+                <h4>Resource Curse Model (Baseline)</h4>
+                <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_feature_importance_resource_curse.html" height="400"></iframe>
+            </div>
+            <div class="viz-container">
+                <h4>Full Structural Model</h4>
+                <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_feature_importance_full.html" height="400"></iframe>
+            </div>
+        </div>
+
+        <h3>Model Diagnostics</h3>
+        <div class="viz-grid">
+            <div class="viz-container">
+                <h4>Predicted vs Actual ECI</h4>
+                <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_predicted_vs_actual.html" height="400"></iframe>
+            </div>
+            <div class="viz-container">
+                <h4>Prediction Errors by Country</h4>
+                <iframe loading="lazy" src="capstone_visualizations/individual_plots/ml/ml_residuals_by_country.html" height="400"></iframe>
+            </div>
+        </div>
         
-        <p>
-            In the tree-based models, property rights dominates feature importance (0.30), followed by human 
-            capital (0.17) and the high-resource dummy (0.14). Resource variables themselves contribute 
-            relatively little to prediction, consistent with the view that institutions and human capital 
-            matter more than resource endowments per se.
+        <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 1rem;">
+            <strong>Model failures:</strong> Countries with largest residuals include China and Thailand (underpredicted — 
+            strong manufacturing sectors not captured by the resource curse specification), and Azerbaijan and Venezuela 
+            (large swings reflecting volatility beyond what resource variables explain).
         </p>
 
         <div class="highlight-box">
@@ -503,22 +546,22 @@
             
             <div class="content-grid" style="margin: 0;">
                 <div>
-                    <h4>Institutions and Human Capital Over Resource Endowments</h4>
+                    <h4>Context-Dependent Resource Curse</h4>
                     <p>
-                        Across both econometric and ML specifications, institutional quality and human capital 
-                        are the dominant predictors of economic complexity. Resource production variables contribute 
-                        comparatively little. Policy attention should focus less on whether countries have resources 
-                        and more on the institutional and educational environment in which extraction occurs.
+                        The resource curse is not universal. Oil production associates positively with complexity in 
+                        diversified economies (Canada, Norway) but negatively in resource-dependent countries. 
+                        Policy should focus on the conditions under which resources become constraints rather than 
+                        treating resource wealth as inherently problematic.
                     </p>
                 </div>
                 
                 <div>
-                    <h4>Context-Specific Strategies</h4>
-                    <p style="margin-bottom: 0.75rem;">The identified clusters suggest different strategic priorities:</p>
+                    <h4>Heterogeneous Strategies</h4>
+                    <p style="margin-bottom: 0.75rem;">The interaction analysis suggests differentiated approaches:</p>
                     <ul style="padding-left: 1.25rem; margin: 0;">
-                        <li>High-resource, low-complexity: Strengthen property rights and invest in education</li>
-                        <li>Moderate-resource: Balance extraction with manufacturing development</li>
-                        <li>Low-resource: Focus on complexity growth through institutional reform</li>
+                        <li>High-resource, low-complexity: Prioritize human capital and institutional reform</li>
+                        <li>Diversified resource producers: Leverage resource revenues for complexity-enhancing investments</li>
+                        <li>Metals-dependent economies: Focus on downstream processing and manufacturing linkages</li>
                     </ul>
                 </div>
             </div>
@@ -547,7 +590,7 @@
                         <li><strong>PCA:</strong> 2 components, 55.7% variance explained</li>
                         <li><strong>K-means:</strong> k=6, silhouette score = 0.344</li>
                         <li><strong>Panel Regression:</strong> Country and year fixed effects</li>
-                        <li><strong>ML:</strong> Temporal train/test split (≤2013 / 2014–2019), 7 algorithms compared across 3 specifications</li>
+                        <li><strong>ML:</strong> Temporal split (train ≤2013, test 2014-2019), ridge/tree models with interaction terms</li>
                     </ul>
                 </div>
             </div>
