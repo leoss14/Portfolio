@@ -23,10 +23,10 @@
     
     <!-- HERO -->
     <div class="project-hero">
-        <h1>Classifying Gendered Products in UK Retail Data</h1>
+        <h1>Investigating Gender Price Differences in UK Retail Products</h1>
         <p class="subtitle">
-            Building a classifier to label products as female-marketed, male-marketed, or neutral 
-            using text and color features from supermarket data.
+            Classifying products by target gender using text and color features, then testing 
+            for price differentials across 12,800 supermarket products.
         </p>
         
         <div class="project-meta-bar">
@@ -54,17 +54,20 @@
         <div class="theory-box">
             <h3>Overview</h3>
             <p>
-                This project builds a classifier to predict whether a retail product is marketed toward 
-                women, men, or neither. The motivation is to support analysis of gendered pricing 
-                differentials (the "pink tax"), which requires first identifying which products are 
-                gendered—something not always explicit in the data.
+                This project examines whether products marketed to women are priced higher than 
+                comparable products for men in UK supermarkets — the so-called "pink tax." It 
+                proceeds in two stages: first, building a classifier to identify gendered products 
+                from text and image features; then, running a series of regressions to estimate 
+                the price gap while controlling for product category, store, and product characteristics.
             </p>
             <p>
-                The classifier uses TF-IDF features from product descriptions and category breadcrumbs, 
-                plus color features extracted from product images. The best model achieves 84% agreement 
-                with human labels on a held-out validation set. Color features contribute modestly to 
-                performance (+4.5 percentage points in an ablation test), with lavender and pink 
-                associated with female products, and black and brown with male products.
+                The classifier achieves 80% F1 using TF-IDF and color features. The regression 
+                analysis finds that female products are ~9% cheaper in raw comparisons, but 
+                the gap becomes statistically insignificant after controlling for product category 
+                (p = 0.35). The unit price regression shows essentially zero difference (+0.7%, 
+                p = 0.92). The main finding is that apparent price differences reflect category 
+                composition — women's and men's products fall into different product types — 
+                rather than within-category pricing discrimination.
             </p>
         </div>
     </section>
@@ -431,49 +434,473 @@
         </p>
     </section>
 
+    <!-- ================================================================== -->
+    <!-- PART II: ESTIMATING THE PINK TAX                                   -->
+    <!-- ================================================================== -->
+
+    <section>
+        <div style="border-top: 2px solid var(--border); margin-bottom: 3rem;"></div>
+        <h2 class="section-title">Estimating the Pink Tax</h2>
+
+        <div class="theory-box">
+            <h3>Prior Research</h3>
+            <p>
+                The "pink tax" refers to the observation that consumer products marketed toward women 
+                are often priced higher than comparable products aimed at men. Research on the topic 
+                has produced mixed findings. Gonzalez Guittar et al. (2022) studied over 3,000 products 
+                and found some evidence of a premium on specific items such as deodorants and lotions, 
+                though men paid more for shaving products. Moshary et al. (2023), using Nielsen scanner 
+                data with product ingredient controls, concluded that price gaps largely reflect 
+                differences in product composition rather than discriminatory pricing.
+            </p>
+            <p>
+                Both studies agree that gender segmentation in consumer products is widespread, but 
+                diverge on whether the resulting price differences constitute a "tax" or simply reflect 
+                product differentiation. This analysis contributes to the question using UK grocery data, 
+                testing whether a female price premium persists after progressively controlling for 
+                product category, store, and product characteristics.
+            </p>
+        </div>
+
+        <div class="theory-box">
+            <h3>Approach</h3>
+            <p>
+                With the classification pipeline providing gender labels, the next step is to 
+                estimate the price differential between female- and male-targeted products. The 
+                analysis uses log-transformed prices as the dependent variable, which means coefficients 
+                can be interpreted as approximate percentage differences. All regressions use 
+                heteroskedasticity-robust standard errors (HC1).
+            </p>
+            <p>
+                The key question is whether the female coefficient remains significant as controls are 
+                added. If the gap disappears after controlling for product category, it suggests 
+                composition effects (women's products fall in different price ranges) rather than 
+                within-category pricing discrimination.
+            </p>
+        </div>
+    </section>
+
+    <!-- RAW PRICE COMPARISON -->
+    <section>
+        <h2 class="section-title">Raw Price Comparison</h2>
+
+        <div class="theory-box">
+            <p>
+                Among the 1,919 explicitly gendered products (1,075 female, 844 male), female 
+                products have a lower mean price (£7.03 vs £8.15) and lower median (£4.00 vs £4.50). 
+                This is the opposite of what the pink tax narrative predicts.
+            </p>
+        </div>
+
+        <div class="project-meta-bar">
+            <div class="meta-item">
+                <span class="meta-label">Female Mean</span>
+                <span class="meta-value">£7.03</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Male Mean</span>
+                <span class="meta-value">£8.15</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Raw Gap</span>
+                <span class="meta-value">−9.3%</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Gendered Products</span>
+                <span class="meta-value">1,919</span>
+            </div>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/04_price_distributions.png" 
+                 alt="Price distributions by gender" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Price distributions for female and male products. Log prices (top right) show 
+            overlapping distributions with female products shifted slightly left.
+        </p>
+    </section>
+
+    <!-- REGRESSION RESULTS -->
+    <section>
+        <h2 class="section-title">Regression Results</h2>
+
+        <div class="theory-box">
+            <p>
+                The table below shows how the female price coefficient changes as controls are 
+                progressively added. Specifications (1) and (2) show a significant negative gap 
+                (female products are cheaper). Once product category is controlled for in specification 
+                (3), the sign reverses but the coefficient becomes statistically insignificant 
+                (p = 0.35). Adding description controls in specification (6) shrinks the gap further. 
+                The unit price regression (8) shows essentially zero difference.
+            </p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Specification</th>
+                    <th>Controls</th>
+                    <th>% Gap</th>
+                    <th>95% CI</th>
+                    <th>p-value</th>
+                    <th>R²</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>(1) Raw gap</td>
+                    <td>None</td>
+                    <td>−9.3%</td>
+                    <td>[−16.3, −1.7]</td>
+                    <td>0.018**</td>
+                    <td>0.003</td>
+                </tr>
+                <tr>
+                    <td>(2) + Store FE</td>
+                    <td>Store</td>
+                    <td>−9.8%</td>
+                    <td>[−16.8, −2.3]</td>
+                    <td>0.012**</td>
+                    <td>0.006</td>
+                </tr>
+                <tr>
+                    <td>(3) + Category FE</td>
+                    <td>Store + Category</td>
+                    <td>+8.4%</td>
+                    <td>[−8.3, +28.0]</td>
+                    <td>0.345</td>
+                    <td>0.672</td>
+                </tr>
+                <tr>
+                    <td>(6) + Description</td>
+                    <td>Store + Cat + TF-IDF</td>
+                    <td>+3.7%</td>
+                    <td>[−9.1, +18.4]</td>
+                    <td>0.587</td>
+                    <td>0.738</td>
+                </tr>
+                <tr>
+                    <td>(8) Unit price</td>
+                    <td>Store + Category</td>
+                    <td>+0.7%</td>
+                    <td>[−11.8, +15.0]</td>
+                    <td>0.922</td>
+                    <td>0.854</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+            ** p &lt; 0.05. All specifications use log(price) as dependent variable and HC1 robust 
+            standard errors. N = 1,919 for specs (1)–(2); 1,374 for specs (3)–(6); 743 for spec (8).
+        </p>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/01_coefficient_plot.png" 
+                 alt="Coefficient plot across specifications" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Female price coefficient with 95% confidence intervals. The gap is significantly negative 
+            without controls, then shifts to a small positive but insignificant estimate with category controls.
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <p>
+                The R² jump from 0.006 to 0.672 when adding category fixed effects is the key result. 
+                Product category explains the vast majority of price variation. The raw negative gap 
+                arises because female-targeted products are concentrated in lower-priced categories 
+                (personal care, period products) while male-targeted products span a wider price range 
+                (including grooming sets and premium razors). Within the same category, there is no 
+                statistically detectable difference.
+            </p>
+            <p>
+                This aligns with Moshary et al.'s conclusion that price differences between gendered 
+                products are largely explained by product differentiation rather than discriminatory pricing.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/10_r2_progression.png" 
+                 alt="R-squared progression" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Variance explained by each specification. Category controls account for the largest share of price variation.
+        </p>
+    </section>
+
+    <!-- THREE-WAY COMPARISON -->
+    <section>
+        <h2 class="section-title">Gendered vs Ungendered Products</h2>
+
+        <div class="theory-box">
+            <p>
+                A three-way comparison using all 12,832 products (with ungendered products as 
+                the reference group) shows that both gendered categories are cheaper than ungendered 
+                products, but female products especially so. Female products are 16.4% cheaper than 
+                ungendered ones (p &lt; 0.001), while male products are 2.9% cheaper (not significant). 
+                This suggests gendered products as a whole occupy lower price tiers than the broader 
+                product mix.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/07_three_way_comparison.png" 
+                 alt="Three-way price comparison" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Price distributions across all three gender groups. Ungendered products span a wider and higher price range.
+        </p>
+    </section>
+
+    <!-- WITHIN-CATEGORY -->
+    <section>
+        <h2 class="section-title">Within-Category Analysis</h2>
+
+        <div class="theory-box">
+            <p>
+                Only 11 product categories contain at least 3 female and 3 male products, limiting 
+                the scope of within-category comparisons. For these categories, the median price 
+                gap is +7.4% (female more expensive) and the trimmed mean is +3.0%, though most 
+                individual gaps are not statistically significant based on bootstrap confidence intervals.
+            </p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>F</th>
+                    <th>M</th>
+                    <th>Gap</th>
+                    <th>Significant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Toiletries > Incontinence</td><td>12</td><td>3</td><td>+259%</td><td>Yes</td></tr>
+                <tr><td>Toiletries > Gifting</td><td>3</td><td>9</td><td>+30%</td><td>No</td></tr>
+                <tr><td>Marketplace > Greeting Cards</td><td>11</td><td>9</td><td>+25%</td><td>Yes</td></tr>
+                <tr><td>Toiletries > Incontinence (sub)</td><td>5</td><td>3</td><td>+16%</td><td>No</td></tr>
+                <tr><td>Greeting Cards (various sub-categories)</td><td>40</td><td>19</td><td>+2% to +10%</td><td>Mixed</td></tr>
+                <tr><td>Baby > Nappies</td><td>3</td><td>3</td><td>0%</td><td>No</td></tr>
+                <tr><td>Health > Medicines</td><td>11</td><td>4</td><td>−35%</td><td>No</td></tr>
+                <tr><td>Health & Beauty > Shower</td><td>3</td><td>10</td><td>−55%</td><td>Yes</td></tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+            Significance based on 1,000-draw bootstrap 95% confidence intervals.
+        </p>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/03_within_category_gaps.png" 
+                 alt="Within-category price gaps" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Per-category female price premium with 95% bootstrap CIs. Bold borders indicate statistical significance.
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <p>
+                The +259% outlier in incontinence products is driven by only 3 male comparison 
+                products, making it unreliable. The greeting cards category shows a more 
+                consistent pattern (+10–25% across sub-categories, one significant), though this 
+                likely reflects product differentiation (birthday cards for women may include 
+                different materials or designs) rather than identical items at different prices.
+            </p>
+            <p>
+                The shower category shows the reverse: male shower products are more expensive, 
+                driven by premium grooming brands. The direction and magnitude of the gap depends 
+                entirely on the product category.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/06_scatter_by_category.png" 
+                 alt="Female vs male mean price by category" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Each point is a product category. Points above the 45° line indicate a female premium; below indicates male premium.
+        </p>
+    </section>
+
+    <!-- QUANTILE REGRESSION -->
+    <section>
+        <h2 class="section-title">Quantile Regression</h2>
+
+        <div class="theory-box">
+            <p>
+                OLS estimates the effect on the conditional mean. Quantile regression tests whether 
+                the gap differs across the price distribution. Without category controls, the gap 
+                is significantly negative at the 10th, 50th, and 90th percentiles (female products 
+                are 12–20% cheaper), but zero at the 25th and 75th percentiles. With category 
+                controls, the pattern reverses at the bottom of the distribution: at the 10th and 
+                25th percentiles, female products are 25–43% more expensive within the same category 
+                (p &lt; 0.001), while the gap is zero at higher quantiles.
+            </p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantile</th>
+                    <th>Without Category Controls</th>
+                    <th>With Category Controls</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>10th</td><td>−12.1% **</td><td>+43.0% ***</td></tr>
+                <tr><td>25th</td><td>0.0%</td><td>+25.0% ***</td></tr>
+                <tr><td>50th (median)</td><td>−10.0% **</td><td>0.0%</td></tr>
+                <tr><td>75th</td><td>0.0%</td><td>0.0%</td></tr>
+                <tr><td>90th</td><td>−20.0% ***</td><td>0.0%</td></tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+            ** p &lt; 0.05, *** p &lt; 0.01. Percentage gaps computed as exp(coef) − 1.
+        </p>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem; margin-top: 2rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/02_quantile_regression.png" 
+                 alt="Quantile regression results" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Quantile regression coefficients with 95% CIs. Left: store controls only. Right: store + category controls.
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <p>
+                The controlled quantile results suggest that the cheapest female products within a 
+                category tend to be priced higher than the cheapest male equivalents. This could 
+                reflect a floor-price effect — budget female products start at a higher baseline, 
+                even if median and premium products are priced similarly. However, the small 
+                number of categories and products within each means these estimates should be 
+                treated cautiously.
+            </p>
+        </div>
+    </section>
+
+    <!-- BY STORE -->
+    <section>
+        <h2 class="section-title">Variation by Store</h2>
+
+        <div class="theory-box">
+            <p>
+                Running the raw-gap regression separately by store reveals substantial heterogeneity. 
+                One retailer (Morrisons) shows a large and significant female discount of 18.6% 
+                (p &lt; 0.001), while the other two stores show no significant gap. A female × store 
+                interaction model confirms this: the interaction for Morrisons is significant (p &lt; 0.001) 
+                with a total female effect of −50.6%, while the other stores show no significant 
+                interaction.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/05_by_store.png" 
+                 alt="Pink tax by store" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Left: female price premium by store (thick border = p &lt; 0.05). Right: mean prices by gender and store.
+        </p>
+    </section>
+
+    <!-- CATEGORY COMPOSITION -->
+    <section>
+        <h2 class="section-title">Category Composition</h2>
+
+        <div class="theory-box">
+            <p>
+                The charts below show which product categories contain the most female and male 
+                products. Female products are concentrated in period products, hair removal, and 
+                intimate care. Male products cluster in toiletries, deodorants, razors, and skincare. 
+                These categories have different baseline price levels, which drives the raw price gap.
+            </p>
+        </div>
+
+        <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
+            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/08_category_composition.png" 
+                 alt="Category composition by gender" style="width: 100%; border-radius: 4px;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">
+            Top product categories by gender. Female products are concentrated in fewer, lower-priced categories.
+        </p>
+    </section>
+
+    <!-- CONCLUSIONS -->
+    <section>
+        <h2 class="section-title">Conclusions</h2>
+
+        <div class="theory-box">
+            <h3>On Classification</h3>
+            <p>
+                The classifier reaches 80% F1 (gradient boosting) on the test set and 72% agreement 
+                with independent human labels. Text features (category breadcrumbs and description TF-IDF) 
+                carry most of the predictive signal, with color features adding a modest +2.3 percentage 
+                points. The model is conservative — it under-classifies gendered products rather than 
+                over-classifying neutral ones.
+            </p>
+        </div>
+
+        <div class="theory-box">
+            <h3>On Pricing</h3>
+            <p>
+                The regression analysis finds no evidence of a systematic pink tax at the aggregate 
+                level. Female products are 9–10% cheaper in raw comparisons, and the gap becomes 
+                statistically insignificant (and reverses sign to +3.7%) after controlling for product 
+                category. The unit price regression shows no difference at all (+0.7%, p = 0.92).
+            </p>
+            <p>
+                Within categories, results are mixed: greeting cards show a small female premium, 
+                shower products show a male premium, and most categories have too few gendered 
+                products for meaningful comparison. The quantile regression suggests a possible 
+                floor-price effect for the cheapest products within a category, but the evidence 
+                is limited by sample size.
+            </p>
+            <p>
+                These findings are consistent with the prior literature. As in Moshary et al. (2023), 
+                the apparent price gap is largely a composition effect — female and male products fall 
+                into different categories with different price levels — rather than within-category 
+                discrimination. The meaningful finding is the extent of gender segmentation itself, 
+                not the prices.
+            </p>
+        </div>
+    </section>
+
     <!-- LIMITATIONS -->
     <section>
         <h2 class="section-title">Limitations</h2>
         
         <div class="theory-box">
             <p>
-                <strong>Color extraction quality:</strong> Many extracted colors are wrong due to 
-                backgrounds, reflections, and packaging elements. Better image segmentation would help, 
-                but wasn't implemented here.
+                <strong>Gender labeling:</strong> Products are classified using explicit keyword 
+                matching and a trained classifier. Both approaches miss implicitly gendered products — items 
+                marketed toward a gender through color, imagery, or brand positioning without using 
+                explicit terms. The human-coded sample (259 products) showed that keyword-based labels 
+                miss roughly 23% of gendered products.
             </p>
             <p>
-                <strong>Missing data:</strong> 867 products failed color extraction entirely. These 
-                are treated as missing, which gradient boosting handles but logistic regression does not.
+                <strong>Category granularity:</strong> Only 11 product categories had sufficient 
+                products of both genders for within-category comparison. Finer-grained categories 
+                would improve comparability but reduce sample sizes further.
             </p>
             <p>
-                <strong>Label quality:</strong> The "ground truth" combines regex-extracted labels and 
-                human coding. Regex labels may miss implicit gendering; human labels weren't checked 
-                for inter-rater reliability.
+                <strong>Product equivalence:</strong> The regression controls for category and 
+                description text, but does not account for product quality, ingredients, or size 
+                beyond what unit price captures. A "women's razor" and a "men's razor" in the same 
+                breadcrumb category may differ in blade count, handle design, or packaging, which 
+                could justify price differences.
             </p>
             <p>
-                <strong>Class imbalance:</strong> The neutral class dominates in raw data. Balancing 
-                helped training but may not reflect the true distribution, affecting calibration.
+                <strong>Color data coverage:</strong> Color features are available only for 
+                Morrisons products (~5,600 of 12,800). Tesco and ASDA image URLs had expired 
+                at the time of extraction. Color-based findings should be interpreted with this 
+                coverage limitation in mind.
             </p>
             <p>
-                <strong>Generalization:</strong> The classifier was trained on UK supermarket data. 
-                Performance on other retailers or countries is unknown.
-            </p>
-        </div>
-    </section>
-
-    <!-- NEXT STEPS -->
-    <section>
-        <h2 class="section-title">Next Steps</h2>
-        
-        <div class="theory-box">
-            <p>
-                The original goal was to measure price differentials between gendered products. 
-                With classification complete, the next phase would match similar products across 
-                gender categories and compare prices, controlling for quantity, brand, and retailer.
-            </p>
-            <p>
-                This is harder than classification—it requires defining "equivalent" products, 
-                which involves judgment calls about what counts as comparable.
+                <strong>Retailer scope:</strong> The data covers three UK grocery retailers. 
+                Results may not generalise to other product categories (clothing, electronics) 
+                or other markets.
             </p>
         </div>
     </section>
@@ -486,33 +913,33 @@
             <div class="content-card">
                 <div class="card-header"><h3>Data</h3></div>
                 <div class="card-body">
-                    <p>Sources: Tesco, Sainsbury's, Boots, Superdrug</p>
+                    <p>Sources: Morrisons, Tesco, ASDA</p>
                     <p>Raw products: 21,436</p>
                     <p>After filtering: 12,832</p>
                     <p>Human-coded: 259</p>
-                    <p style="margin-bottom: 0;">Training set: 2,532 (balanced)</p>
+                    <p style="margin-bottom: 0;">Gendered (explicit): 1,919</p>
                 </div>
             </div>
 
             <div class="content-card">
-                <div class="card-header"><h3>Features</h3></div>
+                <div class="card-header"><h3>Classification</h3></div>
                 <div class="card-body">
-                    <p>Breadcrumb TF-IDF: 200</p>
-                    <p>Description TF-IDF: 500</p>
-                    <p>Color features: 93</p>
-                    <p>Metadata: 6</p>
-                    <p style="margin-bottom: 0;">Total: 799</p>
-                </div>
-            </div>
-
-            <div class="content-card">
-                <div class="card-header"><h3>Training</h3></div>
-                <div class="card-body">
-                    <p>Split: 75/25 train-test</p>
-                    <p>CV: 5-fold stratified</p>
+                    <p>Features: 799 (TF-IDF + color + meta)</p>
+                    <p>Training set: 2,532 (balanced)</p>
                     <p>Best model: HistGradientBoosting</p>
-                    <p>Regularization: L1, L2</p>
-                    <p style="margin-bottom: 0;">Random state: 42</p>
+                    <p>Test F1: 0.804</p>
+                    <p style="margin-bottom: 0;">Human agreement: 72%</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header"><h3>Regression</h3></div>
+                <div class="card-body">
+                    <p>DV: log(price), log(unit price)</p>
+                    <p>Standard errors: HC1 robust</p>
+                    <p>Category FE: 96 categories</p>
+                    <p>Quantile regression: 5 quantiles</p>
+                    <p style="margin-bottom: 0;">Bootstrap: 1,000 draws</p>
                 </div>
             </div>
 
@@ -521,8 +948,8 @@
                 <div class="card-body">
                     <p>Language: Python</p>
                     <p>ML: Scikit-learn</p>
+                    <p>Regression: Statsmodels</p>
                     <p>Images: PIL, K-means</p>
-                    <p>Text: TfidfVectorizer</p>
                     <p style="margin-bottom: 0;">Viz: Matplotlib, Seaborn</p>
                 </div>
             </div>
@@ -530,10 +957,12 @@
 
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 2.5rem 0;">
             <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Classification</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">OLS Regression</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Quantile Regression</span>
             <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">TF-IDF</span>
             <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Color Extraction</span>
-            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Gradient Boosting</span>
-            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">LASSO</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Bootstrap</span>
+            <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Fixed Effects</span>
             <span style="padding: 0.5rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; color: var(--text-secondary);">Python</span>
         </div>
     </section>
@@ -541,9 +970,9 @@
     <footer>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
-            <a href="mailto:l.luksic@lse.ac.uk" class="social-link">Email</a>
+            <a href="/cdn-cgi/l/email-protection#e488ca88918f978d87a4889781ca8587ca918f" class="social-link">Email</a>
         </div>
-        <p>© 2025 Leonardo Luksic</p>
+        <p>&copy; 2025 Leonardo Luksic</p>
     </footer>
 
 </body>

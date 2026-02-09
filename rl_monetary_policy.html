@@ -24,10 +24,10 @@
 
     <!-- Hero -->
     <section class="project-hero">
-        <h1>Reinforcement Learning for Monetary Policy Optimization</h1>
+        <h1>Reinforcement Learning for Monetary Policy Optimisation</h1>
         <p class="subtitle">
-            Can a Q-learning agent learn to set interest rates better than the Taylor Rule? 
-            Training neural networks on 70 years of Federal Reserve data to simulate and optimize monetary policy decisions.
+            Training a DQN agent on 50 years of US macroeconomic data to set interest rates,
+            benchmarked against the Taylor Rule and actual Federal Reserve decisions.
         </p>
         <div class="project-meta-bar">
             <div class="meta-item">
@@ -36,15 +36,15 @@
             </div>
             <div class="meta-item">
                 <span class="meta-label">Data</span>
-                <span class="meta-value">1954–2025</span>
+                <span class="meta-value">1974&ndash;2023</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label">Observations</span>
-                <span class="meta-value">285 Quarters</span>
+                <span class="meta-label">Frequency</span>
+                <span class="meta-value">Monthly</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label">RL Improvement</span>
-                <span class="meta-value">+51%</span>
+                <span class="meta-label">DQN vs Taylor</span>
+                <span class="meta-value">&minus;27% MAD</span>
             </div>
         </div>
     </section>
@@ -52,17 +52,21 @@
     <!-- Summary -->
     <section class="summary-section">
         <div class="theory-box">
-            <h3>Key Finding</h3>
+            <h3>Summary</h3>
             <p>
-                A Q-learning agent trained on simulated economic dynamics significantly outperforms 
-                the classic Taylor Rule in out-of-sample testing. When trained only on pre-2000 data and 
-                evaluated on post-2000 dynamics, the RL agent achieved a mean reward of <strong>−143.26</strong> 
-                compared to <strong>−290.04</strong> for the Taylor Rule — a 51% improvement (t=4.79, p&lt;0.0001).
+                A Deep Q-Network trained on a neural-network inflation forecast produces interest-rate
+                recommendations that track actual Federal Reserve decisions more closely than the standard
+                Taylor Rule across five decades of history. The DQN agent achieves a mean absolute deviation
+                of <strong>3.14 pp</strong> from the Fed, compared to <strong>4.30 pp</strong> for the Taylor
+                Rule &mdash; a 27% reduction. This advantage is not uniform: regime decomposition shows
+                the DQN is strongest during crisis periods (GFC, ZLB), while the Taylor Rule overshoots
+                most during structural breaks.
             </p>
             <p>
-                Notably, the RL agent actually <em>improved</em> going out-of-sample (+12.1%) while the 
-                Taylor Rule degraded (−52.3%), suggesting the learned policy generalizes well to the 
-                calmer post-2000 monetary environment.
+                Five model specifications are tested under expanding-window time-series cross-validation.
+                A focused 8-feature specification outperforms higher-dimensional alternatives, and
+                reward function sensitivity analysis shows the learned policy responds meaningfully
+                to changes in the central bank&rsquo;s loss weights.
             </p>
         </div>
     </section>
@@ -71,34 +75,48 @@
     <section>
         <h2>Motivation</h2>
         <p class="section-subtitle">
-            Central banks have traditionally relied on rule-based approaches like the Taylor Rule to guide 
-            interest rate decisions. But can machine learning discover better policies?
+            Central banks set interest rates to steer inflation toward a target while stabilising
+            employment and output. The Taylor Rule provides a transparent benchmark, but it is a fixed
+            formula that cannot adapt to shifting economic dynamics. This project explores whether a
+            reinforcement learning agent, trained on historical data, can learn a more flexible
+            rate-setting policy.
         </p>
-        
+
         <div class="theory-box">
             <h3>The Taylor Rule</h3>
             <p>
-                John Taylor's 1993 rule prescribes interest rates as a function of inflation and output gaps:
+                John Taylor&rsquo;s 1993 rule prescribes the nominal interest rate as a linear function of
+                the inflation gap and the unemployment gap:
             </p>
-            <p style="text-align: center; font-family: monospace; font-size: 1.1rem; padding: 1rem; background: var(--grey-100); border-radius: 4px;">
-                i = r* + π + 1.5(π − π*) + 0.5(y − y*)
+            <p style="text-align: center; font-family: monospace; font-size: 1.05rem; padding: 1rem; background: var(--grey-100); border-radius: 4px;">
+                i = r* + &pi; + 1.5(&pi; &minus; &pi;*) + 0.5(u &minus; u*)
             </p>
             <p>
-                Where <em>r*</em> is the neutral real rate (≈2%), <em>π*</em> is the inflation target (2%), 
-                and <em>y</em> is the output gap. The rule is simple, transparent, and historically tracks 
-                Fed decisions reasonably well — but it's not optimized for any explicit objective function.
+                Where <em>r*</em> = 2% (neutral real rate), <em>&pi;*</em> = 2% (inflation target),
+                and <em>u*</em> = 5% (natural unemployment rate). The rule is simple and historically
+                tracks Fed decisions during stable periods, but tends to overshoot during recessions
+                and structural breaks &mdash; prescribing rates above 20% during the Volcker era and
+                above 10% during the post-COVID inflation surge.
             </p>
         </div>
 
         <div class="theory-box">
-            <h3>The RL Approach (Hinterlang & Tanzer, 2021)</h3>
+            <h3>The RL Approach</h3>
             <p>
-                Following recent literature on RL for macroeconomic policy, this project:
+                Following Hinterlang &amp; Tanzer (2021) and related literature, this project uses
+                a two-stage pipeline:
             </p>
             <p>
-                <strong>1.</strong> Trains neural networks to model the economy's response to interest rate changes<br>
-                <strong>2.</strong> Uses these models as a simulation environment for RL training<br>
-                <strong>3.</strong> Optimizes a central bank loss function: minimize inflation and output deviations while avoiding rate volatility
+                <strong>1.</strong> A neural network learns to forecast inflation 12 months ahead using
+                lagged macroeconomic indicators &mdash; the only learned transition in the environment.<br>
+                <strong>2.</strong> A DQN agent sets monthly interest rates within that environment,
+                optimising a weighted loss over inflation deviations, unemployment deviations,
+                and rate-smoothing.
+            </p>
+            <p>
+                Unemployment and capacity utilisation evolve from historical data rather than from a
+                second learned model, avoiding the compounding-error problem that arises when multiple
+                transition models are chained together.
             </p>
         </div>
     </section>
@@ -107,313 +125,576 @@
     <section>
         <h2>Data</h2>
         <p class="section-subtitle">
-            Quarterly macroeconomic indicators from FRED spanning 70 years of U.S. economic history.
+            Six monthly economic indicators from FRED, spanning 1971&ndash;2024.
         </p>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">285</div>
-                <div class="stat-label">Quarterly Observations</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">3.57%</div>
-                <div class="stat-label">Mean Inflation</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">4.61%</div>
-                <div class="stat-label">Mean Fed Funds Rate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">70 yrs</div>
-                <div class="stat-label">1954 – 2025</div>
-            </div>
+        <div class="viz-container">
+            <img src="Outputs/data_overview.png" alt="US Economic Indicators" style="width: 100%; display: block;">
         </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 1: Monthly US economic indicators, 1973&ndash;2025.
+        </p>
 
         <table>
             <thead>
                 <tr>
                     <th>Variable</th>
-                    <th>Description</th>
-                    <th>Mean</th>
-                    <th>Std</th>
-                    <th>Range</th>
+                    <th>FRED Series</th>
+                    <th>Role</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Inflation</strong></td>
-                    <td>CPI Year-over-Year Change</td>
-                    <td>3.57%</td>
-                    <td>2.79%</td>
-                    <td>−1.96% to 14.59%</td>
+                    <td><strong>CPI</strong></td>
+                    <td>CPIAUCSL</td>
+                    <td>Compute year-over-year inflation</td>
                 </tr>
                 <tr>
-                    <td><strong>Output Gap</strong></td>
-                    <td>Real GDP vs HP-filtered Trend</td>
-                    <td>0.26%</td>
-                    <td>2.37%</td>
-                    <td>−9.00% to 7.02%</td>
+                    <td><strong>Unemployment</strong></td>
+                    <td>UNRATE</td>
+                    <td>Labour market slack (gap from 5%)</td>
                 </tr>
                 <tr>
                     <td><strong>Fed Funds Rate</strong></td>
-                    <td>Federal Funds Effective Rate</td>
-                    <td>4.61%</td>
-                    <td>3.53%</td>
-                    <td>0.06% to 17.78%</td>
+                    <td>FEDFUNDS</td>
+                    <td>Policy instrument</td>
+                </tr>
+                <tr>
+                    <td><strong>Capacity Utilisation</strong></td>
+                    <td>TCU</td>
+                    <td>Real-economy output measure</td>
+                </tr>
+                <tr>
+                    <td><strong>10-Year Treasury</strong></td>
+                    <td>GS10</td>
+                    <td>Term structure / expectations</td>
+                </tr>
+                <tr>
+                    <td><strong>Financial Conditions</strong></td>
+                    <td>NFCI (weekly &rarr; monthly)</td>
+                    <td>Financial stress indicator</td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">583</div>
+                <div class="stat-label">Monthly Observations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Economic Indicators</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50 yrs</div>
+                <div class="stat-label">1974 &ndash; 2023</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12 mo</div>
+                <div class="stat-label">Forecast Horizon</div>
+            </div>
+        </div>
     </section>
 
     <!-- Methodology -->
     <section>
         <h2>Methodology</h2>
-        
-        <div class="content-grid">
-            <div class="content-card">
-                <div class="card-header">
-                    <h3>1. Economy Simulation</h3>
-                </div>
-                <div class="card-body">
-                    <p>Two MLPRegressor models predict next-period output gap and inflation from lagged values and the policy rate.</p>
-                    <p><strong>Output Gap R²:</strong> 0.90</p>
-                    <p><strong>Inflation R²:</strong> 0.61</p>
-                </div>
-            </div>
-            
-            <div class="content-card">
-                <div class="card-header">
-                    <h3>2. Environment Design</h3>
-                </div>
-                <div class="card-body">
-                    <p><strong>State:</strong> [π<sub>t-1</sub>, π<sub>t-2</sub>, y<sub>t-1</sub>, y<sub>t-2</sub>, i<sub>t-1</sub>, i<sub>t-2</sub>]</p>
-                    <p><strong>Actions:</strong> 17 discrete rates (0–16%)</p>
-                    <p><strong>Episode:</strong> 40 quarters</p>
-                </div>
-            </div>
-            
-            <div class="content-card">
-                <div class="card-header">
-                    <h3>3. Reward Function</h3>
-                </div>
-                <div class="card-body">
-                    <p>Central bank loss function:</p>
-                    <p style="font-family: monospace; font-size: 0.9rem;">
-                        R = −[0.5(π−2)² + 0.5(y)² + 0.05(Δi)²]
-                    </p>
-                    <p>Penalizes inflation/output deviations and rate volatility.</p>
-                </div>
-            </div>
-            
-            <div class="content-card">
-                <div class="card-header">
-                    <h3>4. Q-Learning Agent</h3>
-                </div>
-                <div class="card-body">
-                    <p>Function approximation with target network for stability.</p>
-                    <p><strong>γ:</strong> 0.95 | <strong>ε-decay:</strong> 0.998</p>
-                    <p><strong>Training:</strong> 1,000 episodes</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results -->
-    <section>
-        <h2>Results</h2>
-        <p class="section-subtitle">
-            The RL agent learns to consistently outperform rule-based policies with lower variance.
-        </p>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">−143.26</div>
-                <div class="stat-label">RL Agent (OOS)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">−126.34</div>
-                <div class="stat-label">Inertial Taylor</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">−290.04</div>
-                <div class="stat-label">Taylor Rule</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">p &lt; 0.001</div>
-                <div class="stat-label">RL vs Taylor</div>
-            </div>
-        </div>
-
-        <div class="viz-container">
-            <img src="Outputs/training_curves.png" alt="Training Curves" style="width: 100%; display: block;">
-        </div>
-        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
-            Figure 1: Training reward and loss over 1,000 episodes on pre-2000 economy.
-        </p>
-
-        <div class="viz-container" style="margin-top: 2rem;">
-            <img src="Outputs/policy_comparison.png" alt="Policy Comparison" style="width: 100%; display: block;">
-        </div>
-        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
-            Figure 2: Simulated trajectory comparison on post-2000 economy (out-of-sample).
-        </p>
-
-        <div class="viz-container" style="margin-top: 2rem;">
-            <img src="Outputs/reward_distribution.png" alt="Reward Distribution" style="width: 100%; display: block;">
-        </div>
-        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
-            Figure 3: Out-of-sample reward distribution (50 episodes on post-2000 economy).
-        </p>
-
-        <table style="margin-top: 2rem;">
-            <thead>
-                <tr>
-                    <th>Policy</th>
-                    <th>In-Sample Reward</th>
-                    <th>Std Dev</th>
-                    <th>vs Taylor Rule</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>RL Agent</strong></td>
-                    <td><strong>−162.99</strong></td>
-                    <td><strong>174.06</strong></td>
-                    <td><strong>+14.4%</strong></td>
-                </tr>
-                <tr style="background: var(--success-bg);">
-                    <td>Inertial Taylor</td>
-                    <td>−130.34</td>
-                    <td>111.71</td>
-                    <td>+31.5%</td>
-                </tr>
-                <tr>
-                    <td>Taylor Rule</td>
-                    <td>−190.39</td>
-                    <td>93.17</td>
-                    <td>Baseline</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <!-- Robustness -->
-    <section>
-        <h2>Robustness Check</h2>
-        <p class="section-subtitle">
-            Does the learned policy generalize to economic regimes it never saw during training?
-        </p>
 
         <div class="theory-box">
-            <h3>Out-of-Sample Test Design</h3>
+            <h3>Information Structure</h3>
             <p>
-                <strong>Training:</strong> Economy models and RL agent trained only on 1955–1999 data (high inflation era, Volcker shock, etc.)<br>
-                <strong>Testing:</strong> Evaluate on economy models fitted to 2000–2025 data (low inflation, zero-lower-bound, COVID)
+                Central banks face publication delays: economic data is typically available with
+                a lag of 1&ndash;6 months. To test the effect of these constraints, we create lagged
+                features at two horizons:
+            </p>
+            <p>
+                <strong>Realistic lags (18, 24, 30 months):</strong> approximate the information set
+                available after publication delays plus a 12-month lookback.<br>
+                <strong>Intermediate lags (3, 6, 12 months):</strong> provide more recent signal,
+                improving forecast accuracy at the cost of realism.
+            </p>
+            <p>
+                The target variable is inflation 12 months ahead &mdash; the standard central-bank
+                forecast horizon.
             </p>
         </div>
 
-        <div class="content-grid">
+        <h3>Model Specifications</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+            Five specifications test how lag horizon, variable breadth, and dimensionality
+            affect forecast accuracy:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Specification</th>
+                    <th>Features</th>
+                    <th>Lags</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>SIMPLE</strong></td>
+                    <td>6</td>
+                    <td>18, 24, 30</td>
+                    <td>Inflation + fed funds, realistic lags</td>
+                </tr>
+                <tr>
+                    <td><strong>EXPANDED</strong></td>
+                    <td>12</td>
+                    <td>18, 24, 30</td>
+                    <td>+ unemployment gap, capacity gap</td>
+                </tr>
+                <tr>
+                    <td><strong>FULL</strong></td>
+                    <td>18</td>
+                    <td>18, 24, 30</td>
+                    <td>+ term spread, financial conditions</td>
+                </tr>
+                <tr>
+                    <td><strong>INFORMATIVE</strong></td>
+                    <td>36</td>
+                    <td>3&ndash;30</td>
+                    <td>All variables, all lags</td>
+                </tr>
+                <tr style="background: var(--success-bg);">
+                    <td><strong>LEAN</strong></td>
+                    <td>8</td>
+                    <td>3, 6, 12</td>
+                    <td>Focused: inflation, rate, unemp gap, term spread</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="content-grid" style="margin-top: 2rem;">
             <div class="content-card">
                 <div class="card-header">
-                    <h3>Pre-2000 Regime</h3>
+                    <h3>Inflation Forecast</h3>
                 </div>
                 <div class="card-body">
-                    <p><strong>Mean Inflation:</strong> 4.18%</p>
-                    <p><strong>Mean Fed Rate:</strong> 6.14%</p>
-                    <p><strong>Observations:</strong> 180</p>
+                    <p>MLP neural network (64-32 hidden units) predicts inflation 12 months ahead.</p>
+                    <p><strong>Architecture:</strong> 2-layer MLP, ReLU</p>
+                    <p><strong>Regularisation:</strong> &alpha; = 0.01</p>
+                    <p><strong>Validation:</strong> Time-series CV (5 folds)</p>
                 </div>
             </div>
             <div class="content-card">
                 <div class="card-header">
-                    <h3>Post-2000 Regime</h3>
+                    <h3>RL Environment</h3>
                 </div>
                 <div class="card-body">
-                    <p><strong>Mean Inflation:</strong> 2.58%</p>
-                    <p><strong>Mean Fed Rate:</strong> 1.99%</p>
-                    <p><strong>Observations:</strong> 103</p>
+                    <p><strong>State:</strong> [inflation, unemployment, capacity, rate]</p>
+                    <p><strong>Actions:</strong> 41 discrete rates (0&ndash;20%)</p>
+                    <p><strong>Episodes:</strong> 36 months (3 years)</p>
+                    <p><strong>Reward:</strong> &minus;(&pi;_dev&sup2; + 0.5&middot;u_dev&sup2; + 0.1&middot;&Delta;i&sup2;)</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>DQN Agent</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Network:</strong> 128-128 Q-network (PyTorch)</p>
+                    <p><strong>Target network:</strong> Updated every 400 steps</p>
+                    <p><strong>Replay buffer:</strong> 15,000 transitions</p>
+                    <p><strong>Training:</strong> 600 episodes (~21,600 steps)</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <table style="margin-top: 2rem;">
+    <!-- Cross-Validation -->
+    <section>
+        <h2>Cross-Validation Results</h2>
+        <p class="section-subtitle">
+            Expanding-window CV across five economic regimes tests whether each specification
+            generalises to structurally different periods.
+        </p>
+
+        <div class="viz-container">
+            <img src="Outputs/cv_results.png" alt="Cross-Validation Results" style="width: 100%; display: block;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 2: Test MSE by specification and CV fold. LEAN achieves the lowest average error.
+        </p>
+
+        <table>
             <thead>
                 <tr>
-                    <th>Policy</th>
-                    <th>Out-of-Sample Reward</th>
-                    <th>Std Dev</th>
-                    <th>p-value vs Taylor</th>
+                    <th>Specification</th>
+                    <th>Avg MSE</th>
+                    <th>Avg MAE</th>
+                    <th>Features</th>
                 </tr>
             </thead>
             <tbody>
                 <tr style="background: var(--success-bg);">
-                    <td><strong>RL Agent</strong></td>
-                    <td><strong>−143.26</strong></td>
-                    <td><strong>67.05</strong></td>
-                    <td><strong>p &lt; 0.001</strong></td>
+                    <td><strong>LEAN</strong></td>
+                    <td><strong>6.19</strong></td>
+                    <td><strong>1.93</strong></td>
+                    <td>8</td>
                 </tr>
                 <tr>
-                    <td>Inertial Taylor</td>
-                    <td>−126.34</td>
-                    <td>151.63</td>
-                    <td>—</td>
+                    <td>INFORMATIVE</td>
+                    <td>8.42</td>
+                    <td>2.03</td>
+                    <td>36</td>
                 </tr>
                 <tr>
-                    <td>Taylor Rule</td>
-                    <td>−290.04</td>
-                    <td>203.66</td>
-                    <td>Baseline</td>
+                    <td>FULL</td>
+                    <td>14.59</td>
+                    <td>2.72</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td>EXPANDED</td>
+                    <td>14.40</td>
+                    <td>2.71</td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td>SIMPLE</td>
+                    <td>13.86</td>
+                    <td>2.82</td>
+                    <td>6</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="method-box correct" style="margin-top: 1.5rem;">
-            <h4>✓ Generalization Confirmed</h4>
+            <h4>Parsimony Outperforms Dimensionality</h4>
             <p>
-                The RL agent trained on pre-2000 dynamics significantly outperforms Taylor on post-2000 data 
-                (t = 4.79, p &lt; 0.001). The learned policy transfers across regime changes, actually 
-                <em>improving</em> out-of-sample (+12.1%) while Taylor degrades (−52.3%).
+                LEAN (8 features) outperforms INFORMATIVE (36 features) despite using far fewer variables.
+                With ~460 training observations, higher-dimensional specifications overfit &mdash; training
+                R&sup2; near 1.0 but negative validation R&sup2;. The focused feature set captures the core
+                macro signal without excess model capacity.
             </p>
         </div>
 
-        <div class="viz-container" style="margin-top: 2rem;">
-            <img src="Outputs/robustness_check.png" alt="Robustness Check" style="width: 100%; display: block;">
+        <div class="method-box wrong" style="margin-top: 1rem;">
+            <h4>Regime Sensitivity</h4>
+            <p>
+                All specifications struggle on the Early 1990s fold (trained on 1973&ndash;1990, tested
+                on 1991&ndash;1995). Models trained on 1970s&ndash;80s volatility extrapolate poorly into
+                the Great Moderation &mdash; a structural limitation of any lag-based forecast model
+                across regime changes.
+            </p>
+        </div>
+    </section>
+
+    <!-- Policy Comparison -->
+    <section>
+        <h2>Policy Comparison</h2>
+        <p class="section-subtitle">
+            Rate recommendations from the DQN, the Taylor Rule, and four additional baselines
+            compared against actual Federal Reserve decisions across 50 years.
+        </p>
+
+        <div class="viz-container">
+            <img src="Outputs/policy_comparison.png" alt="Policy Comparison" style="width: 100%; display: block;">
         </div>
         <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
-            Figure 4: In-sample vs out-of-sample performance comparison.
+            Figure 3: Interest-rate policies and deviations from Fed decisions, 1975&ndash;2023. Recession periods shaded.
         </p>
+
+        <div class="viz-container" style="margin-top: 2rem;">
+            <img src="Outputs/baseline_comparison.png" alt="Baseline Comparison" style="width: 100%; display: block;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 4: MAD and RMSE across six policy rules. Lower is better.
+        </p>
+
+        <table style="margin-top: 2rem;">
+            <thead>
+                <tr>
+                    <th>Policy</th>
+                    <th>MAD (pp)</th>
+                    <th>RMSE (pp)</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: var(--success-bg);">
+                    <td><strong>DQN Agent</strong></td>
+                    <td><strong>3.14</strong></td>
+                    <td><strong>4.07</strong></td>
+                    <td>Learned policy (this project)</td>
+                </tr>
+                <tr>
+                    <td>Hold Steady</td>
+                    <td colspan="2" style="text-align: center; color: var(--text-muted);">Varies</td>
+                    <td>Keep last month&rsquo;s rate (persistence)</td>
+                </tr>
+                <tr>
+                    <td>Inertial Taylor</td>
+                    <td colspan="2" style="text-align: center; color: var(--text-muted);">Varies</td>
+                    <td>Taylor Rule with &rho;=0.8 smoothing</td>
+                </tr>
+                <tr>
+                    <td>Taylor Rule</td>
+                    <td>4.30</td>
+                    <td>5.82</td>
+                    <td>Standard Taylor (1993)</td>
+                </tr>
+                <tr>
+                    <td>Friedman k%</td>
+                    <td colspan="2" style="text-align: center; color: var(--text-muted);">Varies</td>
+                    <td>Constant rate at historical average</td>
+                </tr>
+                <tr>
+                    <td>Naive Mean</td>
+                    <td colspan="2" style="text-align: center; color: var(--text-muted);">Varies</td>
+                    <td>Always set sample mean rate</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Regime Decomposition -->
+    <section>
+        <h2>Regime Decomposition</h2>
+        <p class="section-subtitle">
+            The aggregate MAD advantage masks substantial variation across economic conditions.
+            Breaking the comparison into sub-periods reveals where each policy is strongest.
+        </p>
+
+        <div class="viz-container">
+            <img src="Outputs/regime_decomposition.png" alt="Regime Decomposition" style="width: 100%; display: block;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 5: MAD from Fed rate by economic regime. Lower is better.
+        </p>
+
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); line-height: 1.75;">
+            The Taylor Rule&rsquo;s largest deviations concentrate in the Volcker era (where it
+            prescribes rates at the 20% ceiling) and the COVID period (where it overshoots by
+            ~10 pp). The DQN&rsquo;s advantage is clearest during the GFC and zero-lower-bound
+            period, where the agent produces a more measured response than the Taylor Rule&rsquo;s
+            mechanical prescription. During the Great Moderation (1985&ndash;2000), when the
+            economy was relatively stable, the policies converge.
+        </p>
+    </section>
+
+    <!-- Counterfactual Crisis Analysis -->
+    <section>
+        <h2>Counterfactual Crisis Analysis</h2>
+        <p class="section-subtitle">
+            Zooming into four episodes where monetary policy faced difficult decisions.
+            What did the Fed actually do, what would Taylor have prescribed, and what
+            does the DQN recommend?
+        </p>
+
+        <div class="viz-container">
+            <img src="Outputs/crisis_analysis.png" alt="Crisis Analysis" style="width: 100%; display: block;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 6: Policy recommendations during four crisis episodes.
+        </p>
+
+        <table style="margin-top: 2rem;">
+            <thead>
+                <tr>
+                    <th>Crisis</th>
+                    <th>Fed Avg</th>
+                    <th>Taylor Avg</th>
+                    <th>DQN Avg</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Volcker Disinflation (1979&ndash;84)</strong></td>
+                    <td>12.24%</td>
+                    <td>16.68%</td>
+                    <td>17.53%</td>
+                </tr>
+                <tr>
+                    <td><strong>Global Financial Crisis (2007&ndash;10)</strong></td>
+                    <td>1.62%</td>
+                    <td>5.67%</td>
+                    <td>3.46%</td>
+                </tr>
+                <tr>
+                    <td><strong>Zero Lower Bound (2011&ndash;16)</strong></td>
+                    <td>0.14%</td>
+                    <td>4.16%</td>
+                    <td>2.39%</td>
+                </tr>
+                <tr>
+                    <td><strong>COVID Inflation (2020&ndash;23)</strong></td>
+                    <td>0.81%</td>
+                    <td>11.02%</td>
+                    <td>3.91%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <h3>Observations</h3>
+            <p>
+                <strong>GFC and ZLB:</strong> The DQN sits roughly halfway between the Fed and Taylor.
+                It does not overshoot the way the Taylor Rule does (5.67% vs 1.62% actual during the GFC),
+                but it cannot reach the zero-lower-bound either &mdash; the 2&ndash;3% floor reflects
+                the smoothing penalty discouraging large rate cuts, and most training data having
+                positive rates.
+            </p>
+            <p>
+                <strong>COVID:</strong> The DQN recommends 3.91% on average while the Taylor Rule
+                prescribes 11.02%. The agent&rsquo;s response is more moderate but still substantially
+                above the Fed&rsquo;s near-zero stance, reflecting the difficulty of learning that
+                rates can stay near zero during an inflationary episode driven by supply-side factors.
+            </p>
+            <p>
+                <strong>Volcker:</strong> Both the DQN and Taylor pin at or near the 20% action space
+                ceiling. Neither can track Volcker&rsquo;s targeted approach of aggressive but temporary
+                tightening. This is a hard constraint of the discrete action space.
+            </p>
+        </div>
+    </section>
+
+    <!-- Reward Function Sensitivity -->
+    <section>
+        <h2>Reward Function Sensitivity</h2>
+        <p class="section-subtitle">
+            The central bank&rsquo;s loss function encodes its policy priorities. How does the
+            learned policy shift when the relative weight on inflation versus unemployment changes?
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>&omega;<sub>&pi;</sub> (inflation)</th>
+                    <th>&omega;<sub>u</sub> (unemployment)</th>
+                    <th>&omega;<sub>smooth</sub></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Baseline</strong></td>
+                    <td>1.0</td>
+                    <td>0.5</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td><strong>Hawkish</strong></td>
+                    <td>2.0</td>
+                    <td>0.2</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td><strong>Dovish</strong></td>
+                    <td>0.3</td>
+                    <td>1.5</td>
+                    <td>0.1</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="viz-container" style="margin-top: 2rem;">
+            <img src="Outputs/sensitivity_analysis.png" alt="Sensitivity Analysis" style="width: 100%; display: block;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 7: How loss function weights shape the learned policy. Bottom panel shows the gap
+            between hawkish and dovish parameterisations.
+        </p>
+
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); line-height: 1.75;">
+            The three policies diverge in the expected direction: the hawkish agent (high inflation
+            weight) recommends systematically higher rates, while the dovish agent (high unemployment
+            weight) keeps rates lower. The hawk&ndash;dove spread widens during inflationary episodes
+            &mdash; particularly the early 1980s and post-COVID &mdash; reflecting the tension between
+            the dual mandate objectives. During stable periods the policies converge, suggesting that
+            the loss function weights matter most when the economy is under stress.
+        </p>
+    </section>
+
+    <!-- Feature Importance -->
+    <section>
+        <h2>Feature Importance</h2>
+        <p class="section-subtitle">
+            Which variables matter most for the 12-month-ahead inflation forecast?
+            Permutation importance measures how much validation error changes when each
+            feature is randomly shuffled.
+        </p>
+
+        <div class="viz-container">
+            <img src="Outputs/feature_importance.png" alt="Feature Importance" style="width: 100%; display: block;">
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: -1rem;">
+            Figure 8: Permutation importance on the LEAN specification (validation set, 30 repeats).
+        </p>
+
+        <div class="theory-box" style="margin-top: 2rem;">
+            <h3>Interpretation</h3>
+            <p>
+                Only the 6-month lagged fed funds rate shows genuinely positive permutation importance
+                &mdash; shuffling it degrades the forecast. The negative importance values for the other
+                features mean that disrupting them actually <em>improves</em> validation predictions.
+                This indicates the model overfits to patterns in those features during training that
+                do not transfer to the validation period (which includes the post-COVID inflation spike).
+            </p>
+            <p>
+                The fed funds rate being the most reliable predictor is consistent with economic
+                intuition: the Fed&rsquo;s own rate-setting behaviour is itself a strong forward signal
+                about where inflation is headed, since the FOMC responds to the same leading indicators
+                the model is trying to capture.
+            </p>
+            <p>
+                This result also highlights a fundamental challenge of inflation forecasting with
+                macroeconomic data: structural breaks render historical lag relationships unreliable,
+                and 8 features with ~460 observations leaves limited room for the model to learn
+                stable patterns that generalise across regimes.
+            </p>
+        </div>
     </section>
 
     <!-- Limitations -->
     <section>
-        <h2>Limitations & Future Work</h2>
-        
+        <h2>Limitations</h2>
+
         <div class="theory-box">
             <h3>Caveats</h3>
             <p>
-                <strong>Simulation fidelity:</strong> The RL agent optimizes against ANN approximations of economic dynamics, 
-                not the true data-generating process. Performance depends on model quality.
+                <strong>Forecast model accuracy:</strong> The inflation forecast has limited out-of-sample
+                accuracy, particularly across regime changes. The agent&rsquo;s policy quality is bounded
+                by the quality of the underlying model. Feature importance analysis confirms that most
+                features do not contribute stable predictive signal on the validation set.
             </p>
             <p>
-                <strong>Lucas critique:</strong> Learned policies might fail if agents in the economy change behavior 
-                in response to the new policy regime.
+                <strong>Partial equilibrium:</strong> Unemployment and capacity evolve from the
+                historical record rather than responding to the agent&rsquo;s rate choices. A full
+                general-equilibrium model would capture these feedback effects but introduces
+                the compounding-error problem.
             </p>
             <p>
-                <strong>Interpretability:</strong> Neural network policies are black boxes. Central banks require 
-                explainable, auditable decision rules.
+                <strong>Rate anchoring:</strong> The agent&rsquo;s tendency to stay near the current
+                fed funds rate partly reflects the rate-smoothing penalty in the reward function
+                rather than learned macro dynamics. This also prevents the agent from reaching
+                the zero-lower-bound during crisis periods.
             </p>
             <p>
-                <strong>Inertial Taylor competitive:</strong> The smoothed Taylor Rule (ρ=0.8) performs comparably to 
-                RL out-of-sample (p=0.48), suggesting rate smoothing captures much of the benefit.
+                <strong>Action space ceiling:</strong> The 0&ndash;20% rate grid prevents the agent
+                from tracking extreme tightening episodes (Volcker) and contributes to clipping
+                artifacts in the crisis analysis.
+            </p>
+            <p>
+                <strong>Lucas critique:</strong> Learned policies assume the economy&rsquo;s response
+                to interest rates remains stable. Agents in the economy may change behaviour
+                under a different policy regime.
             </p>
         </div>
 
         <div class="theory-box">
             <h3>Extensions</h3>
             <p>
-                • Train on DSGE model simulations for theoretical grounding<br>
-                • Add forward guidance and balance sheet policies<br>
-                • Multi-objective RL with explicit inequality constraints<br>
-                • Policy distillation to interpretable rule approximations
+                Calibrated New Keynesian environment with known IS/Phillips dynamics to isolate
+                the RL contribution from forecast model quality. PPO or SAC algorithms for more
+                stable training. Multi-country comparison (ECB, BoE, BoJ). Policy distillation
+                to extract interpretable decision rules from the trained network. Continuous
+                action space to eliminate rate-grid discretisation.
             </p>
         </div>
     </section>
@@ -421,23 +702,32 @@
     <!-- Technical -->
     <section>
         <h2>Technical Details</h2>
-        
+
         <div class="project-skills" style="margin-bottom: 1.5rem;">
-            <span class="skill-tag">Q-Learning</span>
-            <span class="skill-tag">MLPRegressor</span>
+            <span class="skill-tag">Deep Q-Network</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">Gymnasium</span>
             <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">Pandas</span>
             <span class="skill-tag">Matplotlib</span>
-            <span class="skill-tag">Time Series</span>
-            <span class="skill-tag">FRED API</span>
+            <span class="skill-tag">Time Series CV</span>
+            <span class="skill-tag">FRED Data</span>
         </div>
 
         <p>
             <strong>Code:</strong> <a href="https://github.com/leoss14" target="_blank" style="color: var(--accent);">GitHub Repository</a>
         </p>
-        <p>
-            <strong>Reference:</strong> Hinterlang, N., & Tanzer, J. (2021). "Monetary Policy and the Stock Market: 
-            A Deep Reinforcement Learning Approach." <em>Working Paper</em>.
+        <p style="margin-top: 0.75rem;">
+            <strong>Authors:</strong> Leonardo Luksic, Krisha Chandnani, Ignacio Orueta
+        </p>
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); line-height: 1.75;">
+            <strong>References:</strong><br>
+            Taylor, J. B. (1993). Discretion versus policy rules in practice.
+            <em>Carnegie-Rochester Conference Series on Public Policy.</em><br>
+            Hinterlang, N. &amp; Tanzer, P. M. (2021). Monetary policy using reinforcement learning.
+            <em>arXiv:2108.01195.</em><br>
+            Mnih, V. et al. (2015). Human-level control through deep reinforcement learning.
+            <em>Nature.</em>
         </p>
     </section>
 
@@ -445,6 +735,11 @@
     <footer>
         <div class="social-links">
             <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
-            <a href="/cdn-cgi/l/email-protection#660a480a130d150f05260a150348070548130d" class="social-link">Email</a>
+            <a href="https://github.com/leoss14" target="_blank" class="social-link">GitHub</a>
+            <a href="mailto:l.luksic@lse.ac.uk" class="social-link">Email</a>
         </div>
-        <p>© 2025 Leonardo L
+        <p>&copy; 2025 Leonardo Luksic</p>
+    </footer>
+
+</body>
+</html>

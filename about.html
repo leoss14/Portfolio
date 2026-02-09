@@ -6,6 +6,164 @@
     <title>About - Leonardo Luksic</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ---- Opening pitch ---- */
+        .pitch {
+            max-width: 900px;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pitch p {
+            font-size: 1.15rem;
+            line-height: 1.85;
+            color: var(--text-secondary);
+        }
+
+        .pitch p strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* ---- Compact skills ---- */
+        .skills-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 1.25rem;
+        }
+
+        .skills-strip .skill-tag {
+            font-size: 0.78rem;
+            padding: 0.3rem 0.65rem;
+        }
+
+        .skills-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .skills-label:first-child {
+            margin-top: 0;
+        }
+
+        .languages-line {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--grey-200);
+        }
+
+        .languages-line strong {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* ---- Timeline ---- */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: var(--grey-300);
+        }
+
+        .tl-item {
+            position: relative;
+            padding-bottom: 2.75rem;
+        }
+
+        .tl-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 7px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: var(--white);
+            z-index: 1;
+        }
+
+        .tl-item.work::before {
+            background: var(--accent);
+        }
+
+        .tl-date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .tl-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.15rem;
+        }
+
+        .tl-org {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .tl-desc {
+            font-size: 0.9rem;
+            line-height: 1.65;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+
+        .tl-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.2rem 0.55rem;
+            border-radius: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .tl-tag.edu {
+            background: var(--grey-100);
+            color: var(--slate);
+        }
+
+        .tl-tag.job {
+            background: rgba(194, 58, 58, 0.08);
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            .timeline { padding-left: 1.5rem; }
+            .tl-item::before { left: -1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
@@ -23,130 +181,122 @@
     </div>
 
     <!-- Page Header -->
-    <div class="page-header">
-        <h1>About Me</h1>
-        <p>Data scientist specializing in econometrics, machine learning, and policy analysis</p>
+    <div class="project-hero">
+        <h1>About</h1>
     </div>
 
-    <!-- Bio Section -->
+    <!-- Pitch -->
     <section>
-        <div class="content-section">
-            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                I'm a data scientist and econometrician specializing in applying advanced analytical methods to complex 
-                policy questions. Currently pursuing an MPA in Data Science for Public Policy at the London School of Economics, 
-                I combine rigorous econometric training with modern machine learning techniques.
-            </p>
-            <p style="font-size: 1.15rem; line-height: 1.8;">
-                My work spans reinforcement learning applications, economic complexity analysis, spatial econometrics, 
-                and causal inference. I'm particularly interested in using data science to understand development economics, 
-                international trade, and policy effectiveness.
+        <div class="pitch">
+            <p>
+                My work applies <strong>econometric and machine learning</strong> methods to policy-relevant 
+                problems — sovereign risk assessment, central bank decision modelling, and firm-level 
+                credit analysis. I have worked with imperfect data across different institutional and 
+                geographic settings, and I approach analytical problems with an emphasis on methodological 
+                rigour over complexity.
             </p>
         </div>
     </section>
 
-    <!-- Technical Skills -->
+    <!-- Skills -->
     <section>
-        <h2 class="section-title">Technical Skills</h2>
+        <h2 class="section-title">Skills</h2>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            
-            <div class="content-section">
-                <h3 style="font-family: 'Syne', sans-serif; color: var(--lse-red); margin-bottom: 1.5rem;">
-                    🤖 Machine Learning
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
-                    <span class="skill-tag">Reinforcement Learning</span>
-                    <span class="skill-tag">K-means Clustering</span>
-                    <span class="skill-tag">Hierarchical Clustering</span>
-                    <span class="skill-tag">LASSO/Ridge/Elastic Net</span>
-                    <span class="skill-tag">Random Forest</span>
-                    <span class="skill-tag">PCA</span>
-                    <span class="skill-tag">Classification Models</span>
-                    <span class="skill-tag">Model Validation</span>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h3 style="font-family: 'Syne', sans-serif; color: var(--lse-red); margin-bottom: 1.5rem;">
-                    📊 Econometrics
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
-                    <span class="skill-tag">Panel Data Analysis</span>
-                    <span class="skill-tag">Fixed Effects Models</span>
-                    <span class="skill-tag">Causal Inference</span>
-                    <span class="skill-tag">Hypothesis Testing</span>
-                    <span class="skill-tag">Spatial Econometrics</span>
-                    <span class="skill-tag">Time Series Analysis</span>
-                    <span class="skill-tag">Network Analysis</span>
-                    <span class="skill-tag">Regression Discontinuity</span>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h3 style="font-family: 'Syne', sans-serif; color: var(--lse-red); margin-bottom: 1.5rem;">
-                    💻 Programming
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">R</span>
-                    <span class="skill-tag">Pandas</span>
-                    <span class="skill-tag">NumPy</span>
-                    <span class="skill-tag">Scikit-learn</span>
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">Matplotlib</span>
-                    <span class="skill-tag">Seaborn</span>
-                    <span class="skill-tag">Plotly</span>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h3 style="font-family: 'Syne', sans-serif; color: var(--lse-red); margin-bottom: 1.5rem;">
-                    🛠️ Tools & Platforms
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
-                    <span class="skill-tag">Jupyter Notebooks</span>
-                    <span class="skill-tag">Git / GitHub</span>
-                    <span class="skill-tag">QGIS</span>
-                    <span class="skill-tag">SQL</span>
-                    <span class="skill-tag">Web Scraping</span>
-                    <span class="skill-tag">Data Visualization</span>
-                    <span class="skill-tag">Statistical Software</span>
-                </div>
-            </div>
-
+        <p class="skills-label">Programming &amp; Libraries</p>
+        <div class="skills-strip">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">R</span>
+            <span class="skill-tag">Stata</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">pandas</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">scikit-learn</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">Matplotlib</span>
+            <span class="skill-tag">seaborn</span>
+            <span class="skill-tag">Plotly</span>
         </div>
+
+        <p class="skills-label">Methods</p>
+        <div class="skills-strip">
+            <span class="skill-tag">Causal Inference</span>
+            <span class="skill-tag">Panel Data</span>
+            <span class="skill-tag">Clustering</span>
+            <span class="skill-tag">LASSO / Ridge</span>
+            <span class="skill-tag">Random Forest</span>
+            <span class="skill-tag">PCA</span>
+            <span class="skill-tag">Reinforcement Learning</span>
+            <span class="skill-tag">Spatial Analysis</span>
+            <span class="skill-tag">Network Analysis</span>
+        </div>
+
+        <p class="skills-label">Tools</p>
+        <div class="skills-strip">
+            <span class="skill-tag">Git / GitHub</span>
+            <span class="skill-tag">Jupyter</span>
+            <span class="skill-tag">QGIS</span>
+            <span class="skill-tag">Excel</span>
+        </div>
+
     </section>
 
-    <!-- Education -->
+    <!-- Timeline -->
     <section>
-        <h2 class="section-title">Education</h2>
-        
-        <div class="content-section">
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">2025 - 2026</div>
-                    <div class="timeline-title">MPA Data Science for Public Policy</div>
-                    <div class="timeline-desc">London School of Economics and Political Science</div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">2024</div>
-                    <div class="timeline-title">Visiting Student</div>
-                    <div class="timeline-desc">University of Oxford</div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">2023</div>
-                    <div class="timeline-title">Exchange Program</div>
-                    <div class="timeline-desc">Yale-NUS College, Singapore</div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">2021 - 2025</div>
-                    <div class="timeline-title">Bachelor's Degree</div>
-                    <div class="timeline-desc">Economics & International Relations</div>
-                </div>
+        <h2 class="section-title">Timeline</h2>
+
+        <div class="timeline">
+
+            <div class="tl-item">
+                <span class="tl-tag edu">Education</span>
+                <p class="tl-date">Sept 2024 — June 2026</p>
+                <p class="tl-title">MPA in Data Science for Public Policy</p>
+                <p class="tl-org">London School of Economics</p>
+                <p class="tl-desc">
+                    Capstone with Moody's Ratings on sovereign resource dependency. 
+                    Coursework in machine learning, spatial analysis, network systems, and quantitative methods.
+                </p>
             </div>
+
+            <div class="tl-item work">
+                <span class="tl-tag job">Work</span>
+                <p class="tl-date">Aug 2024 — Aug 2025</p>
+                <p class="tl-title">Logistics Intern</p>
+                <p class="tl-org">Gibi Trieste · Trieste, Italy</p>
+                <p class="tl-desc">
+                    Restructured inventory management to resolve persistent mismatches between 
+                    offline and online records. Scaled the online sales department to 20% of revenue.
+                </p>
+            </div>
+
+            <div class="tl-item work">
+                <span class="tl-tag job">Work</span>
+                <p class="tl-date">April 2024 — July 2024</p>
+                <p class="tl-title">Political Analytics &amp; User Engagement</p>
+                <p class="tl-org">Methexi Political Compass · Remote</p>
+                <p class="tl-desc">
+                    Built an interactive voter-party matching tool for the 2024 European elections in Greece. 
+                    10,000+ responses, top Google ranking, 40% click-through rate via organic promotion.
+                </p>
+            </div>
+
+            <div class="tl-item">
+                <span class="tl-tag edu">Education</span>
+                <p class="tl-date">Jan 2024 — June 2024</p>
+                <p class="tl-title">Exchange Semester</p>
+                <p class="tl-org">Yale-NUS College · Singapore</p>
+            </div>
+
+            <div class="tl-item">
+                <span class="tl-tag edu">Education</span>
+                <p class="tl-date">Sept 2021 — July 2024</p>
+                <p class="tl-title">BSc in International Politics and Government</p>
+                <p class="tl-org">Bocconi University · Milan, Italy</p>
+                <p class="tl-desc">
+                    Dissertation on geographic credit allocation to financially constrained firms in Northern Italy. 
+                    Coursework in statistics, econometrics, computer science, and public governance.
+                </p>
+            </div>
+
         </div>
     </section>
 
@@ -154,19 +304,9 @@
     <footer>
         <div style="max-width: 1400px; margin: 0 auto;">
             <div class="social-links">
-                <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">
-                    LinkedIn
-                </a>
-                <a href="https://github.com/leoss14" target="_blank" class="social-link">
-                    GitHub
-                </a>
-                <a href="mailto:l.luksic@lse.ac.uk" class="social-link">
-                    Email
-                </a>
+                <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
+                <a href="https://github.com/leoss14" target="_blank" class="social-link">GitHub</a>
+                <a href="/cdn-cgi/l/email-protection#294507455c425a404a69455a4c07484a075c42" class="social-link">Email</a>
             </div>
-            <p style="color: var(--text-medium); font-size: 0.9rem;">© 2026 Leonardo Luksic</p>
-        </div>
-    </footer>
-
-</body>
-</html>
+            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">&copy; 2026 Leonardo Luksic</p>
+     
