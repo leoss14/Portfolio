@@ -1153,6 +1153,85 @@ footer p {
 }
 
 /* ==========================================
+   MOBILE NAVIGATION (CSS-only, no JS)
+   ========================================== */
+.nav-check {
+    display: none;
+}
+
+.nav-toggle {
+    display: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+    z-index: 1001;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Animate hamburger to X when checked */
+.nav-check:checked ~ .nav-toggle span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 6px);
+}
+
+.nav-check:checked ~ .nav-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-check:checked ~ .nav-toggle span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -6px);
+}
+
+@media (max-width: 640px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+        flex-direction: column;
+        padding: var(--space-md) var(--space-lg);
+        gap: 0;
+        display: none;
+    }
+
+    .nav-check:checked ~ .nav-links {
+        display: flex;
+    }
+
+    .nav-links li {
+        border-bottom: 1px solid var(--grey-100);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 0.85rem 0;
+        font-size: 0.95rem;
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+}
+
+/* ==========================================
    RESPONSIVE DESIGN
    ========================================== */
 @media (max-width: 768px) {

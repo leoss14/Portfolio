@@ -2,294 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gender Price Differences in UK Retail Products. Machine learning classification and econometric analysis of the pink tax in UK supermarkets.">
+    <meta property="og:title" content="Pink Tax Analysis | Leonardo Luksic">
+    <meta property="og:description" content="Gender Price Differences in UK Retail Products. Machine learning classification and econometric analysis of the pink tax in UK supermarkets.">
+    <meta property="og:type" content="website">
     <title>Pink Tax Analysis | Leonardo Luksic</title>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* =============================================
-           SHARED PROJECT PAGE OVERRIDES
-           Consistent across all project detail pages
-           ============================================= */
-
-        /* Use IBM Plex Sans everywhere, override Syne display font */
-        :root {
-            --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-size-base: 19px;
-            --text-primary: #1a1a2e;
-            --text-secondary: #2d3748;
-        }
-
-        body { font-size: var(--font-size-base); color: var(--text-primary); }
-        p { font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
-        li { font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); }
-
-        /* Headings */
-        section h2 {
-            font-size: clamp(1.9rem, 3.5vw, 2.5rem);
-            font-weight: 700;
-            color: var(--navy);
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-        }
-        section h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-top: 2.75rem;
-            margin-bottom: 1.25rem;
-        }
-        section h4 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        /* Section spacing */
-        section { padding: 3.75rem 1.5rem; }
-
-        /* ---- Viz containers ---- */
-        .viz-container h4 {
-            margin: 0;
-            padding: 1rem 1.5rem;
-            background: var(--grey-100);
-            border-bottom: 1px solid var(--border);
-            font-size: 1.05rem;
-        }
-        .viz-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin: 2.5rem 0;
-        }
-        .viz-grid .viz-container { margin: 0; }
-
-        /* ---- Pull quote ---- */
-        .pull-quote {
-            background: #fef2f2;
-            border-left: 5px solid var(--accent);
-            padding: 1.75rem 2rem;
-            margin: 2.5rem 0;
-            font-size: 1.1rem;
-            line-height: 1.75;
-            color: var(--navy);
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* ---- Highlight box (dark navy) ---- */
-        .highlight-box {
-            background: var(--navy);
-            color: var(--white);
-            border-radius: 10px;
-            padding: 2.5rem;
-            margin: 3rem 0;
-        }
-        .highlight-box h3,
-        .highlight-box h4 { color: var(--white); border: none; padding-bottom: 0; margin-top: 0; }
-        .highlight-box p,
-        .highlight-box li { color: rgba(255, 255, 255, 0.92); font-size: 1.05rem; }
-
-        /* ---- Note box ---- */
-        .note-box {
-            background: var(--grey-100);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.75rem 2rem;
-            margin: 2rem 0;
-        }
-        .note-box h4 {
-            color: var(--navy);
-            margin: 0 0 0.75rem;
-            border: none;
-            padding: 0;
-            font-size: 1.12rem;
-        }
-        .note-box p { margin-bottom: 0.6rem; }
-        .note-box p:last-child { margin-bottom: 0; }
-
-        /* ---- Image containers ---- */
-        .img-container {
-            padding: 1.5rem;
-            text-align: center;
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--grey-100);
-        }
-        .img-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        /* ---- Full-width banded sections ---- */
-        .full-width-section {
-            max-width: none;
-            padding-left: 0;
-            padding-right: 0;
-        }
-        .full-width-section .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        /* ---- Section label ---- */
-        .section-label {
-            display: inline-block;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.4rem;
-        }
-
-        /* ---- Two-column layout ---- */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        /* ---- Results table ---- */
-        .results-table { font-size: 1rem; }
-        .results-table th {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-        .results-table td.num {
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-            font-family: var(--font-mono);
-            font-size: 0.95rem;
-        }
-        .results-table .highlight-row td {
-            background: rgba(194, 58, 58, 0.06);
-            font-weight: 600;
-        }
-
-        /* ---- Divider with label ---- */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            margin: 3.5rem 0 2rem;
-        }
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: var(--grey-200);
-        }
-        .divider span {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--navy);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            white-space: nowrap;
-        }
-
-        /* ---- Conclusion / takeaway cards ---- */
-        .conclusion-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-        .conclusion-card {
-            display: flex;
-            gap: 1.25rem;
-            padding: 1.75rem;
-            background: var(--grey-100);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            transition: box-shadow 0.2s ease;
-        }
-        .conclusion-card:hover {
-            box-shadow: var(--shadow-md);
-        }
-        .conclusion-number {
-            font-family: var(--font-mono);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1;
-            flex-shrink: 0;
-            padding-top: 0.15rem;
-        }
-        .conclusion-content h4 {
-            font-size: 1.08rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 0.6rem;
-            line-height: 1.35;
-        }
-        .conclusion-content p {
-            font-size: 0.98rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            margin-bottom: 0;
-        }
-
-        /* ---- Equation box ---- */
-        .equation-box {
-            text-align: center;
-            font-family: var(--font-mono);
-            font-size: 1.05rem;
-            padding: 1.25rem;
-            background: var(--grey-100);
-            border-radius: 6px;
-            margin: 1.5rem 0;
-        }
-
-        /* ---- Chart caption boxes ---- */
-        .chart-caption {
-            background: var(--grey-100);
-            border-left: 3px solid var(--navy);
-            padding: 0.9rem 1.25rem;
-            margin-bottom: 0;
-            border-radius: 0 6px 0 0;
-        }
-        .chart-caption h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin: 0 0 0.2rem;
-            padding: 0;
-            border: none;
-            letter-spacing: -0.01em;
-        }
-        .chart-caption p {
-            font-size: 0.88rem;
-            line-height: 1.55;
-            color: var(--text-muted);
-            margin: 0;
-        }
-        .chart-caption + .viz-container {
-            border-radius: 0 0 8px 8px;
-        }
-
-        /* ---- Mobile responsive ---- */
-        @media (max-width: 768px) {
-            .viz-grid { grid-template-columns: 1fr; }
-            .two-col { grid-template-columns: 1fr; }
-            .conclusion-grid { grid-template-columns: 1fr; }
-            .compare-bars { grid-template-columns: 1fr; gap: 1.5rem; }
-            section { padding: 2.5rem 1rem; }
-            p { font-size: 1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="project-shared.css">
 </head>
 <body>
 
     <!-- Navigation -->
     <div class="nav-container">
         <nav>
+            <input type="checkbox" id="nav-check" class="nav-check" aria-hidden="true">
             <a href="index.html" class="logo">LL</a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
@@ -297,6 +26,11 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+            <label for="nav-check" class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
         </nav>
     </div>
 
@@ -445,7 +179,7 @@
             <p>K-means extracted colors mapped to a 31-color palette. Some extractions are noisy, such as the Lacoste cologne labeled male but picking up pink/salmon from the background.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/validation/sample_products_colors.png" alt="Sample products with extracted colors" style="width: 100%; border-radius: 4px;">
+            <img src="UK%20pink%20tax/Outputs/charts/validation/sample_products_colors.png" alt="Sample products with extracted colors" style="width: 100%; border-radius: 4px;">
         </div>
     </section>
 
@@ -529,7 +263,7 @@
                 <p>Confusion matrices across feature set configurations. The model tends to under-classify gendered products rather than mis-label neutral ones.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="UK pink tax/Outputs/charts/validation/confusion_vs_human.png" alt="Confusion matrices vs human labels" style="width: 100%; border-radius: 4px;">
+                <img src="UK%20pink%20tax/Outputs/charts/validation/confusion_vs_human.png" alt="Confusion matrices vs human labels" style="width: 100%; border-radius: 4px;">
             </div>
 
             <h3>Feature Importance</h3>
@@ -606,7 +340,7 @@
             <p>Share of each dominant color among explicitly gendered products. Sample sizes are small (n &#8776; 32 per group), so these distributions are indicative rather than definitive.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/validation/color_distribution_by_gender.png" alt="Color distribution by gender" style="width: 100%; border-radius: 4px;">
+            <img src="UK%20pink%20tax/Outputs/charts/validation/color_distribution_by_gender.png" alt="Color distribution by gender" style="width: 100%; border-radius: 4px;">
         </div>
 
         <div class="chart-caption">
@@ -614,7 +348,7 @@
             <p>L1-regularized logistic regression coefficients for color features in a binary female/male classifier. Positive values predict female; negative values predict male.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/validation/color_importance.png" alt="Color importance for gender prediction" style="width: 100%; border-radius: 4px;">
+            <img src="UK%20pink%20tax/Outputs/charts/validation/color_importance.png" alt="Color importance for gender prediction" style="width: 100%; border-radius: 4px;">
         </div>
 
         <p>
@@ -715,7 +449,7 @@
             <p>Summed L1 coefficients across all three color slots, showing which colors push predictions toward each gender class.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/validation/color_importance_heatmap.png" alt="Color importance heatmap" style="width: 100%; border-radius: 4px;">
+            <img src="UK%20pink%20tax/Outputs/charts/validation/color_importance_heatmap.png" alt="Color importance heatmap" style="width: 100%; border-radius: 4px;">
         </div>
     </section>
 
@@ -825,7 +559,7 @@
                 <p>Raw and log-transformed price distributions, box plots, and CDFs for explicitly gendered products. Log prices show overlapping distributions with the female curve shifted slightly left.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/04_price_distributions.png"
+                <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/04_price_distributions.png"
                      alt="Price distributions by gender" style="width: 100%; border-radius: 4px;">
             </div>
 
@@ -916,7 +650,7 @@
                 <p>Point estimates with 95% CIs (HC1 robust). The coefficient is significantly negative without controls, then shifts to a small positive but insignificant value once category fixed effects are included.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/01_coefficient_plot.png"
+                <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/01_coefficient_plot.png"
                      alt="Coefficient plot across specifications" style="width: 100%; border-radius: 4px;">
             </div>
 
@@ -925,7 +659,7 @@
                 <p>Adding category fixed effects drives R&#178; from 0.006 to 0.672. Product category is the dominant source of price variation, not gender.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/10_r2_progression.png"
+                <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/10_r2_progression.png"
                      alt="R-squared progression" style="width: 100%; border-radius: 4px;">
             </div>
 
@@ -934,7 +668,7 @@
                 <p>Waterfall showing the cumulative change in the estimated female price gap as each layer of controls is added. The gap starts at &minus;9.3% (female products cheaper), then reverses to a small, insignificant positive value once category fixed effects absorb the composition effect.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/13_waterfall_decomposition.png"
+                <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/13_waterfall_decomposition.png"
                      alt="Waterfall decomposition of female price coefficient" style="width: 100%; border-radius: 4px;">
             </div>
         </div>
@@ -959,7 +693,7 @@
             <p>Log-price distributions and box plots across all 12,832 products. Ungendered products span a wider and higher price range than either gendered group.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/07_three_way_comparison.png"
+            <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/07_three_way_comparison.png"
                  alt="Three-way price comparison" style="width: 100%; border-radius: 4px;">
         </div>
     </section>
@@ -1022,7 +756,7 @@
             <p>Percentage gap in mean price (female minus male) with 95% bootstrap confidence intervals (1,000 draws). Bold borders indicate statistical significance at the 5% level.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/03_within_category_gaps.png"
+            <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/03_within_category_gaps.png"
                  alt="Within-category price gaps" style="width: 100%; border-radius: 4px;">
         </div>
 
@@ -1031,7 +765,7 @@
             <p>Each point is a product category; size indicates sample count. Points above the 45-degree line indicate a female premium; below indicates a male premium.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/06_scatter_by_category.png"
+            <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/06_scatter_by_category.png"
                  alt="Female vs male mean price by category" style="width: 100%; border-radius: 4px;">
         </div>
     </section>
@@ -1075,7 +809,7 @@
             <p>Coefficients with 95% CIs at five quantiles (10th through 90th percentile). Left panel: store controls only. Right panel: store and category controls added. The floor-price effect at the 10th and 25th percentiles persists with category controls.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/02_quantile_regression.png"
+            <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/02_quantile_regression.png"
                  alt="Quantile regression results" style="width: 100%; border-radius: 4px;">
         </div>
 
@@ -1112,7 +846,7 @@
             <p>Left: female price premium per store (thick border indicates p &lt; 0.05). Right: mean prices by gender and store. Morrisons shows a large and significant female discount; the other two stores show no significant gap.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/05_by_store.png"
+            <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/05_by_store.png"
                  alt="Pink tax by store" style="width: 100%; border-radius: 4px;">
         </div>
     </section>
@@ -1135,7 +869,7 @@
             <p>Top 12 product categories by count for each gender. Female products concentrate in period products, hair removal, and intimate care; male products span toiletries, deodorants, razors, and skincare.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="UK pink tax/Outputs/charts/pink_tax_regression_v2/08_category_composition.png"
+            <img src="UK%20pink%20tax/Outputs/charts/pink_tax_regression_v2/08_category_composition.png"
                  alt="Category composition by gender" style="width: 100%; border-radius: 4px;">
         </div>
     </section>
@@ -1302,7 +1036,7 @@
         <div class="social-links">
             <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
             <a href="https://github.com/leoss14" target="_blank" class="social-link">GitHub</a>
-            <a href="/cdn-cgi/l/email-protection#e488ca88918f978d87a4889781ca8587ca918f" class="social-link">Email</a>
+            <a href="mailto:l.luksic@lse.ac.uk" class="social-link">Email</a>
         </div>
         <p><strong>Gender Price Differences in UK Retail Products</strong></p>
         <p>Machine Learning &amp; Econometric Analysis</p>
