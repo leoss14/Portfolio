@@ -1,0 +1,59 @@
+{
+  "version": "4.0",
+  "data": {
+    "original": 21436,
+    "filtered": 12832,
+    "excluded": 8604,
+    "training_samples": 2532,
+    "color_samples": 5525,
+    "color_coverage_note": "Morrisons only; Tesco/ASDA CDN links expired"
+  },
+  "models": [
+    {
+      "Model": "L1 (LASSO)",
+      "Accuracy": 0.6494522691705791,
+      "F1_weighted": 0.6462126372675415
+    },
+    {
+      "Model": "L2 (Ridge)",
+      "Accuracy": 0.7276995305164319,
+      "F1_weighted": 0.7278627400433506
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy": 0.7183098591549296,
+      "F1_weighted": 0.7167873830540961
+    },
+    {
+      "Model": "Hist Gradient Boosting",
+      "Accuracy": 0.8012519561815337,
+      "F1_weighted": 0.8008662621894986
+    },
+    {
+      "Model": "SVM",
+      "Accuracy": 0.729264475743349,
+      "F1_weighted": 0.7276428625786514
+    }
+  ],
+  "color_impact": {
+    "full_sample_l1": {
+      "with_colors_f1": 0.6462126372675415,
+      "without_colors_f1": 0.622293960071858
+    },
+    "morrisons_only_hgb": {
+      "n_train": 822,
+      "n_test": 293,
+      "hgb_with_colors_acc": 0.8395904436860068,
+      "hgb_with_colors_f1": 0.839946615210571,
+      "hgb_without_colors_acc": 0.8191126279863481,
+      "hgb_without_colors_f1": 0.8191750780625954,
+      "delta_acc_pp": 2.0477815699658675,
+      "delta_f1_pp": 2.077153714797564
+    }
+  },
+  "predictions": {
+    "female": 2257,
+    "male": 1384,
+    "none": 9191
+  }
+}

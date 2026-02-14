@@ -345,7 +345,7 @@
             <p>Share of each dominant color among explicitly gendered products. Sample sizes are small (n &#8776; 32 per group), so these distributions are indicative rather than definitive.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="outputs/charts/validation/color_distribution_by_gender.png" alt="Color distribution by gender" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/validation/color_distribution_by_gender.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
 
         <div class="chart-caption">
@@ -353,7 +353,7 @@
             <p>L1-regularized logistic regression coefficients for color features in a binary female/male classifier. Positive values predict female; negative values predict male.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="outputs/charts/validation/color_importance.png" alt="Color importance for gender prediction" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/validation/color_importance.html" width="100%" height="600" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
 
         <p>
@@ -454,7 +454,7 @@
             <p>Summed L1 coefficients across all three color slots, showing which colors push predictions toward each gender class.</p>
         </div>
         <div class="viz-container" style="background: #1a1a2e; padding: 1rem;">
-            <img src="outputs/charts/validation/color_importance_heatmap.png" alt="Color importance heatmap" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/validation/color_importance_heatmap.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
     </section>
 
@@ -564,8 +564,7 @@
                 <p>Raw and log-transformed price distributions, box plots, and CDFs for explicitly gendered products. Log prices show overlapping distributions with the female curve shifted slightly left.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="outputs/charts/pink_tax_regression_v2/04_price_distributions.png"
-                     alt="Price distributions by gender" style="width: 100%; border-radius: 4px;">
+                <iframe src="outputs/charts/regression/04_price_distributions.html" width="100%" height="700" frameborder="0" style="border-radius: 4px;"></iframe>
             </div>
 
             <div class="divider"><span>Progressive Controls</span></div>
@@ -655,8 +654,7 @@
                 <p>Point estimates with 95% CIs (HC1 robust). The coefficient is significantly negative without controls, then shifts to a small positive but insignificant value once category fixed effects are included.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="outputs/charts/pink_tax_regression_v2/01_coefficient_plot.png"
-                     alt="Coefficient plot across specifications" style="width: 100%; border-radius: 4px;">
+                <iframe src="outputs/charts/regression/01_coefficient_plot.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
             </div>
 
             <div class="chart-caption" style="margin-top: 2rem;">
@@ -664,8 +662,7 @@
                 <p>Adding category fixed effects drives R&#178; from 0.006 to 0.672. Product category is the dominant source of price variation, not gender.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="outputs/charts/pink_tax_regression_v2/10_r2_progression.png"
-                     alt="R-squared progression" style="width: 100%; border-radius: 4px;">
+                <iframe src="outputs/charts/regression/10_r2_progression.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
             </div>
 
             <div class="chart-caption" style="margin-top: 2rem;">
@@ -673,8 +670,7 @@
                 <p>Waterfall showing the cumulative change in the estimated female price gap as each layer of controls is added. The gap starts at &minus;9.3% (female products cheaper), then reverses to a small, insignificant positive value once category fixed effects absorb the composition effect.</p>
             </div>
             <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-                <img src="outputs/charts/pink_tax_regression_v2/13_waterfall_decomposition.png"
-                     alt="Waterfall decomposition of female price coefficient" style="width: 100%; border-radius: 4px;">
+                <iframe src="outputs/charts/regression/13_waterfall_decomposition.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
             </div>
         </div>
     </section>
@@ -698,8 +694,7 @@
             <p>Log-price distributions and box plots across all 12,832 products. Ungendered products span a wider and higher price range than either gendered group.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="outputs/charts/pink_tax_regression_v2/07_three_way_comparison.png"
-                 alt="Three-way price comparison" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/regression/07_three_way_comparison.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
     </section>
 
@@ -761,8 +756,7 @@
             <p>Percentage gap in mean price (female minus male) with 95% bootstrap confidence intervals (1,000 draws). Bold borders indicate statistical significance at the 5% level.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="outputs/charts/pink_tax_regression_v2/03_within_category_gaps.png"
-                 alt="Within-category price gaps" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/regression/03_within_category_gaps.html" width="100%" height="700" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
 
         <div class="chart-caption" style="margin-top: 2rem;">
@@ -770,8 +764,7 @@
             <p>Each point is a product category; size indicates sample count. Points above the 45-degree line indicate a female premium; below indicates a male premium.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="outputs/charts/pink_tax_regression_v2/06_scatter_by_category.png"
-                 alt="Female vs male mean price by category" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/regression/06_scatter_by_category.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
     </section>
 
@@ -814,8 +807,7 @@
             <p>Coefficients with 95% CIs at five quantiles (10th through 90th percentile). Left panel: store controls only. Right panel: store and category controls added. The floor-price effect at the 10th and 25th percentiles persists with category controls.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="outputs/charts/pink_tax_regression_v2/02_quantile_regression.png"
-                 alt="Quantile regression results" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/regression/02_quantile_regression.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
 
         <div class="note-box">
@@ -851,8 +843,7 @@
             <p>Left: female price premium per store (thick border indicates p &lt; 0.05). Right: mean prices by gender and store. Morrisons shows a large and significant female discount; the other two stores show no significant gap.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="outputs/charts/pink_tax_regression_v2/05_by_store.png"
-                 alt="Pink tax by store" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/regression/05_by_store.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
     </section>
 
@@ -874,8 +865,7 @@
             <p>Top 12 product categories by count for each gender. Female products concentrate in period products, hair removal, and intimate care; male products span toiletries, deodorants, razors, and skincare.</p>
         </div>
         <div class="viz-container" style="background: #f0f2f5; padding: 1rem;">
-            <img src="outputs/charts/pink_tax_regression_v2/08_category_composition.png"
-                 alt="Category composition by gender" style="width: 100%; border-radius: 4px;">
+            <iframe src="outputs/charts/regression/08_category_composition.html" width="100%" height="550" frameborder="0" style="border-radius: 4px;"></iframe>
         </div>
     </section>
 
@@ -1040,9 +1030,7 @@
         <div class="social-links">
             <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
             <a href="https://github.com/leoss14" target="_blank" class="social-link">GitHub</a>
-            <a href="/cdn-cgi/l/email-protection#87eba9ebf2ecf4eee4c7ebf4e2a9e6e4a9f2ec" class="social-link">Email</a>
+            <a href="/cdn-cgi/l/email-protection#8be7a5e7fee0f8e2e8cbe7f8eea5eae8a5fee0" class="social-link">Email</a>
         </div>
     </footer>
-    <script src="../../js/nav.js"></script>
-
-    <scrip
+    <script da

@@ -3,39 +3,6 @@
    Consistent across all project detail pages
    ============================================= */
 
-/* Use IBM Plex Sans everywhere, override Syne display font */
-:root {
-    --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-size-base: 19px;
-    --text-primary: #1a1a2e;
-    --text-secondary: #2d3748;
-}
-
-body { font-size: var(--font-size-base); color: var(--text-primary); }
-section p { font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
-section li { font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); }
-
-/* Headings */
-section h2 {
-    font-size: clamp(1.9rem, 3.5vw, 2.5rem);
-    font-weight: 700;
-    color: var(--navy);
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-}
-section h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-top: 2.75rem;
-    margin-bottom: 1.25rem;
-}
-section h4 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--navy);
-}
-
 /* Section spacing */
 section { padding: 3.75rem clamp(1.5rem, 5vw, 6rem); }
 
