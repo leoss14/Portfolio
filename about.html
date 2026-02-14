@@ -3,165 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Leonardo Luksic</title>
+    <title>Contact - Leonardo Luksic</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ---- Opening pitch ---- */
-        .pitch {
-            max-width: 900px;
-            padding-bottom: 3rem;
-            border-bottom: 1px solid var(--border);
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        .pitch p {
-            font-size: 1.15rem;
-            line-height: 1.85;
-            color: var(--text-secondary);
+        .contact-item {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--grey-100);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: border-color 0.2s ease;
         }
 
-        .pitch p strong {
-            color: var(--text-primary);
-            font-weight: 600;
+        .contact-item:hover {
+            border-color: var(--accent);
         }
 
-        /* ---- Compact skills ---- */
-        .skills-strip {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin-top: 1.25rem;
-        }
-
-        .skills-strip .skill-tag {
-            font-size: 0.78rem;
-            padding: 0.3rem 0.65rem;
-        }
-
-        .skills-label {
+        .contact-item .label {
             font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
-            margin-top: 1.5rem;
             margin-bottom: 0.6rem;
         }
 
-        .skills-label:first-child {
-            margin-top: 0;
-        }
-
-        .languages-line {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--grey-200);
-        }
-
-        .languages-line strong {
-            font-weight: 500;
+        .contact-item a {
             color: var(--text-primary);
-        }
-
-        /* ---- Timeline ---- */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 8px;
-            bottom: 8px;
-            width: 1px;
-            background: var(--grey-300);
-        }
-
-        .tl-item {
-            position: relative;
-            padding-bottom: 2.75rem;
-        }
-
-        .tl-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .tl-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 7px;
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            background: var(--white);
-            z-index: 1;
-        }
-
-        .tl-item.work::before {
-            background: var(--accent);
-        }
-
-        .tl-date {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-muted);
-            margin-bottom: 0.3rem;
-        }
-
-        .tl-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 0.15rem;
-        }
-
-        .tl-org {
-            font-size: 0.88rem;
+            text-decoration: none;
+            font-size: 0.95rem;
             font-weight: 500;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
+            transition: color 0.2s ease;
         }
 
-        .tl-desc {
-            font-size: 0.9rem;
-            line-height: 1.65;
-            color: var(--text-secondary);
-            max-width: 600px;
-        }
-
-        .tl-tag {
-            display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            padding: 0.2rem 0.55rem;
-            border-radius: 3px;
-            margin-bottom: 0.5rem;
-        }
-
-        .tl-tag.edu {
-            background: var(--grey-100);
-            color: var(--slate);
-        }
-
-        .tl-tag.job {
-            background: rgba(194, 58, 58, 0.08);
+        .contact-item a:hover {
             color: var(--accent);
         }
 
         @media (max-width: 600px) {
-            .timeline { padding-left: 1.5rem; }
-            .tl-item::before { left: -1.5rem; }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -181,122 +70,28 @@
     </div>
 
     <!-- Page Header -->
-    <div class="project-hero">
-        <h1>About</h1>
+    <div class="project-hero" style="padding-bottom: 1.5rem;">
+        <h1>Contact</h1>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; max-width: 600px; margin: 0 auto;">
+            Open to discussing research, data analysis work, and collaborations.
+        </p>
     </div>
 
-    <!-- Pitch -->
-    <section>
-        <div class="pitch">
-            <p>
-                My work applies <strong>econometric and machine learning</strong> methods to policy-relevant 
-                problems — sovereign risk assessment, central bank decision modelling, and firm-level 
-                credit analysis. I have worked with imperfect data across different institutional and 
-                geographic settings, and I approach analytical problems with an emphasis on methodological 
-                rigour over complexity.
-            </p>
-        </div>
-    </section>
-
-    <!-- Skills -->
-    <section>
-        <h2 class="section-title">Skills</h2>
-
-        <p class="skills-label">Programming &amp; Libraries</p>
-        <div class="skills-strip">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">Stata</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">pandas</span>
-            <span class="skill-tag">NumPy</span>
-            <span class="skill-tag">scikit-learn</span>
-            <span class="skill-tag">PyTorch</span>
-            <span class="skill-tag">Matplotlib</span>
-            <span class="skill-tag">seaborn</span>
-            <span class="skill-tag">Plotly</span>
-        </div>
-
-        <p class="skills-label">Methods</p>
-        <div class="skills-strip">
-            <span class="skill-tag">Causal Inference</span>
-            <span class="skill-tag">Panel Data</span>
-            <span class="skill-tag">Clustering</span>
-            <span class="skill-tag">LASSO / Ridge</span>
-            <span class="skill-tag">Random Forest</span>
-            <span class="skill-tag">PCA</span>
-            <span class="skill-tag">Reinforcement Learning</span>
-            <span class="skill-tag">Spatial Analysis</span>
-            <span class="skill-tag">Network Analysis</span>
-        </div>
-
-        <p class="skills-label">Tools</p>
-        <div class="skills-strip">
-            <span class="skill-tag">Git / GitHub</span>
-            <span class="skill-tag">Jupyter</span>
-            <span class="skill-tag">QGIS</span>
-            <span class="skill-tag">Excel</span>
-        </div>
-
-    </section>
-
-    <!-- Timeline -->
-    <section>
-        <h2 class="section-title">Timeline</h2>
-
-        <div class="timeline">
-
-            <div class="tl-item">
-                <span class="tl-tag edu">Education</span>
-                <p class="tl-date">Sept 2024 — June 2026</p>
-                <p class="tl-title">MPA in Data Science for Public Policy</p>
-                <p class="tl-org">London School of Economics</p>
-                <p class="tl-desc">
-                    Capstone with Moody's Ratings on sovereign resource dependency. 
-                    Coursework in machine learning, spatial analysis, network systems, and quantitative methods.
-                </p>
+    <!-- Contact -->
+    <section style="max-width: 800px; padding-top: 1rem;">
+        <div class="contact-grid">
+            <div class="contact-item">
+                <p class="label">Email</p>
+                <a href="mailto:l.luksic@lse.ac.uk">l.luksic@lse.ac.uk</a>
             </div>
-
-            <div class="tl-item work">
-                <span class="tl-tag job">Work</span>
-                <p class="tl-date">Aug 2024 — Aug 2025</p>
-                <p class="tl-title">Logistics Intern</p>
-                <p class="tl-org">Gibi Trieste · Trieste, Italy</p>
-                <p class="tl-desc">
-                    Restructured inventory management to resolve persistent mismatches between 
-                    offline and online records. Scaled the online sales department to 20% of revenue.
-                </p>
+            <div class="contact-item">
+                <p class="label">LinkedIn</p>
+                <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank">Leonardo Luksic</a>
             </div>
-
-            <div class="tl-item work">
-                <span class="tl-tag job">Work</span>
-                <p class="tl-date">April 2024 — July 2024</p>
-                <p class="tl-title">Political Analytics &amp; User Engagement</p>
-                <p class="tl-org">Methexi Political Compass · Remote</p>
-                <p class="tl-desc">
-                    Built an interactive voter-party matching tool for the 2024 European elections in Greece. 
-                    10,000+ responses, top Google ranking, 40% click-through rate via organic promotion.
-                </p>
+            <div class="contact-item">
+                <p class="label">GitHub</p>
+                <a href="https://github.com/leoss14" target="_blank">leoss14</a>
             </div>
-
-            <div class="tl-item">
-                <span class="tl-tag edu">Education</span>
-                <p class="tl-date">Jan 2024 — June 2024</p>
-                <p class="tl-title">Exchange Semester</p>
-                <p class="tl-org">Yale-NUS College · Singapore</p>
-            </div>
-
-            <div class="tl-item">
-                <span class="tl-tag edu">Education</span>
-                <p class="tl-date">Sept 2021 — July 2024</p>
-                <p class="tl-title">BSc in International Politics and Government</p>
-                <p class="tl-org">Bocconi University · Milan, Italy</p>
-                <p class="tl-desc">
-                    Dissertation on geographic credit allocation to financially constrained firms in Northern Italy. 
-                    Coursework in statistics, econometrics, computer science, and public governance.
-                </p>
-            </div>
-
         </div>
     </section>
 
@@ -306,7 +101,11 @@
             <div class="social-links">
                 <a href="https://www.linkedin.com/in/leonardo-luksic-3b9251240/" target="_blank" class="social-link">LinkedIn</a>
                 <a href="https://github.com/leoss14" target="_blank" class="social-link">GitHub</a>
-                <a href="/cdn-cgi/l/email-protection#294507455c425a404a69455a4c07484a075c42" class="social-link">Email</a>
+                <a href="mailto:l.luksic@lse.ac.uk" class="social-link">Email</a>
             </div>
             <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">&copy; 2026 Leonardo Luksic</p>
-     
+        </div>
+    </footer>
+
+</body>
+</html>
