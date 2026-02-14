@@ -12,8 +12,8 @@
 }
 
 body { font-size: var(--font-size-base); color: var(--text-primary); }
-p { font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
-li { font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); }
+section p { font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
+section li { font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); }
 
 /* Headings */
 section h2 {
