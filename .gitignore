@@ -1,0 +1,45 @@
+# ── macOS ──────────────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+*.DS_Store
+
+# ── Python cache ───────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ── R ──────────────────────────────────────────────────────────────────
+.Rhistory
+.Rapp.history
+
+# ── Dev tooling (kept locally, not published) ──────────────────────────
+sync_pages.py
+STRUCTURE.md
+style_1.css
+
+# ── Generated mirrors (sync_pages.py output) ──────────────────────────
+all_pages/
+
+# ── Large data files ───────────────────────────────────────────────────
+*.parquet
+*.dta
+
+# ── Specific large / sensitive files ──────────────────────────────────
+projects/capstone/data/Master.csv
+projects/capstone/data/NaturalResource.csv
+projects/Chile/data/hs92_country_product_year_6.csv
+projects/uber/Leonardo_Luksic_CV_CETEx.pdf
+
+# ── Regenerable output files ───────────────────────────────────────────
+projects/capstone/outputs/**/*.csv
+projects/Chile/output/intermediary/*.csv
+projects/Chile/output/intermediary/*.pkl
+projects/pink-tax/outputs/text/
+projects/export/outputs/*.png
+projects/export/outputs/*.csv
+projects/export/outputs/leftovers/
+projects/uber/outputs/leftovers/
+projects/uber/outputs/fix_trip_distance.html
+projects/uber/outputs/ext4_trip_distance_distribution.html
+uber_visualizations/data/fhvhv_tripdata_2025-01.parquet
+uber_visualizations/data/fhv_tripdata_2018-01.parquet
